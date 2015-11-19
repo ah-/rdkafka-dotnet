@@ -1,0 +1,7 @@
+{
+  "sources": [
+    "src",
+    "test",
+    "examples"
+  ]
+}

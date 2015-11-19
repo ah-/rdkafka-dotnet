@@ -1,0 +1,6 @@
+project.lock.json
+bin/
+obj/
+*.so
+*.dylib
+todo.txt

@@ -1,0 +1,18 @@
+{
+    "version": "1.0.0",
+    "authors": ["Andreas Heider"],
+    "compilationOptons": {
+        "emitEntryPoint": true
+    },
+    "dependencies": {
+        "RdKafka": { "target": "project" }
+    },
+    "commands": {
+    },
+    "frameworks" : {
+        "dnxcore50": {
+            "System.Console": "4.0.0-*",
+            "System.Runtime": "4.0.21-*"
+        }
+    }
+}
