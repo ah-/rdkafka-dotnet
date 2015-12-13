@@ -1,14 +1,17 @@
 {
     "version": "1.0.0-beta",
+    "description": "C# Apache Kafka client",
     "authors": ["Andreas Heider"],
-    "dependencies": {
-        "System.Console": "4.0.0-*",
-        "System.Linq": "4.0.0-*",
-        "System.IO": "4.0.11-*",
-        "System.Runtime": "4.0.21-*",
-        "System.Runtime.InteropServices": "4.0.21-*"
-    },
+
     "frameworks" : {
-        "dnxcore50": { }
+        "dotnet5.3": {
+            "dependencies": {
+                "System.Console": "4.0.0-*",
+                "System.Linq": "4.0.0-*",
+                "System.IO": "4.0.11-*",
+                "System.Runtime": "4.0.21-*",
+                "System.Runtime.InteropServices": "4.0.21-*"
+            }
+        }
     }
 }
