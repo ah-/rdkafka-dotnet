@@ -95,6 +95,21 @@ namespace RdKafka.Internal
                 internal /* rd_kafka_topic_partition_t * */ IntPtr elems;
         };
 
+        internal static List<string> GetTopicList(IntPtr listPtr)
+        {
+            if (listPtr == IntPtr.Zero)
+            {
+                return new List<string>();
+            }
+
+            var list = Marshal.PtrToStructure<rd_kafka_topic_partition_list>(listPtr);
+            return Enumerable.Range(0, list.cnt)
+                .Select(i => Marshal.PtrToStructure<rd_kafka_topic_partition>(
+                    list.elems + i * Marshal.SizeOf<rd_kafka_topic_partition>()))
+                .Select(ktp => ktp.topic)
+                .ToList();
+        }
+
         internal static List<TopicPartition> GetTopicPartitionList(IntPtr listPtr)
         {
             if (listPtr == IntPtr.Zero)

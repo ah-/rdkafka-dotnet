@@ -28,6 +28,16 @@ namespace RdKafka
             }
         }
 
+        /// <summary>
+        /// Returns the current partition assignment as set by Assign.
+        /// </summary>
+        public List<TopicPartition> Assignment => handle.GetAssignment();
+
+        /// <summary>
+        /// Returns the current partition subscription as set by Subscribe.
+        /// </summary>
+        public List<string> Subscription => handle.GetSubscription();
+
         public string Name => handle.GetName();
         public event EventHandler<Message> OnMessage;
 
@@ -151,10 +161,6 @@ namespace RdKafka
                 handle.ConsumerClose();
             }
         }
-
-        public List<TopicPartition> GetSubscriptions() => handle.GetSubscriptions();
-
-        public List<TopicPartition> GetAssignment() => handle.GetAssignment();
 
         public void Commit(List<TopicPartitionOffset> offsets)
         {

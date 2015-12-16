@@ -353,18 +353,6 @@ namespace RdKafka.Internal
             }
         }
 
-        internal List<TopicPartition> GetSubscriptions()
-        {
-            IntPtr listPtr = IntPtr.Zero;
-            ErrorCode err = rd_kafka_subscription(handle, out listPtr);
-            if (err != ErrorCode.NO_ERROR)
-            {
-                throw RdKafkaException.FromErr(err, "Failed to get subscriptions");
-            }
-            // TODO: need to free anything here?
-            return LibRdKafka.GetTopicPartitionList(listPtr);
-        }
-
         internal List<TopicPartition> GetAssignment()
         {
             IntPtr listPtr = IntPtr.Zero;
@@ -375,6 +363,18 @@ namespace RdKafka.Internal
             }
             // TODO: need to free anything here?
             return LibRdKafka.GetTopicPartitionList(listPtr);
+        }
+
+        internal List<string> GetSubscription()
+        {
+            IntPtr listPtr = IntPtr.Zero;
+            ErrorCode err = rd_kafka_subscription(handle, out listPtr);
+            if (err != ErrorCode.NO_ERROR)
+            {
+                throw RdKafkaException.FromErr(err, "Failed to get subscription");
+            }
+            // TODO: need to free anything here?
+            return LibRdKafka.GetTopicList(listPtr);
         }
 
         // For use with RebalanceCallback only

@@ -58,8 +58,8 @@ namespace AdvancedConsumer
             consumer.Subscribe(topic);
             consumer.Start();
 
-            List<TopicPartition> subscriptions = consumer.GetSubscriptions();
-            Console.WriteLine($"Subscribed to: [{string.Join(", ", subscriptions)}]");
+            Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");
+            Console.WriteLine($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
             Console.WriteLine("Started consumer, press enter to stop consuming");
             Console.ReadLine();
