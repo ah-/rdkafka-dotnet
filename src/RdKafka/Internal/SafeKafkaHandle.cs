@@ -403,6 +403,15 @@ namespace RdKafka.Internal
             }
         }
 
+        internal void Commit()
+        {
+            ErrorCode err = rd_kafka_commit(handle, IntPtr.Zero, false);
+            if (err != ErrorCode.NO_ERROR)
+            {
+                throw RdKafkaException.FromErr(err, "Failed to commit offsets");
+            }
+        }
+
         internal void Commit(List<TopicPartitionOffset> offsets)
         {
             IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) offsets.Count);

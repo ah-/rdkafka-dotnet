@@ -54,11 +54,6 @@ namespace RdKafka
             handle.Subscribe(topics);
         }
 
-        public void Subscribe(params string[] topics)
-        {
-            handle.Subscribe(topics.ToList());
-        }
-
         /// <summary>
         /// Unsubscribe from the current subscription set.
         /// </summary>
@@ -188,6 +183,11 @@ namespace RdKafka
             }
         }
 
+        public void Commit()
+        {
+            handle.Commit();
+        }
+
         public void Commit(List<TopicPartitionOffset> offsets)
         {
             handle.Commit(offsets);
@@ -195,8 +195,7 @@ namespace RdKafka
 
         public void Commit(Message message)
         {
-            Commit(new List<TopicPartitionOffset>()
-                    { message.TopicPartitionOffset });
+            Commit(new List<TopicPartitionOffset>() { message.TopicPartitionOffset });
         }
 
         /*
