@@ -38,6 +38,35 @@ namespace RdKafka
         /// </summary>
         public List<string> Subscription => handle.GetSubscription();
 
+        /// <summary>
+        /// Update the subscription set to topics.
+        ///
+        /// Any previous subscription will be unassigned and unsubscribed first.
+        ///
+        /// The subscription set denotes the desired topics to consume and this
+        /// set is provided to the partition assignor (one of the elected group
+        /// members) for all clients which then uses the configured
+        /// partition.assignment.strategy to assign the subscription sets's
+        /// topics's partitions to the consumers, depending on their subscription.
+        /// </summary>
+        public void Subscribe(List<string> topics)
+        {
+            handle.Subscribe(topics);
+        }
+
+        public void Subscribe(params string[] topics)
+        {
+            handle.Subscribe(topics.ToList());
+        }
+
+        /// <summary>
+        /// Unsubscribe from the current subscription set.
+        /// </summary>
+        public void Unsubscribe()
+        {
+            handle.Unsubscribe();
+        }
+
         public string Name => handle.GetName();
         public event EventHandler<Message> OnMessage;
 
@@ -93,28 +122,6 @@ namespace RdKafka
                         Offsets = LibRdKafka.GetTopicPartitionOffsetList(offsets)
                     });
         }
-
-        public void Subscribe(params string[] topics)
-        {
-            handle.Subscribe(topics.ToList());
-        }
-
-        public void Subscribe(List<string> topics)
-        {
-            handle.Subscribe(topics);
-        }
-
-        public void Unsubscribe()
-        {
-            handle.Unsubscribe();
-        }
-
-        /*
-        public void Unsubscribe(string topic, int partition)
-        {
-            handle.Unsubscribe(topic, partition);
-        }
-        */
 
         public void Start()
         {
