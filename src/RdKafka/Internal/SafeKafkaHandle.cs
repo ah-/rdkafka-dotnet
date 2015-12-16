@@ -199,9 +199,10 @@ namespace RdKafka.Internal
          *  onlyTopic  - only request info about this topic
          *  timeout    - maximum response time before failing.
          */
-        internal Metadata Metadata(bool allTopics=true,
-                SafeTopicHandle onlyTopic=null,
-                TimeSpan timeout=default(TimeSpan))
+        internal Metadata Metadata(bool allTopics,
+                SafeTopicHandle onlyTopic,
+                bool includeInternal,
+                TimeSpan timeout)
         {
             if (timeout == default(TimeSpan))
             {
@@ -220,22 +221,23 @@ namespace RdKafka.Internal
                 try {
                     var meta = (rd_kafka_metadata) Marshal.PtrToStructure<rd_kafka_metadata>(metaPtr);
 
-                    var brokers = Enumerable.Range(0, (int) meta.broker_cnt)
+                    var brokers = Enumerable.Range(0, meta.broker_cnt)
                         .Select(i => Marshal.PtrToStructure<rd_kafka_metadata_broker>(
                                     meta.brokers + i * Marshal.SizeOf<rd_kafka_metadata_broker>()))
                         .Select(b => new BrokerMetadata() { BrokerId = b.id, Host = b.host, Port = b.port })
                         .ToList();
 
                     // TODO: filter our topics starting with __, as those are internal. Maybe add a flag to not ignore them.
-                    var topics = Enumerable.Range(0, (int) meta.topic_cnt)
+                    var topics = Enumerable.Range(0, meta.topic_cnt)
                         .Select(i => Marshal.PtrToStructure<rd_kafka_metadata_topic>(
                                     meta.topics + i * Marshal.SizeOf<rd_kafka_metadata_topic>()))
+                        .Where(t => includeInternal || !t.topic.StartsWith("__"))
                         .Select(t => new TopicMetadata()
                                 {
                                     Topic = t.topic,
                                     Error = t.err,
                                     Partitions =
-                                        Enumerable.Range(0, (int) t.partition_cnt)
+                                        Enumerable.Range(0, t.partition_cnt)
                                         .Select(j => Marshal.PtrToStructure<rd_kafka_metadata_partition>(
                                                     t.partitions + j * Marshal.SizeOf<rd_kafka_metadata_partition>()))
                                         .Select(p => new PartitionMetadata()
@@ -243,8 +245,8 @@ namespace RdKafka.Internal
                                                     PartitionId = p.id,
                                                     Error = p.err,
                                                     Leader = p.leader,
-                                                    Replicas = MarshalCopy(p.replicas, (int) p.replica_cnt),
-                                                    InSyncReplicas = MarshalCopy(p.isrs, (int) p.isr_cnt)
+                                                    Replicas = MarshalCopy(p.replicas, p.replica_cnt),
+                                                    InSyncReplicas = MarshalCopy(p.isrs, p.isr_cnt)
                                                 })
                                         .ToList()
                                 })

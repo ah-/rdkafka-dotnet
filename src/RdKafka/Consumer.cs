@@ -7,9 +7,8 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
-    public class Consumer : IDisposable
+    public class Consumer : Handle, IDisposable
     {
-        readonly SafeKafkaHandle handle;
         Task consumerTask;
         CancellationTokenSource consumerCts;
 
@@ -129,8 +128,6 @@ namespace RdKafka
         {
             handle.Commit(offsets);
         }
-
-        public string Name => handle.GetName();
 
         // Rebalance callbacks
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
@@ -257,13 +254,7 @@ namespace RdKafka
             }
 
             handle.ConsumerClose();
+            handle.Dispose();
         }
-
-        /*
-        public string MemberId()
-        {
-            return handle.MemberId();
-        }
-        */
     }
 }

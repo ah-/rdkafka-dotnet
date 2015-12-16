@@ -6,9 +6,8 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
-    public class Producer : IDisposable
+    public class Producer : Handle, IDisposable
     {
-        readonly SafeKafkaHandle handle;
         readonly Task callbackTask;
         readonly CancellationTokenSource callbackCts;
 
@@ -30,9 +29,6 @@ namespace RdKafka
             callbackTask = StartCallbackTask(callbackCts.Token);
         }
 
-        public string Name => handle.GetName();
-        public long OutQueueLength => handle.GetOutQueueLength();
-
         public Topic Topic(string topic, TopicConfig config = null)
         {
             config = config ?? new TopicConfig();
@@ -52,7 +48,7 @@ namespace RdKafka
                 handle.Poll((IntPtr) 100);
             }
 
-            //handle.Dispose();
+            handle.Dispose();
         }
 
         // Explicitly keep reference to delegate so it stays alive

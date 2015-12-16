@@ -15,25 +15,25 @@ namespace RdKafka.Internal
         internal int id;
         internal ErrorCode err;
         internal int leader;
-        internal IntPtr replica_cnt;
+        internal int replica_cnt;
         internal /* int32_t * */ IntPtr replicas;
-        internal IntPtr isr_cnt;
+        internal int isr_cnt;
         internal /* int32_t * */ IntPtr isrs;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     struct rd_kafka_metadata_topic {
         internal string topic;
-        internal IntPtr partition_cnt;
+        internal int partition_cnt;
         internal /* struct rd_kafka_metadata_partition * */ IntPtr partitions;
         internal ErrorCode err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     struct rd_kafka_metadata {
-        internal IntPtr broker_cnt;
+        internal int broker_cnt;
         internal /* struct rd_kafka_metadata_broker * */ IntPtr brokers;
-        internal IntPtr topic_cnt;
+        internal int topic_cnt;
         internal /* struct rd_kafka_metadata_topic * */ IntPtr topics;
         internal int orig_broker_id;
         [MarshalAs(UnmanagedType.LPStr)]

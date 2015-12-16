@@ -17,24 +17,24 @@ public class Program
         Console.WriteLine($"{Library.VersionString()}");
         Console.WriteLine($"{string.Join(", ", Library.DebugContexts)}");
 
-        /*
-        var producer = new Producer("localhost:9092");
-        var meta = producer.Metadata();
-        Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");
-        meta.Brokers.ForEach(broker =>
-            Console.WriteLine($"Broker: {broker.BrokerId} {broker.Host}:{broker.Port}"));
-
-        meta.Topics.ForEach(topic =>
+        using (var producer = new Producer("localhost:9092"))
         {
-            Console.WriteLine($"Topic: {topic.Topic} {topic.Error}");
-            topic.Partitions.ForEach(partition =>
+            var meta = producer.Metadata();
+            Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");
+            meta.Brokers.ForEach(broker =>
+                Console.WriteLine($"Broker: {broker.BrokerId} {broker.Host}:{broker.Port}"));
+
+            meta.Topics.ForEach(topic =>
             {
-                Console.WriteLine($"  Partition: {partition.PartitionId}");
-                Console.WriteLine($"    Replicas: {ToString(partition.Replicas)}");
-                Console.WriteLine($"    InSyncReplicas: {ToString(partition.InSyncReplicas)}");
+                Console.WriteLine($"Topic: {topic.Topic} {topic.Error}");
+                topic.Partitions.ForEach(partition =>
+                {
+                    Console.WriteLine($"  Partition: {partition.PartitionId}");
+                    Console.WriteLine($"    Replicas: {ToString(partition.Replicas)}");
+                    Console.WriteLine($"    InSyncReplicas: {ToString(partition.InSyncReplicas)}");
+                });
             });
-        });
-        */
+        }
 
         foreach (var kv in new Config().Dump())
         {

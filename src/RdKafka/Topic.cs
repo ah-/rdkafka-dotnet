@@ -14,7 +14,7 @@ namespace RdKafka
     public class Topic
     {
         const int RD_KAFKA_PARTITION_UA = -1;
-        SafeTopicHandle handle;
+        internal SafeTopicHandle handle;
         Producer producer;
 
         internal Topic(SafeTopicHandle handle, Producer producer)
