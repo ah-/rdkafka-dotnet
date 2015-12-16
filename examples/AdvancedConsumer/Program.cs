@@ -49,13 +49,15 @@ namespace AdvancedConsumer
 
             consumer.OnPartitionsAssigned += (obj, partitions) => {
                 Console.WriteLine($"Assigned partitions: [{string.Join(", ", partitions)}]");
+                consumer.Assign(partitions);
             };
 
             consumer.OnPartitionsRevoked += (obj, partitions) => {
                 Console.WriteLine($"Revoked partitions: [{string.Join(", ", partitions)}]");
+                consumer.Unassign();
             };
 
-            consumer.Subscribe(topic);
+            consumer.Subscribe(new List<string>{topic});
             consumer.Start();
 
             Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");

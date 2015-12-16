@@ -119,8 +119,8 @@ namespace RdKafka
         public event EventHandler<Message> OnMessage;
 
         // Rebalance callbacks
-        public event EventHandler<IList<TopicPartition>> OnPartitionsAssigned;
-        public event EventHandler<IList<TopicPartition>> OnPartitionsRevoked;
+        public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
+        public event EventHandler<List<TopicPartitionOffset>> OnPartitionsRevoked;
 
         public event EventHandler<TopicPartitionOffset> OnEndReached;
 
@@ -137,22 +137,29 @@ namespace RdKafka
                 /* rd_kafka_topic_partition_list_t * */ IntPtr partitions,
                 IntPtr opaque)
         {
+            var partitionList = LibRdKafka.GetTopicPartitionOffsetList(partitions);
             if (err == ErrorCode._ASSIGN_PARTITIONS)
             {
-                OnPartitionsAssigned?.Invoke(this,
-                        LibRdKafka.GetTopicPartitionList(partitions));
-                ErrorCode aerr = handle.Assign(partitions);
-                if (aerr != ErrorCode.NO_ERROR) {
-                    throw RdKafkaException.FromErr(aerr, "Failed to assign partitions");
+                var handler = OnPartitionsAssigned;
+                if (handler != null && handler.GetInvocationList().Length > 0)
+                {
+                    handler(this, partitionList);
+                }
+                else
+                {
+                    Assign(partitionList);
                 }
             }
             if (err == ErrorCode._REVOKE_PARTITIONS)
             {
-                OnPartitionsRevoked?.Invoke(this,
-                        LibRdKafka.GetTopicPartitionList(partitions));
-                ErrorCode aerr = handle.Assign(IntPtr.Zero);
-                if (aerr != ErrorCode.NO_ERROR) {
-                    throw RdKafkaException.FromErr(aerr, "Failed to revoke partitions");
+                var handler = OnPartitionsRevoked;
+                if (handler != null && handler.GetInvocationList().Length > 0)
+                {
+                    handler(this, partitionList);
+                }
+                else
+                {
+                    Unassign();
                 }
             }
         }

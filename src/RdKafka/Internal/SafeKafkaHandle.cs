@@ -377,9 +377,6 @@ namespace RdKafka.Internal
             return LibRdKafka.GetTopicList(listPtr);
         }
 
-        // For use with RebalanceCallback only
-        internal ErrorCode Assign(IntPtr partitions) => rd_kafka_assign(handle, partitions);
-
         internal void Assign(List<TopicPartitionOffset> partitions)
         {
             IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) partitions.Count);
