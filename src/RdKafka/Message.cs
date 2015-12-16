@@ -16,4 +16,10 @@ namespace RdKafka
                     Offset = Offset
                 };
     }
+
+    public struct MessageAndError
+    {
+        internal Message Message;
+        internal ErrorCode Error;
+    }
 }

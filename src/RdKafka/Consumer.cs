@@ -10,8 +10,8 @@ namespace RdKafka
     public class Consumer
     {
         readonly SafeKafkaHandle handle;
-        Task pollingTask;
-        CancellationTokenSource pollingCts;
+        Task consumerTask;
+        CancellationTokenSource consumerCts;
 
         public Consumer(Config config, string brokerList = null)
         {
@@ -82,6 +82,22 @@ namespace RdKafka
         }
 
         /// <summary>
+        /// Manually consume message or get error, triggers events.
+        ///
+        /// Will invoke events for OnPartitionsAssigned/Revoked,
+        /// OnOffsetCommit, etc. on the calling thread.
+        ///
+        /// Returns one of:
+        /// - proper message (ErrorCode is NO_ERROR)
+        /// - error event (ErrorCode is != NO_ERROR)
+        /// - timeout due to no message or event within timeout (null)
+        /// </summary>
+        public MessageAndError? Consume(TimeSpan timeout)
+        {
+            return handle.ConsumerPoll((IntPtr) timeout.TotalMilliseconds);
+        }
+
+        /// <summary>
         /// Commit offsets for the current assignment.
         ///
         /// This is the synchronous variant that blocks until offsets 
@@ -116,20 +132,9 @@ namespace RdKafka
 
         public string Name => handle.GetName();
 
-        public event EventHandler<Message> OnMessage;
-
         // Rebalance callbacks
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsRevoked;
-
-        public event EventHandler<TopicPartitionOffset> OnEndReached;
-
-        public class OffsetCommitArgs
-        {
-            public ErrorCode Error { get; set; }
-            public IList<TopicPartitionOffset> Offsets { get; set; }
-        }
-        public event EventHandler<OffsetCommitArgs> OnOffsetCommit;
 
         // Explicitly keep reference to delegate so it stays alive
         LibRdKafka.RebalanceCallback RebalanceDelegate;
@@ -164,6 +169,13 @@ namespace RdKafka
             }
         }
 
+        public class OffsetCommitArgs
+        {
+            public ErrorCode Error { get; set; }
+            public IList<TopicPartitionOffset> Offsets { get; set; }
+        }
+        public event EventHandler<OffsetCommitArgs> OnOffsetCommit;
+
         // Explicitly keep reference to delegate so it stays alive
         LibRdKafka.CommitCallback CommitDelegate;
         internal void CommitCallback(IntPtr rk,
@@ -178,17 +190,29 @@ namespace RdKafka
                     });
         }
 
+        public event EventHandler<Message> OnMessage;
+        public event EventHandler<TopicPartitionOffset> OnEndReached;
+
+        /// <summary>
+        /// Start automatically consuming message and trigger events.
+        ///
+        /// Will invoke events for OnMessage, OnEndReached,
+        /// OnPartitionsAssigned/Revoked, OnOffsetCommit, etc.
+        /// </summary>
         public void Start()
         {
-            // TODO: check if already polling
-            this.pollingCts = new CancellationTokenSource();
-            var ct = this.pollingCts.Token;
-            this.pollingTask = Task.Factory.StartNew(() =>
+            if (consumerTask != null)
+            {
+                throw new InvalidOperationException("Consumer task already running");
+            }
+
+            consumerCts = new CancellationTokenSource();
+            var ct = consumerCts.Token;
+            consumerTask = Task.Factory.StartNew(() =>
                 {
                     while (!ct.IsCancellationRequested)
                     {
-                        var messageAndError = handle.ConsumerPoll(
-                                (IntPtr) TimeSpan.FromSeconds(1).TotalMilliseconds);
+                        var messageAndError = Consume(TimeSpan.FromSeconds(1));
                         if (messageAndError.HasValue)
                         {
                             var mae = messageAndError.Value;
@@ -213,13 +237,16 @@ namespace RdKafka
 
         public async Task Stop()
         {
-            pollingCts.Cancel();
+            consumerCts.Cancel();
             try
             {
-                await pollingTask;
+                await consumerTask;
             }
             finally
             {
+                consumerTask = null;
+                consumerCts = null;
+                // TODO: make IDisposable
                 handle.ConsumerClose();
             }
         }

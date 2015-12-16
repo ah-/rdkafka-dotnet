@@ -299,12 +299,6 @@ namespace RdKafka.Internal
             }
         }
 
-        internal struct MessageAndError 
-        {
-            internal Message Message;
-            internal ErrorCode Error;
-        }
-
         internal MessageAndError? ConsumerPoll(IntPtr timeoutMs)
         {
             IntPtr msgPtr = rd_kafka_consumer_poll(handle, timeoutMs);
