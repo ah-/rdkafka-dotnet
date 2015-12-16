@@ -7,7 +7,7 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
-    public class Consumer
+    public class Consumer : IDisposable
     {
         readonly SafeKafkaHandle handle;
         Task consumerTask;
@@ -246,9 +246,17 @@ namespace RdKafka
             {
                 consumerTask = null;
                 consumerCts = null;
-                // TODO: make IDisposable
-                handle.ConsumerClose();
             }
+        }
+
+        public void Dispose()
+        {
+            if (consumerTask != null)
+            {
+                Stop().Wait();
+            }
+
+            handle.ConsumerClose();
         }
 
         /*
