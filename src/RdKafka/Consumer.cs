@@ -81,7 +81,41 @@ namespace RdKafka
             handle.Assign(new List<TopicPartitionOffset>());
         }
 
+        /// <summary>
+        /// Commit offsets for the current assignment.
+        ///
+        /// This is the synchronous variant that blocks until offsets 
+        /// are committed or the commit fails.
+        /// </summary>
+        public void Commit()
+        {
+            handle.Commit();
+        }
+
+        /// <summary>
+        /// Commit offset for a single topic+partition based on message.
+        ///
+        /// This is the synchronous variant that blocks until offsets 
+        /// are committed or the commit fails.
+        /// </summary>
+        public void Commit(Message message)
+        {
+            Commit(new List<TopicPartitionOffset>() { message.TopicPartitionOffset });
+        }
+
+        /// <summary>
+        /// Commit explicit list of offsets.
+        ///
+        /// This is the synchronous variant that blocks until offsets 
+        /// are committed or the commit fails.
+        /// </summary>
+        public void Commit(List<TopicPartitionOffset> offsets)
+        {
+            handle.Commit(offsets);
+        }
+
         public string Name => handle.GetName();
+
         public event EventHandler<Message> OnMessage;
 
         // Rebalance callbacks
@@ -181,21 +215,6 @@ namespace RdKafka
             {
                 handle.ConsumerClose();
             }
-        }
-
-        public void Commit()
-        {
-            handle.Commit();
-        }
-
-        public void Commit(List<TopicPartitionOffset> offsets)
-        {
-            handle.Commit(offsets);
-        }
-
-        public void Commit(Message message)
-        {
-            Commit(new List<TopicPartitionOffset>() { message.TopicPartitionOffset });
         }
 
         /*
