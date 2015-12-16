@@ -67,6 +67,25 @@ namespace RdKafka
             handle.Unsubscribe();
         }
 
+        /// <summary>
+        /// Update the assignment set to \p partitions.
+        ///
+        /// The assignment set is the set of partitions actually being consumed
+        /// by the KafkaConsumer.
+        /// </summary>
+        public void Assign(List<TopicPartitionOffset> partitions)
+        {
+            handle.Assign(partitions);
+        }
+
+        /// <summary>
+        /// Stop consumption and remove the current assignment.
+        /// </summary>
+        public void Unassign()
+        {
+            handle.Assign(new List<TopicPartitionOffset>());
+        }
+
         public string Name => handle.GetName();
         public event EventHandler<Message> OnMessage;
 

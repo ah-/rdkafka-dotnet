@@ -380,6 +380,29 @@ namespace RdKafka.Internal
         // For use with RebalanceCallback only
         internal ErrorCode Assign(IntPtr partitions) => rd_kafka_assign(handle, partitions);
 
+        internal void Assign(List<TopicPartitionOffset> partitions)
+        {
+            IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) partitions.Count);
+            if (list == IntPtr.Zero)
+            {
+                throw new Exception("Failed to create topic partition list");
+            }
+            foreach (var partition in partitions)
+            {
+                IntPtr ptr = rd_kafka_topic_partition_list_add(list, partition.Topic, partition.Partition);
+                Marshal.WriteInt64(ptr,
+                        (int) Marshal.OffsetOf<LibRdKafka.rd_kafka_topic_partition>("offset"),
+                        partition.Offset);
+            }
+
+            ErrorCode err = rd_kafka_assign(handle, list);
+            rd_kafka_topic_partition_list_destroy(list);
+            if (err != ErrorCode.NO_ERROR)
+            {
+                throw RdKafkaException.FromErr(err, "Failed to assign partitions");
+            }
+        }
+
         internal void Commit(List<TopicPartitionOffset> offsets)
         {
             IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) offsets.Count);
