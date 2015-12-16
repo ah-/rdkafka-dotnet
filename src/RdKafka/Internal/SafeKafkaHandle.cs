@@ -286,7 +286,7 @@ namespace RdKafka.Internal
             rd_kafka_topic_partition_list_destroy(list);
             if (err != ErrorCode.NO_ERROR)
             {
-                throw RdKafkaException.FromErr(err, "Failed to create topic");
+                throw RdKafkaException.FromErr(err, "Failed to subscribe to topics");
             }
         }
 
