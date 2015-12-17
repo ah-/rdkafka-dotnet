@@ -122,6 +122,9 @@ namespace RdKafka.Internal
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern ErrorCode rd_kafka_poll_set_consumer(IntPtr rk);
 
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        static extern void rd_kafka_set_log_level(IntPtr rk, int level);
+
         private SafeKafkaHandle() {}
 
         internal static SafeKafkaHandle Create(RdKafkaType type, IntPtr config)
@@ -434,6 +437,11 @@ namespace RdKafka.Internal
             string memberId = Marshal.PtrToStringAnsi(strPtr);
             LibRdKafka.rd_kafka_mem_free(handle, strPtr);
             return memberId;
+        }
+
+        internal void SetLogLevel(int level)
+        {
+            rd_kafka_set_log_level(handle, level);
         }
     }
 }

@@ -64,6 +64,13 @@ namespace RdKafka
         /// </summary>
         public long OutQueueLength => handle.GetOutQueueLength();
 
+        public int LogLevel
+        {
+            set {
+                handle.SetLogLevel(value);
+            }
+        }
+
         /// <summary>
         /// Request Metadata from broker.
         ///
