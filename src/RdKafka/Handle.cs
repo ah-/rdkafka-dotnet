@@ -11,10 +11,25 @@ namespace RdKafka
     {
         internal SafeKafkaHandle handle;
 
+        /// <summary>
+        /// The name of the handle
+        /// </summary>
         public string Name => handle.GetName();
 
+        /// <summary>
+        /// The client's broker-assigned group member id
+        ///
+        /// Last assigned member id, or empty string if not currently
+        /// a group member.
+        /// </summary>
         public string MemberId => handle.MemberId();
 
+        /// <summary>
+        /// The current out queue length
+        ///
+        /// The out queue contains messages and requests waiting to be sent to,
+        /// or acknowledged by, the broker.
+        /// </summary>
         public long OutQueueLength => handle.GetOutQueueLength();
 
         /// <summary>
