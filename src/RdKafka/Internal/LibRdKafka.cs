@@ -75,6 +75,9 @@ namespace RdKafka.Internal
         internal static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(
                 /* rd_kafka_t * */ IntPtr rk, IntPtr timeout_ms);
 
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void rd_kafka_mem_free(IntPtr rk, IntPtr ptr);
+
         [StructLayout(LayoutKind.Sequential)]
         internal struct rd_kafka_topic_partition {
                 internal string topic;

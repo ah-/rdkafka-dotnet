@@ -13,7 +13,7 @@ namespace RdKafka
 
         public string Name => handle.GetName();
 
-        // public string MemberId => handle.MemberId()
+        public string MemberId => handle.MemberId();
 
         public long OutQueueLength => handle.GetOutQueueLength();
 

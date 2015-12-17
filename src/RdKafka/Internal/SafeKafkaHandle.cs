@@ -119,9 +119,8 @@ namespace RdKafka.Internal
                 /* const rd_kafka_topic_partition_list_t * */ IntPtr offsets,
                 bool async);
 
-        //[DllImport("librdkafka")]
-        //static extern /* char * */ IntPtr rd_kafka_memberid(
-                ///* const rd_kafka_t * */ IntPtr rk);
+        [DllImport("librdkafka")]
+        static extern /* char * */ IntPtr rd_kafka_memberid(IntPtr rk);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern ErrorCode rd_kafka_poll_set_consumer(IntPtr rk);
@@ -427,7 +426,6 @@ namespace RdKafka.Internal
             }
         }
 
-        /*
         internal string MemberId()
         {
             IntPtr strPtr = rd_kafka_memberid(handle);
@@ -437,10 +435,8 @@ namespace RdKafka.Internal
             }
 
             string memberId = Marshal.PtrToStringAnsi(strPtr);
-            // TODO: this leaks! how to properly free() the string?
-            //free(strPtr);
+            LibRdKafka.rd_kafka_mem_free(handle, strPtr);
             return memberId;
         }
-        */
     }
 }

@@ -63,7 +63,7 @@ namespace AdvancedConsumer
                 Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");
                 Console.WriteLine($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
-                Console.WriteLine("Started consumer, press enter to stop consuming");
+                Console.WriteLine($"Started consumer {consumer.MemberId}, press enter to stop consuming");
                 Console.ReadLine();
             }
         }
