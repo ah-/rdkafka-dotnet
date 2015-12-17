@@ -20,6 +20,8 @@ namespace RdKafka
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr rd_kafka_wait_destroyed(IntPtr timeout_ms);
 
+        public delegate void LogCallback(string handle, int level, string fac, string buf);
+
         /// <summary>
         /// Returns the librdkafka version as integer.
         ///

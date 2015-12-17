@@ -33,7 +33,7 @@ namespace RdKafka.Internal
                                         *   mgs_opaque from produce() call */
     }
 
-    internal static class LibRdKafka
+    static class LibRdKafka
     {
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern void rd_kafka_conf_set_dr_cb(
@@ -70,6 +70,12 @@ namespace RdKafka.Internal
                 ErrorCode err,
                 /* rd_kafka_topic_partition_list_t * */ IntPtr offsets,
                 IntPtr opaque);
+
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void rd_kafka_conf_set_log_cb(IntPtr conf, LogCallback log_cb);
+
+        [UnmanagedFunctionPointer(callingConvention: CallingConvention.Cdecl)]
+        internal delegate void LogCallback(IntPtr rk, int level, string fac, string buf);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         internal static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(

@@ -38,5 +38,8 @@ namespace RdKafka
             set { this["enable.auto.commit"] = value ? "true" : "false"; }
             get { return this["enable.auto.commit"] == "true"; }
         }
+
+        public delegate void LogCallback(string handle, int level, string fac, string buf);
+        public LogCallback Logger { get; set; }
     }
 }

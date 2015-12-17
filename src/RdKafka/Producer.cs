@@ -16,9 +16,10 @@ namespace RdKafka
         public Producer(Config config, string brokerList = null)
         {
             config = config ?? new Config();
-            LibRdKafka.rd_kafka_conf_set_dr_msg_cb(config.handle.DangerousGetHandle(),
-                    DeliveryReportDelegate);
-            handle = SafeKafkaHandle.Create(RdKafkaType.Producer, config.handle);
+
+            IntPtr cfgPtr = config.handle.Dup();
+            LibRdKafka.rd_kafka_conf_set_dr_msg_cb(cfgPtr, DeliveryReportDelegate);
+            Init(RdKafkaType.Producer, cfgPtr, config.Logger);
 
             if (brokerList != null)
             {

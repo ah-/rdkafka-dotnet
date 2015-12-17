@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Runtime.InteropServices;
 using RdKafka.Internal;
 
 namespace RdKafka
@@ -10,6 +12,27 @@ namespace RdKafka
     public class Handle
     {
         internal SafeKafkaHandle handle;
+        LibRdKafka.LogCallback LogCb;
+        Config.LogCallback Logger;
+
+        internal void Init(RdKafkaType type, IntPtr config, Config.LogCallback logger)
+        {
+            Logger = logger ?? ((string handle, int level, string fac, string buf) =>
+            {
+                var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                Console.WriteLine($"{level}|{now}|{handle}|{fac}| {buf}");
+            });
+            LogCb = (IntPtr rk, int level, string fac, string buf) =>
+            {
+                // The log_cb is called very early during construction, before
+                // SafeKafkaHandle or any of the C# wrappers are ready.
+                // So we can't really pass rk on, just pass the rk name instead.
+                var name = Marshal.PtrToStringAnsi(SafeKafkaHandle.rd_kafka_name(rk));
+                Logger(name, level, fac, buf);
+            };
+            LibRdKafka.rd_kafka_conf_set_log_cb(config, LogCb);
+            handle = SafeKafkaHandle.Create(type, config);
+        }
 
         /// <summary>
         /// The name of the handle

@@ -41,6 +41,9 @@ namespace RdKafka.Internal
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern void rd_kafka_conf_dump_free(/* const char ** */ IntPtr arr, UIntPtr cnt);
 
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        static extern /* rd_kafka_conf_t * */ IntPtr rd_kafka_conf_dup(IntPtr conf);
+
         private SafeConfigHandle()
         {
         }
@@ -59,6 +62,11 @@ namespace RdKafka.Internal
         {
             rd_kafka_conf_destroy(handle);
             return true;
+        }
+
+        internal IntPtr Dup()
+        {
+            return rd_kafka_conf_dup(handle);
         }
 
         internal Dictionary<string, string> Dump()

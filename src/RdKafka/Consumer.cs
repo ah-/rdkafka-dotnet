@@ -15,12 +15,13 @@ namespace RdKafka
         public Consumer(Config config, string brokerList = null)
         {
             RebalanceDelegate = RebalanceCallback;
-            LibRdKafka.rd_kafka_conf_set_rebalance_cb(config.handle.DangerousGetHandle(),
-                    RebalanceDelegate);
             CommitDelegate = CommitCallback;
-            LibRdKafka.rd_kafka_conf_set_offset_commit_cb(config.handle.DangerousGetHandle(),
-                    CommitDelegate);
-            handle = SafeKafkaHandle.Create(RdKafkaType.Consumer, config.handle);
+
+            IntPtr cfgPtr = config.handle.Dup();
+            LibRdKafka.rd_kafka_conf_set_rebalance_cb(cfgPtr, RebalanceDelegate);
+            LibRdKafka.rd_kafka_conf_set_offset_commit_cb(cfgPtr, CommitDelegate);
+            Init(RdKafkaType.Consumer, cfgPtr, config.Logger);
+
             if (brokerList != null)
             {
                 handle.AddBrokers(brokerList);

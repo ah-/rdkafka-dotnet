@@ -26,10 +26,7 @@ namespace RdKafka.Internal
         static extern void rd_kafka_destroy(IntPtr rk);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_conf_t * */ IntPtr rd_kafka_conf_dup(IntPtr conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* const char * */ IntPtr rd_kafka_name(IntPtr rk);
+        internal static extern /* const char * */ IntPtr rd_kafka_name(IntPtr rk);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr rd_kafka_brokers_add(IntPtr rk,
@@ -127,11 +124,11 @@ namespace RdKafka.Internal
 
         private SafeKafkaHandle() {}
 
-        internal static SafeKafkaHandle Create(RdKafkaType type, SafeConfigHandle config)
+        internal static SafeKafkaHandle Create(RdKafkaType type, IntPtr config)
         {
             var errorStringBuilder = new StringBuilder(512);
-            var skh = rd_kafka_new(type, rd_kafka_conf_dup(config.DangerousGetHandle()),
-                    errorStringBuilder, (UIntPtr) errorStringBuilder.Capacity);
+            var skh = rd_kafka_new(type, config, errorStringBuilder,
+                    (UIntPtr) errorStringBuilder.Capacity);
             if (skh.IsInvalid)
             {
                 throw new InvalidOperationException(errorStringBuilder.ToString());
