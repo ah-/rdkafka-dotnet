@@ -14,6 +14,7 @@ namespace RdKafka
         internal SafeKafkaHandle handle;
         LibRdKafka.LogCallback LogCb;
         Config.LogCallback Logger;
+        LibRdKafka.StatsCallback StatsCallback;
 
         internal void Init(RdKafkaType type, IntPtr config, Config.LogCallback logger)
         {
@@ -31,6 +32,14 @@ namespace RdKafka
                 Logger(name, level, fac, buf);
             };
             LibRdKafka.rd_kafka_conf_set_log_cb(config, LogCb);
+
+            StatsCallback = (IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque) =>
+            {
+                OnStatistics?.Invoke(this, Marshal.PtrToStringAnsi(json));
+                return 0;
+            };
+            LibRdKafka.rd_kafka_conf_set_stats_cb(config, StatsCallback);
+
             handle = SafeKafkaHandle.Create(type, config);
         }
 
@@ -70,5 +79,7 @@ namespace RdKafka
         {
             return handle.Metadata(allTopics, onlyForTopic?.handle, includeInternal, timeout);
         }
+
+        public event EventHandler<string> OnStatistics;
     }
 }

@@ -15,7 +15,8 @@ namespace AdvancedConsumer
             var config = new Config()
             {
                 GroupId = "advanced-csharp-consumer",
-                EnableAutoCommit = enableAutoCommit
+                EnableAutoCommit = enableAutoCommit,
+                StatisticsInterval = TimeSpan.FromSeconds(60)
             };
      
             using (var consumer = new Consumer(config, "127.0.0.1:9092"))
@@ -55,6 +56,10 @@ namespace AdvancedConsumer
                 consumer.OnPartitionsRevoked += (obj, partitions) => {
                     Console.WriteLine($"Revoked partitions: [{string.Join(", ", partitions)}]");
                     consumer.Unassign();
+                };
+
+                consumer.OnStatistics += (obj, json) => {
+                    Console.WriteLine($"Statistics: {json}");
                 };
 
                 consumer.Subscribe(new List<string>{topic});

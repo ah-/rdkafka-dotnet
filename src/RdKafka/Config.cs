@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RdKafka.Internal;
 
@@ -41,5 +42,11 @@ namespace RdKafka
 
         public delegate void LogCallback(string handle, int level, string fac, string buf);
         public LogCallback Logger { get; set; }
+
+        public TimeSpan StatisticsInterval
+        {
+            set { this["statistics.interval.ms"] = ((int) value.TotalMilliseconds).ToString(); }
+            get { return TimeSpan.FromMilliseconds(int.Parse(this["statistics.interval.ms"])); }
+        }
     }
 }

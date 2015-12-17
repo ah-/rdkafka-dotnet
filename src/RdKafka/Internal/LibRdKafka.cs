@@ -78,8 +78,14 @@ namespace RdKafka.Internal
         internal delegate void LogCallback(IntPtr rk, int level, string fac, string buf);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void rd_kafka_conf_set_stats_cb(IntPtr conf, StatsCallback stats_cb);
+
+        [UnmanagedFunctionPointer(callingConvention: CallingConvention.Cdecl)]
+        internal delegate int StatsCallback(IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque);
+
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         internal static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(
-                /* rd_kafka_t * */ IntPtr rk, IntPtr timeout_ms);
+                IntPtr rk, IntPtr timeout_ms);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         internal static extern void rd_kafka_mem_free(IntPtr rk, IntPtr ptr);
