@@ -79,5 +79,17 @@ namespace RdKafka
 
             return deliveryCompletionSource.Task;
         }
+
+        /// <summary>
+        /// Check if partition is available (has a leader broker).
+        ///
+        /// Return true if the partition is available, else false.
+        ///
+        /// This function must only be called from inside a partitioner function.
+        /// </summary>
+        public bool PartitionAvailable(int partition)
+        {
+            return handle.PartitionAvailable(partition);
+        }
     }
 }

@@ -26,6 +26,9 @@ namespace RdKafka.Internal
                 byte[] key, UIntPtr keylen,
                 IntPtr msg_opaque);
 
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        static extern bool rd_kafka_topic_partition_available(IntPtr rkt, int partition);
+
         const int RD_KAFKA_PARTITION_UA = -1;
 
         internal SafeKafkaHandle kafkaHandle;
@@ -51,6 +54,11 @@ namespace RdKafka.Internal
                     payload, (UIntPtr) (payload?.Length ?? 0),
                     key, (UIntPtr) (key?.Length ?? 0),
                     opaque);
+        }
+
+        internal bool PartitionAvailable(int partition)
+        {
+            return rd_kafka_topic_partition_available(handle, partition);
         }
     }
 }
