@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0-beta",
+    "version": "0.9.1-beta",
     "description": "C# Apache Kafka client",
     "authors": ["Andreas Heider"],
 
@@ -13,5 +13,9 @@
                 "System.Runtime.InteropServices": "4.0.21-*"
             }
         }
+    },
+
+    "packInclude": {
+        "runtimes/": "runtimes/**"
     }
 }

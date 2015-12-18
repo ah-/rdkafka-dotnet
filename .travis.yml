@@ -1,0 +1,12 @@
+# Origin: https://github.com/ah-/rdkafka-dotnet
+
+language: csharp
+install:
+   - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
+   - dnvm upgrade
+   - dnu restore
+
+script:
+    - ./build/copy-runtimes.sh
+    - dnu build ./src/RdKafka/project.json
+    - dnu pack ./src/RdKafka/project.json
