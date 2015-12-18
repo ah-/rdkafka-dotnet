@@ -15,6 +15,7 @@ fi
 mono nuget.exe install RdKafka.Internal.librdkafka-Darwin -Prerelease -Version 0.9.1-pre
 
 DYLIB=`pwd`/RdKafka.Internal.librdkafka-Darwin.0.9.1-pre/runtimes/osx/native/librdkafka.1.dylib
+chmod +x $DYLIB
 
 popd
 
@@ -26,3 +27,6 @@ do
     mkdir -p $TARGET
     cp $DYLIB $TARGET/librdkafka.dylib
 done
+
+# Due to dnx bug on shutdown, otherwise really shouldn't be there
+cp $DYLIB $RDKAFKA_DOTNET_DIR/librdkafka.dylib

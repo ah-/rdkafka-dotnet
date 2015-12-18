@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "RdKafka": { "target": "project" },
+        "RdKafka": "0.9.1-*",
         "xunit": "2.1.0",
         "xunit.runner.dnx": "2.1.0-*"
     },
@@ -13,3 +13,4 @@
         "dnxcore50": { }
     }
 }
+

@@ -14,3 +14,4 @@ script:
     - ./build/copy-runtimes.sh
     - dnu build ./src/RdKafka/project.json
     - dnu pack ./src/RdKafka/project.json
+    - dnx -p ./test/RdKafka.Tests/ test
