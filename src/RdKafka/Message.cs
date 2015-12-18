@@ -10,11 +10,11 @@ namespace RdKafka
 
         public TopicPartitionOffset TopicPartitionOffset =>
             new TopicPartitionOffset()
-                {
-                    Topic = Topic,
-                    Partition = Partition,
-                    Offset = Offset
-                };
+            {
+                Topic = Topic,
+                Partition = Partition,
+                Offset = Offset
+            };
     }
 
     public struct MessageAndError

@@ -25,7 +25,6 @@ namespace BenchmarkProducer
 
                 Console.WriteLine("Shutting down");
             }
-
         }
 
         public static void Main(string[] args)

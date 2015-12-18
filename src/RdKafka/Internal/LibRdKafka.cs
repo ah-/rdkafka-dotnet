@@ -84,6 +84,19 @@ namespace RdKafka.Internal
         internal delegate int StatsCallback(IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void rd_kafka_topic_conf_set_partitioner_cb(
+                IntPtr topic_conf, PartitionerCallback partitioner_cb);
+
+        [UnmanagedFunctionPointer(callingConvention: CallingConvention.Cdecl)]
+        internal delegate int PartitionerCallback(
+            /* const rd_kafka_topic_t * */ IntPtr rkt,
+            IntPtr keydata,
+            UIntPtr keylen,
+            int partition_cnt,
+            IntPtr rkt_opaque,
+            IntPtr msg_opaque);
+
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         internal static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(
                 IntPtr rk, IntPtr timeout_ms);
 

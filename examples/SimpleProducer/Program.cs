@@ -9,10 +9,9 @@ namespace SimpleProducer
     {
         public static void Main(string[] args)
         {
-            Topic topic;
             using (Producer producer = new Producer("127.0.0.1:9092"))
             {
-                topic = producer.Topic(args[0]);
+                Topic topic = producer.Topic(args[0]);
                 Console.WriteLine($"{producer.Name} producing on {topic.Name}. q to exit.");
 
                 string text;

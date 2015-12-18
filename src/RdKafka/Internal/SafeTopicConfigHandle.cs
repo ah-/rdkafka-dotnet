@@ -12,10 +12,14 @@ namespace RdKafka.Internal
         static extern SafeTopicConfigHandle rd_kafka_topic_conf_new();
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_topic_conf_destroy(IntPtr conf);
+        internal static extern void rd_kafka_topic_conf_destroy(IntPtr conf);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ConfRes rd_kafka_topic_conf_set(
+        static extern /* rd_kafka_topic_conf_t * */ IntPtr rd_kafka_topic_conf_dup(
+                /* const rd_kafka_topic_conf_t * */ IntPtr conf);
+
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ConfRes rd_kafka_topic_conf_set(
                 IntPtr conf,
                 [MarshalAs(UnmanagedType.LPStr)] string name,
                 [MarshalAs(UnmanagedType.LPStr)] string value,
@@ -53,6 +57,11 @@ namespace RdKafka.Internal
         {
             rd_kafka_topic_conf_destroy(handle);
             return true;
+        }
+
+        internal IntPtr Dup()
+        {
+            return rd_kafka_topic_conf_dup(handle);
         }
 
         // TODO: deduplicate, merge with other one

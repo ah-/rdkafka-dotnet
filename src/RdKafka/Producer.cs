@@ -32,10 +32,7 @@ namespace RdKafka
 
         public Topic Topic(string topic, TopicConfig config = null)
         {
-            config = config ?? new TopicConfig();
-            // TODO: default to this in a better way
-            config["produce.offset.report"] = "true";
-            return new Topic(handle.Topic(topic, config), this);
+            return new Topic(handle, this, topic, config);
         }
 
         public void Dispose()

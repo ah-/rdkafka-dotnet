@@ -25,5 +25,8 @@ namespace RdKafka
                 return handle.Get(name);
             }
         }
+
+        public delegate int Partitioner(Topic topic, byte[] key, int partitionCount);
+        public Partitioner CustomPartitioner { get; set; }
     }
 }

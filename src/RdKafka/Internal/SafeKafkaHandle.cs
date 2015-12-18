@@ -42,10 +42,6 @@ namespace RdKafka.Internal
                 /* rd_kafka_topic_conf_t * */ IntPtr conf);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_topic_conf_t * */ IntPtr rd_kafka_topic_conf_dup(
-                /* const rd_kafka_topic_conf_t * */ SafeTopicConfigHandle conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr rd_kafka_outq_len(IntPtr rk);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
@@ -161,7 +157,7 @@ namespace RdKafka.Internal
 
         internal long Poll(IntPtr timeoutMs) => (long)rd_kafka_poll(handle, timeoutMs);
 
-        internal SafeTopicHandle Topic(string topic, TopicConfig config)
+        internal SafeTopicHandle Topic(string topic, IntPtr config)
         {
             // Increase the refcount to this handle to keep it alive for
             // at least as long as the topic handle.
@@ -170,10 +166,10 @@ namespace RdKafka.Internal
             DangerousAddRef(ref success);
             if (!success)
             {
+                SafeTopicConfigHandle.rd_kafka_topic_conf_destroy(config);
                 throw new Exception("Failed to create topic (DangerousAddRef failed)");
             }
-            var topicHandle = rd_kafka_topic_new(handle, topic,
-                    rd_kafka_topic_conf_dup(config.handle));
+            var topicHandle = rd_kafka_topic_new(handle, topic, config);
             if (topicHandle.IsInvalid)
             {
                 DangerousRelease();

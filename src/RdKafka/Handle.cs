@@ -12,33 +12,32 @@ namespace RdKafka
     public class Handle
     {
         internal SafeKafkaHandle handle;
-        LibRdKafka.LogCallback LogCb;
-        Config.LogCallback Logger;
-        LibRdKafka.StatsCallback StatsCallback;
+        LibRdKafka.LogCallback LogDelegate;
+        LibRdKafka.StatsCallback StatsDelegate;
 
         internal void Init(RdKafkaType type, IntPtr config, Config.LogCallback logger)
         {
-            Logger = logger ?? ((string handle, int level, string fac, string buf) =>
+            logger = logger ?? ((string handle, int level, string fac, string buf) =>
             {
                 var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 Console.WriteLine($"{level}|{now}|{handle}|{fac}| {buf}");
             });
-            LogCb = (IntPtr rk, int level, string fac, string buf) =>
+            LogDelegate = (IntPtr rk, int level, string fac, string buf) =>
             {
                 // The log_cb is called very early during construction, before
                 // SafeKafkaHandle or any of the C# wrappers are ready.
                 // So we can't really pass rk on, just pass the rk name instead.
                 var name = Marshal.PtrToStringAnsi(SafeKafkaHandle.rd_kafka_name(rk));
-                Logger(name, level, fac, buf);
+                logger(name, level, fac, buf);
             };
-            LibRdKafka.rd_kafka_conf_set_log_cb(config, LogCb);
+            LibRdKafka.rd_kafka_conf_set_log_cb(config, LogDelegate);
 
-            StatsCallback = (IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque) =>
+            StatsDelegate = (IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque) =>
             {
                 OnStatistics?.Invoke(this, Marshal.PtrToStringAnsi(json));
                 return 0;
             };
-            LibRdKafka.rd_kafka_conf_set_stats_cb(config, StatsCallback);
+            LibRdKafka.rd_kafka_conf_set_stats_cb(config, StatsDelegate);
 
             handle = SafeKafkaHandle.Create(type, config);
         }

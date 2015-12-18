@@ -15,13 +15,35 @@ namespace RdKafka
     {
         const int RD_KAFKA_PARTITION_UA = -1;
 
-        internal SafeTopicHandle handle;
-        Producer producer;
+        internal readonly SafeTopicHandle handle;
+        readonly Producer producer;
+        readonly LibRdKafka.PartitionerCallback PartitionerDelegate;
 
-        internal Topic(SafeTopicHandle handle, Producer producer)
+        internal Topic(SafeKafkaHandle kafkaHandle, Producer producer, string topic, TopicConfig config)
         {
-            this.handle = handle;
             this.producer = producer;
+
+            config = config ?? new TopicConfig();
+            config["produce.offset.report"] = "true";
+            IntPtr configPtr = config.handle.Dup();
+
+            if (config.CustomPartitioner != null)
+            {
+                PartitionerDelegate = (IntPtr rkt, IntPtr keydata, UIntPtr keylen, int partition_cnt,
+                        IntPtr rkt_opaque, IntPtr msg_opaque) =>
+                {
+                    byte[] key = null;
+                    if (keydata != IntPtr.Zero)
+                    {
+                        key = new byte[(int) keylen];
+                        Marshal.Copy(keydata, key, 0, (int) keylen);
+                    }
+                    return config.CustomPartitioner(this, key, partition_cnt);
+                };
+                LibRdKafka.rd_kafka_topic_conf_set_partitioner_cb(configPtr, PartitionerDelegate);
+            }
+
+            handle = kafkaHandle.Topic(topic, configPtr);
         }
 
         public string Name => handle.GetName();
