@@ -10,8 +10,10 @@ namespace RdKafka.Tests
         [Fact]
         public void CanGetName()
         {
-            var producer = new Producer("localhost:9092");
-            Assert.Equal(producer.Name, "rdkafka#producer-1");
+            using (var producer = new Producer("localhost:9092"))
+            {
+                Assert.Equal(producer.Name, "rdkafka#producer-1");
+            }
         }
     }
 }
