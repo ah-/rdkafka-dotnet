@@ -4,6 +4,7 @@
     "authors": ["Andreas Heider"],
 
     "frameworks" : {
+        "net451": { },
         "dotnet5.3": {
             "dependencies": {
                 "System.Console": "4.0.0-*",
