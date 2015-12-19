@@ -6,13 +6,17 @@ os:
    - osx
    - linux
 
+env:
+   - RUNTIME=mono
+   - RUNTIME=coreclr
+
 # TODO on linux: install http://docs.confluent.io/2.0.0/installation.html#installation-apt
 
 install:
    - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
    - dnvm upgrade
-   - dnvm install -r coreclr 1.0.0-rc1-update1
-   - dnvm use -r coreclr 1.0.0-rc1-update1
+   - dnvm install -r $RUNTIME 1.0.0-rc1-update1
+   - dnvm use -r $RUNTIME 1.0.0-rc1-update1
    - dnu restore
 
 script:
