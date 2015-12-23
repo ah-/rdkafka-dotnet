@@ -17,7 +17,7 @@ namespace Misc
 
             if (args.Contains("-m") || args.Contains("--metadata"))
             {
-                using (var producer = new Producer("localhost:9092"))
+                using (var producer = new Producer(args[0]))
                 {
                     var meta = producer.Metadata();
                     Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");

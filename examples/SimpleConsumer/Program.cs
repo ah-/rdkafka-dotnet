@@ -10,7 +10,7 @@ namespace SimpleProducer
         public static void Main(string[] args)
         {
             var config = new Config() { GroupId = "simple-csharp-consumer" };
-            using (var consumer = new Consumer(config, "127.0.0.1:9092"))
+            using (var consumer = new Consumer(config, args[0]))
             {
                 consumer.OnMessage += (obj, msg) =>
                 {
@@ -18,7 +18,7 @@ namespace SimpleProducer
                     Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {text}");
                 };
 
-                consumer.Subscribe(args.ToList());
+                consumer.Subscribe(args.Skip(1).ToList());
                 consumer.Start();
 
                 Console.WriteLine("Started consumer, press enter to stop consuming");

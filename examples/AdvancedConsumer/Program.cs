@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using RdKafka;
 
 namespace AdvancedConsumer
 {
     public class Program
     {
-        public static async Task Run(string topic)
+        public static void Main(string[] args)
         {
             bool enableAutoCommit = false;
 
@@ -19,7 +18,7 @@ namespace AdvancedConsumer
                 StatisticsInterval = TimeSpan.FromSeconds(60)
             };
      
-            using (var consumer = new Consumer(config, "127.0.0.1:9092"))
+            using (var consumer = new Consumer(config, args[0]))
             {
                 consumer.OnMessage += (obj, msg) => {
                     string text = Encoding.UTF8.GetString(msg.Payload, 0, msg.Payload.Length);
@@ -62,7 +61,7 @@ namespace AdvancedConsumer
                     Console.WriteLine($"Statistics: {json}");
                 };
 
-                consumer.Subscribe(new List<string>{topic});
+                consumer.Subscribe(args.Skip(1).ToList());
                 consumer.Start();
 
                 Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");
@@ -71,11 +70,6 @@ namespace AdvancedConsumer
                 Console.WriteLine($"Started consumer {consumer.MemberId}, press enter to stop consuming");
                 Console.ReadLine();
             }
-        }
-
-        public static void Main(string[] args)
-        {
-            Run(args[0]).Wait();
         }
     }
 }
