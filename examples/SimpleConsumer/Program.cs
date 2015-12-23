@@ -9,8 +9,11 @@ namespace SimpleProducer
     {
         public static void Main(string[] args)
         {
+            string brokerList = args[0];
+            var topics = args.Skip(1).ToList();
+
             var config = new Config() { GroupId = "simple-csharp-consumer" };
-            using (var consumer = new Consumer(config, args[0]))
+            using (var consumer = new Consumer(config, brokerList))
             {
                 consumer.OnMessage += (obj, msg) =>
                 {
@@ -18,7 +21,7 @@ namespace SimpleProducer
                     Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {text}");
                 };
 
-                consumer.Subscribe(args.Skip(1).ToList());
+                consumer.Subscribe(topics);
                 consumer.Start();
 
                 Console.WriteLine("Started consumer, press enter to stop consuming");

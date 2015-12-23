@@ -9,6 +9,9 @@ namespace AdvancedConsumer
     {
         public static void Main(string[] args)
         {
+            string brokerList = args[0];
+            var topics = args.Skip(1).ToList();
+
             bool enableAutoCommit = false;
 
             var config = new Config()
@@ -18,7 +21,7 @@ namespace AdvancedConsumer
                 StatisticsInterval = TimeSpan.FromSeconds(60)
             };
      
-            using (var consumer = new Consumer(config, args[0]))
+            using (var consumer = new Consumer(config, brokerList))
             {
                 consumer.OnMessage += (obj, msg) => {
                     string text = Encoding.UTF8.GetString(msg.Payload, 0, msg.Payload.Length);
@@ -61,7 +64,7 @@ namespace AdvancedConsumer
                     Console.WriteLine($"Statistics: {json}");
                 };
 
-                consumer.Subscribe(args.Skip(1).ToList());
+                consumer.Subscribe(topics);
                 consumer.Start();
 
                 Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");

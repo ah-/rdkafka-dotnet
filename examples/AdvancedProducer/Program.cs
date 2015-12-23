@@ -9,7 +9,10 @@ namespace AdvancedProducer
     {
         public static void Main(string[] args)
         {
-            using (Producer producer = new Producer(args[0]))
+            string brokerList = args[0];
+            string topicName = args[1];
+
+            using (Producer producer = new Producer(brokerList))
             {
                 var topicConfig = new TopicConfig
                 {
@@ -22,7 +25,7 @@ namespace AdvancedProducer
                         return partition;
                     }
                 };
-                Topic topic = producer.Topic(args[1], topicConfig);
+                Topic topic = producer.Topic(topicName, topicConfig);
                 Console.WriteLine($"{producer.Name} producing on {topic.Name}. q to exit.");
 
                 string text;
