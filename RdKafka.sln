@@ -23,6 +23,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedConsumer", "example
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BenchmarkProducer", "examples\BenchmarkProducer\BenchmarkProducer.xproj", "{9EA27B93-4714-453C-9319-1920945CEB78}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedProducer", "examples\AdvancedProducer\AdvancedProducer.xproj", "{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{9EA27B93-4714-453C-9319-1920945CEB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EA27B93-4714-453C-9319-1920945CEB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EA27B93-4714-453C-9319-1920945CEB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +75,6 @@ Global
 		{2E6FC09E-2BED-4765-8298-9584E172B6CF} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
 		{0A3DD19C-3A80-47DB-83B0-A1EF6078C9EE} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
 		{9EA27B93-4714-453C-9319-1920945CEB78} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
+		{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
 	EndGlobalSection
 EndGlobal
