@@ -25,25 +25,29 @@ namespace AdvancedProducer
                         return partition;
                     }
                 };
-                Topic topic = producer.Topic(topicName, topicConfig);
-                Console.WriteLine($"{producer.Name} producing on {topic.Name}. q to exit.");
 
-                string text;
-                while ((text = Console.ReadLine()) != "q")
+                using (Topic topic = producer.Topic(topicName, topicConfig))
                 {
-                    byte[] data = Encoding.UTF8.GetBytes(text);
-                    byte[] key = null;
-                    // Use the first word as the key
-                    int index = text.IndexOf(" ");
-                    if (index != -1) {
-                        key = Encoding.UTF8.GetBytes(text.Substring(0, index));
-                    }
+                    Console.WriteLine($"{producer.Name} producing on {topic.Name}. q to exit.");
 
-                    Task<DeliveryReport> deliveryReport = topic.Produce(data, key);
-                    var unused = deliveryReport.ContinueWith(task =>
+                    string text;
+                    while ((text = Console.ReadLine()) != "q")
                     {
-                        Console.WriteLine($"Partition: {task.Result.Partition}, Offset: {task.Result.Offset}");
-                    });
+                        byte[] data = Encoding.UTF8.GetBytes(text);
+                        byte[] key = null;
+                        // Use the first word as the key
+                        int index = text.IndexOf(" ");
+                        if (index != -1)
+                        {
+                            key = Encoding.UTF8.GetBytes(text.Substring(0, index));
+                        }
+
+                        Task<DeliveryReport> deliveryReport = topic.Produce(data, key);
+                        var unused = deliveryReport.ContinueWith(task =>
+                        {
+                            Console.WriteLine($"Partition: {task.Result.Partition}, Offset: {task.Result.Offset}");
+                        });
+                    }
                 }
             }
         }
