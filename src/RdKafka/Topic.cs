@@ -11,7 +11,7 @@ namespace RdKafka
         public long Offset;
     }
 
-    public class Topic
+    public class Topic : IDisposable
     {
         const int RD_KAFKA_PARTITION_UA = -1;
 
@@ -44,6 +44,11 @@ namespace RdKafka
             }
 
             handle = kafkaHandle.Topic(topic, configPtr);
+        }
+
+        public void Dispose()
+        {
+            handle.Dispose();
         }
 
         public string Name => handle.GetName();
