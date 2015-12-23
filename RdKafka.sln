@@ -11,6 +11,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleProducer", "examples\
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleConsumer", "examples\SimpleConsumer\SimpleConsumer.xproj", "{85F08EF0-9E30-49D3-B86F-DBA36267843C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56321620-6DE2-44DC-942B-E3701C01EBFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{03D93818-5A54-4913-A5CD-CA0C373CEE05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +42,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2DDB635-4423-45D7-B3DC-F701E6010868} = {56321620-6DE2-44DC-942B-E3701C01EBFE}
+		{33151BE2-C10B-41BC-8C5E-E55211A1722D} = {03D93818-5A54-4913-A5CD-CA0C373CEE05}
+		{A7BF0A75-D3E7-4024-8597-5FCCC567D372} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
+		{85F08EF0-9E30-49D3-B86F-DBA36267843C} = {5E1F754C-FCE9-4B80-B13D-5F9ACE13305A}
 	EndGlobalSection
 EndGlobal
