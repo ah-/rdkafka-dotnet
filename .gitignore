@@ -3,4 +3,6 @@ bin/
 obj/
 *.so
 *.dylib
+*.xproj.user
+.vs
 todo.txt
