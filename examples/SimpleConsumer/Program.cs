@@ -13,7 +13,7 @@ namespace SimpleProducer
             var topics = args.Skip(1).ToList();
 
             var config = new Config() { GroupId = "simple-csharp-consumer" };
-            using (var consumer = new Consumer(config, brokerList))
+            using (var consumer = new EventConsumer(config, brokerList))
             {
                 consumer.OnMessage += (obj, msg) =>
                 {

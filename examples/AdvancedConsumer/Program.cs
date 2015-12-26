@@ -21,7 +21,7 @@ namespace AdvancedConsumer
                 StatisticsInterval = TimeSpan.FromSeconds(60)
             };
      
-            using (var consumer = new Consumer(config, brokerList))
+            using (var consumer = new EventConsumer(config, brokerList))
             {
                 consumer.OnMessage += (obj, msg) => {
                     string text = Encoding.UTF8.GetString(msg.Payload, 0, msg.Payload.Length);

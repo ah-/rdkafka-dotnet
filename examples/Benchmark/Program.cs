@@ -40,7 +40,7 @@ namespace Benchmark
                 GroupId = "benchmark-consumer",
                 DefaultTopicConfig = topicConfig
             };
-            using (var consumer = new Consumer(config, broker))
+            using (var consumer = new EventConsumer(config, broker))
             {
                 var signal = new SemaphoreSlim(0, 1);
 
