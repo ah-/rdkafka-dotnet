@@ -15,6 +15,8 @@ env:
 # TODO on linux: install http://docs.confluent.io/2.0.0/installation.html#installation-apt
 
 install:
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git glone https://github.com/edenhill/librdkafka; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd librdkafka && ./configure && make && sudo make install && popd; fi
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
    - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
    - dnvm upgrade
