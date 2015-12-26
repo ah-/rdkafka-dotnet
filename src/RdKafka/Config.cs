@@ -48,5 +48,11 @@ namespace RdKafka
             set { this["statistics.interval.ms"] = ((int) value.TotalMilliseconds).ToString(); }
             get { return TimeSpan.FromMilliseconds(int.Parse(this["statistics.interval.ms"])); }
         }
+
+        /// <summary>
+        /// Sets the default topic configuration to use for automatically
+        /// subscribed topics (e.g., through pattern-matched topics).
+        /// </summary>
+        public TopicConfig DefaultTopicConfig { get; set; }
     }
 }

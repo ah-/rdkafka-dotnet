@@ -36,6 +36,10 @@ namespace RdKafka.Internal
     static class LibRdKafka
     {
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void rd_kafka_conf_set_default_topic_conf(
+                IntPtr conf, IntPtr tconf);
+
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern void rd_kafka_conf_set_dr_cb(
                 IntPtr conf,
                 DeliveryReportCallback dr_cb);
