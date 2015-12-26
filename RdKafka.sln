@@ -21,7 +21,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Misc", "examples\Misc\Misc.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedConsumer", "examples\AdvancedConsumer\AdvancedConsumer.xproj", "{0A3DD19C-3A80-47DB-83B0-A1EF6078C9EE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BenchmarkProducer", "examples\BenchmarkProducer\BenchmarkProducer.xproj", "{9EA27B93-4714-453C-9319-1920945CEB78}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Benchmark", "examples\Benchmark\Benchmark.xproj", "{9EA27B93-4714-453C-9319-1920945CEB78}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AdvancedProducer", "examples\AdvancedProducer\AdvancedProducer.xproj", "{DDCE9F6B-6A9D-4B05-BAD0-E77D6359B1FB}"
 EndProject
