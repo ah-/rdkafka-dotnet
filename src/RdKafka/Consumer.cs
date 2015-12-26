@@ -252,7 +252,7 @@ namespace RdKafka
             }
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (consumerTask != null)
             {
@@ -260,7 +260,7 @@ namespace RdKafka
             }
 
             handle.ConsumerClose();
-            handle.Dispose();
+            base.Dispose();
         }
     }
 }

@@ -1,16 +1,12 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using RdKafka.Internal;
 
 namespace RdKafka
 {
-    public class Producer : Handle, IDisposable
+    public class Producer : Handle
     {
-        readonly Task callbackTask;
-        readonly CancellationTokenSource callbackCts;
-
         public Producer(string brokerList) : this(null, brokerList) {}
 
         public Producer(Config config, string brokerList = null)
@@ -25,28 +21,11 @@ namespace RdKafka
             {
                 handle.AddBrokers(brokerList);
             }
-
-            callbackCts = new CancellationTokenSource();
-            callbackTask = StartCallbackTask(callbackCts.Token);
         }
 
         public Topic Topic(string topic, TopicConfig config = null)
         {
             return new Topic(handle, this, topic, config);
-        }
-
-        public void Dispose()
-        {
-            callbackCts.Cancel();
-            callbackTask.Wait();
-
-            // Wait until all outstanding sends have completed
-            while (OutQueueLength > 0)
-            {
-                handle.Poll((IntPtr) 100);
-            }
-
-            handle.Dispose();
         }
 
         // Explicitly keep reference to delegate so it stays alive
@@ -72,17 +51,6 @@ namespace RdKafka
                 Offset = rkmessage.offset,
                 Partition = rkmessage.partition
             });
-        }
-
-        Task StartCallbackTask(CancellationToken ct)
-        {
-            return Task.Factory.StartNew(() =>
-                {
-                    while (!ct.IsCancellationRequested)
-                    {
-                        handle.Poll((IntPtr) 1000);
-                    }
-                }, ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
     }
 }

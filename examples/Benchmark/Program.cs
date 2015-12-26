@@ -70,7 +70,7 @@ namespace Benchmark
             string brokerList = args[0];
             string topic = args[1];
 
-            long numMessages = 100000;
+            long numMessages = 1000000;
             int numThreads = 1;
 
             var stopwatch = new Stopwatch();

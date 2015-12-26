@@ -1,15 +1,19 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Threading;
 using RdKafka.Internal;
 
 namespace RdKafka
 {
-    public class Handle
+    public class Handle : IDisposable
     {
         internal SafeKafkaHandle handle;
         LibRdKafka.LogCallback LogDelegate;
         LibRdKafka.StatsCallback StatsDelegate;
+        Task callbackTask;
+        CancellationTokenSource callbackCts;
 
         internal void Init(RdKafkaType type, IntPtr config, Config.LogCallback logger)
         {
@@ -36,6 +40,23 @@ namespace RdKafka
             LibRdKafka.rd_kafka_conf_set_stats_cb(config, StatsDelegate);
 
             handle = SafeKafkaHandle.Create(type, config);
+
+            callbackCts = new CancellationTokenSource();
+            callbackTask = StartCallbackTask(callbackCts.Token);
+        }
+
+        public virtual void Dispose()
+        {
+            callbackCts.Cancel();
+            callbackTask.Wait();
+
+            // Wait until all outstanding sends have completed
+            while (OutQueueLength > 0)
+            {
+                handle.Poll((IntPtr) 100);
+            }
+
+            handle.Dispose();
         }
 
         /// <summary>
@@ -83,5 +104,16 @@ namespace RdKafka
         }
 
         public event EventHandler<string> OnStatistics;
+
+        Task StartCallbackTask(CancellationToken ct)
+        {
+            return Task.Factory.StartNew(() =>
+                {
+                    while (!ct.IsCancellationRequested)
+                    {
+                        handle.Poll((IntPtr) 1000);
+                    }
+                }, ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
     }
 }
