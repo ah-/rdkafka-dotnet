@@ -15,7 +15,7 @@ env:
 # TODO on linux: install http://docs.confluent.io/2.0.0/installation.html#installation-apt
 
 install:
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libicu-dev; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
    - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
    - dnvm upgrade
    - dnvm install -r $RUNTIME 1.0.0-rc1-update1
