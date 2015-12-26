@@ -6,3 +6,5 @@ obj/
 *.xproj.user
 .vs
 todo.txt
+.cache
+src/RdKafka/runtimes
