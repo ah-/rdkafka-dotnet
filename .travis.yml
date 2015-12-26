@@ -1,6 +1,8 @@
 # Origin: https://github.com/ah-/rdkafka-dotnet
 
 language: csharp
+sudo: required
+dist: trusty
 
 os:
    - osx
@@ -23,9 +25,8 @@ script:
     - ./build/copy-runtimes.sh
     - if [ $RUNTIME == "coreclr" ]
       then
-        dnu build ./src/RdKafka/project.json --framework dotnet5.4
-      else
-        dnu build
+        export FRAMEWORK="--framework dotnet5.4"
       fi
-    - dnu pack ./src/RdKafka/project.json
+    - dnu build ./src/RdKafka/project.json $FRAMEWORK
+    - dnu pack ./src/RdKafka/project.json $FRAMEWORK
     - dnx -p ./test/RdKafka.Tests/ test
