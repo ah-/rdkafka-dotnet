@@ -21,6 +21,11 @@ install:
 
 script:
     - ./build/copy-runtimes.sh
-    - dnu build ./src/RdKafka/project.json
+    - if [ $RUNTIME == "coreclr" ]
+      then
+        dnu build ./src/RdKafka/project.json --framework dotnet5.4
+      else
+        dnu build
+      fi
     - dnu pack ./src/RdKafka/project.json
     - dnx -p ./test/RdKafka.Tests/ test

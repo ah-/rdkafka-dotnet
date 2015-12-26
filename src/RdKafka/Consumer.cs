@@ -9,9 +9,6 @@ namespace RdKafka
 {
     public class Consumer : Handle, IDisposable
     {
-        Task consumerTask;
-        CancellationTokenSource consumerCts;
-
         public Consumer(Config config, string brokerList = null)
         {
             RebalanceDelegate = RebalanceCallback;
