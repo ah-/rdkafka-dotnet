@@ -112,7 +112,7 @@ namespace RdKafka.Internal
                 /* const rd_kafka_topic_partition_list_t * */ IntPtr offsets,
                 bool async);
 
-        [DllImport("librdkafka")]
+        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
         static extern /* char * */ IntPtr rd_kafka_memberid(IntPtr rk);
 
         [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
