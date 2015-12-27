@@ -142,7 +142,7 @@ namespace RdKafka
                 /* rd_kafka_topic_partition_list_t * */ IntPtr partitions,
                 IntPtr opaque)
         {
-            var partitionList = LibRdKafka.GetTopicPartitionOffsetList(partitions);
+            var partitionList = SafeKafkaHandle.GetTopicPartitionOffsetList(partitions);
             if (err == ErrorCode._ASSIGN_PARTITIONS)
             {
                 var handler = OnPartitionsAssigned;
@@ -186,7 +186,7 @@ namespace RdKafka
             OnOffsetCommit?.Invoke(this, new OffsetCommitArgs()
                     {
                         Error = err,
-                        Offsets = LibRdKafka.GetTopicPartitionOffsetList(offsets)
+                        Offsets = SafeKafkaHandle.GetTopicPartitionOffsetList(offsets)
                     });
         }
 

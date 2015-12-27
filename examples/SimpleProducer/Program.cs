@@ -28,8 +28,6 @@ namespace SimpleProducer
                     });
                 }
             }
-
-            Console.ReadLine();
         }
     }
 }
