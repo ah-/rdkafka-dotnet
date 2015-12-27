@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace RdKafka.Internal
 {
     internal static class LibRdKafka
     {
+        const long minVersion = 0x00090100;
+
         static LibRdKafka()
         {
             // TODO: check if win desktop .net, then preload from x86/x64
@@ -127,6 +131,10 @@ namespace RdKafka.Internal
                 _set_log_level = NativeMethods.rd_kafka_set_log_level;
                 _outq_len = NativeMethods.rd_kafka_outq_len;
                 _wait_destroyed = NativeMethods.rd_kafka_wait_destroyed;
+            }
+
+            if ((long) version() < minVersion) {
+                throw new FileLoadException($"Invalid librdkafka version {(long)version():x}, expected at least {minVersion:x}");
             }
         }
 
