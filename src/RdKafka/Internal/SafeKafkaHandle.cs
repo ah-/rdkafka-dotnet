@@ -64,114 +64,12 @@ namespace RdKafka.Internal
     {
         const int RD_KAFKA_PARTITION_UA = -1;
 
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern SafeKafkaHandle rd_kafka_new(
-                RdKafkaType type, IntPtr conf,
-                StringBuilder errstr,
-                UIntPtr errstr_size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_destroy(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern /* const char * */ IntPtr rd_kafka_name(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr rd_kafka_brokers_add(IntPtr rk,
-                [MarshalAs(UnmanagedType.LPStr)] string brokerlist);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr rd_kafka_poll(IntPtr rk, IntPtr timeout_ms);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern SafeTopicHandle rd_kafka_topic_new(
-                IntPtr rk,
-                [MarshalAs(UnmanagedType.LPStr)] string topic,
-                /* rd_kafka_topic_conf_t * */ IntPtr conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr rd_kafka_outq_len(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_metadata(
-            IntPtr rk, bool all_topics,
-            /* rd_kafka_topic_t * */ IntPtr only_rkt,
-            /* const struct rd_kafka_metadata ** */ out IntPtr metadatap,
-            IntPtr timeout_ms);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_metadata_destroy(
-                /* const struct rd_kafka_metadata * */ IntPtr metadata);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_subscribe(IntPtr rk,
-                /* const rd_kafka_topic_partition_list_t * */ IntPtr topics);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_unsubscribe(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(
-                IntPtr rk, IntPtr timeout_ms);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_message_destroy(/* rd_kafka_message_t * */ IntPtr rkmessage);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_consumer_close(IntPtr rk);
-
-        /*
-        RD_EXPORT
-        rd_kafka_resp_err_t rd_kafka_consumer_get_offset (rd_kafka_topic_t *rkt,
-                                                          int32_t partition,
-                                                          int64_t *offsetp,
-                                                          IntPtr timeout_ms);
-        */
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_assign(IntPtr rk,
-                /* const rd_kafka_topic_partition_list_t * */ IntPtr partitions);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_assignment(IntPtr rk,
-                /* rd_kafka_topic_partition_list_t ** */ out IntPtr topics);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_subscription(IntPtr rk,
-                /* rd_kafka_topic_partition_list_t ** */ out IntPtr topics);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_topic_partition_list_t * */ IntPtr
-        rd_kafka_topic_partition_list_new(IntPtr size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_topic_partition_list_destroy(
-                /* rd_kafka_topic_partition_list_t * */ IntPtr rkparlist);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_topic_partition_t * */ IntPtr
-        rd_kafka_topic_partition_list_add(
-                /* rd_kafka_topic_partition_list_t * */ IntPtr rktparlist,
-                string topic, int partition);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ErrorCode rd_kafka_commit(
-                IntPtr rk,
-                /* const rd_kafka_topic_partition_list_t * */ IntPtr offsets,
-                bool async);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* char * */ IntPtr rd_kafka_memberid(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_set_log_level(IntPtr rk, int level);
-
         private SafeKafkaHandle() {}
 
         internal static SafeKafkaHandle Create(RdKafkaType type, IntPtr config)
         {
             var errorStringBuilder = new StringBuilder(512);
-            var skh = rd_kafka_new(type, config, errorStringBuilder,
+            var skh = LibRdKafka.kafka_new(type, config, errorStringBuilder,
                     (UIntPtr) errorStringBuilder.Capacity);
             if (skh.IsInvalid)
             {
@@ -182,17 +80,17 @@ namespace RdKafka.Internal
 
         protected override bool ReleaseHandle()
         {
-            rd_kafka_destroy(handle);
+            LibRdKafka.destroy(handle);
             return true;
         }
 
-        internal string GetName() => Marshal.PtrToStringAnsi(rd_kafka_name(handle));
+        internal string GetName() => Marshal.PtrToStringAnsi(LibRdKafka.name(handle));
 
-        internal long GetOutQueueLength() => (long)rd_kafka_outq_len(handle);
+        internal long GetOutQueueLength() => (long)LibRdKafka.outq_len(handle);
 
-        internal long AddBrokers(string brokers) => (long)rd_kafka_brokers_add(handle, brokers);
+        internal long AddBrokers(string brokers) => (long)LibRdKafka.brokers_add(handle, brokers);
 
-        internal long Poll(IntPtr timeoutMs) => (long)rd_kafka_poll(handle, timeoutMs);
+        internal long Poll(IntPtr timeoutMs) => (long)LibRdKafka.poll(handle, timeoutMs);
 
         internal SafeTopicHandle Topic(string topic, IntPtr config)
         {
@@ -203,10 +101,10 @@ namespace RdKafka.Internal
             DangerousAddRef(ref success);
             if (!success)
             {
-                SafeTopicConfigHandle.rd_kafka_topic_conf_destroy(config);
+                LibRdKafka.topic_conf_destroy(config);
                 throw new Exception("Failed to create topic (DangerousAddRef failed)");
             }
-            var topicHandle = rd_kafka_topic_new(handle, topic, config);
+            var topicHandle = LibRdKafka.topic_new(handle, topic, config);
             if (topicHandle.IsInvalid)
             {
                 DangerousRelease();
@@ -242,7 +140,7 @@ namespace RdKafka.Internal
             }
 
             IntPtr metaPtr;
-            ErrorCode err = rd_kafka_metadata(
+            ErrorCode err = LibRdKafka.metadata(
                 handle, allTopics,
                 onlyTopic?.DangerousGetHandle() ?? IntPtr.Zero,
                 /* const struct rd_kafka_metadata ** */ out metaPtr,
@@ -294,7 +192,7 @@ namespace RdKafka.Internal
                 }
                 finally
                 {
-                    rd_kafka_metadata_destroy(metaPtr);
+                    LibRdKafka.metadata_destroy(metaPtr);
                 }
             }
             else
@@ -306,18 +204,18 @@ namespace RdKafka.Internal
         // Consumer API
         internal void Subscribe(IList<string> topics)
         {
-            IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) topics.Count);
+            IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) topics.Count);
             if (list == IntPtr.Zero)
             {
                 throw new Exception("Failed to create topic partition list");
             }
             foreach (string topic in topics)
             {
-                rd_kafka_topic_partition_list_add(list, topic, RD_KAFKA_PARTITION_UA);
+                LibRdKafka.topic_partition_list_add(list, topic, RD_KAFKA_PARTITION_UA);
             }
 
-            ErrorCode err = rd_kafka_subscribe(handle, list);
-            rd_kafka_topic_partition_list_destroy(list);
+            ErrorCode err = LibRdKafka.subscribe(handle, list);
+            LibRdKafka.topic_partition_list_destroy(list);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to subscribe to topics");
@@ -326,7 +224,7 @@ namespace RdKafka.Internal
 
         internal void Unsubscribe()
         {
-            ErrorCode err = rd_kafka_unsubscribe(handle);
+            ErrorCode err = LibRdKafka.unsubscribe(handle);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to unsubscribe");
@@ -335,7 +233,7 @@ namespace RdKafka.Internal
 
         internal MessageAndError? ConsumerPoll(IntPtr timeoutMs)
         {
-            IntPtr msgPtr = rd_kafka_consumer_poll(handle, timeoutMs);
+            IntPtr msgPtr = LibRdKafka.consumer_poll(handle, timeoutMs);
             if (msgPtr == IntPtr.Zero)
             {
                 return null;
@@ -353,8 +251,8 @@ namespace RdKafka.Internal
                 key = new byte[(int) msg.key_len];
                 Marshal.Copy(msg.key, key, 0, (int) msg.key_len);
             }
-            string topic = Marshal.PtrToStringAnsi(SafeTopicHandle.rd_kafka_topic_name(msg.rkt));
-            rd_kafka_message_destroy(msgPtr);
+            string topic = Marshal.PtrToStringAnsi(LibRdKafka.topic_name(msg.rkt));
+            LibRdKafka.message_destroy(msgPtr);
 
             var message = new Message()
             {
@@ -374,7 +272,7 @@ namespace RdKafka.Internal
 
         internal void ConsumerClose()
         {
-            ErrorCode err = rd_kafka_consumer_close(handle);
+            ErrorCode err = LibRdKafka.consumer_close(handle);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to close consumer");
@@ -384,7 +282,7 @@ namespace RdKafka.Internal
         internal List<TopicPartition> GetAssignment()
         {
             IntPtr listPtr = IntPtr.Zero;
-            ErrorCode err = rd_kafka_assignment(handle, out listPtr);
+            ErrorCode err = LibRdKafka.assignment(handle, out listPtr);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to get assignment");
@@ -396,7 +294,7 @@ namespace RdKafka.Internal
         internal List<string> GetSubscription()
         {
             IntPtr listPtr = IntPtr.Zero;
-            ErrorCode err = rd_kafka_subscription(handle, out listPtr);
+            ErrorCode err = LibRdKafka.subscription(handle, out listPtr);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to get subscription");
@@ -407,21 +305,21 @@ namespace RdKafka.Internal
 
         internal void Assign(List<TopicPartitionOffset> partitions)
         {
-            IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) partitions.Count);
+            IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
             if (list == IntPtr.Zero)
             {
                 throw new Exception("Failed to create topic partition list");
             }
             foreach (var partition in partitions)
             {
-                IntPtr ptr = rd_kafka_topic_partition_list_add(list, partition.Topic, partition.Partition);
+                IntPtr ptr = LibRdKafka.topic_partition_list_add(list, partition.Topic, partition.Partition);
                 Marshal.WriteInt64(ptr,
                         (int) Marshal.OffsetOf<rd_kafka_topic_partition>("offset"),
                         partition.Offset);
             }
 
-            ErrorCode err = rd_kafka_assign(handle, list);
-            rd_kafka_topic_partition_list_destroy(list);
+            ErrorCode err = LibRdKafka.assign(handle, list);
+            LibRdKafka.topic_partition_list_destroy(list);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to assign partitions");
@@ -430,7 +328,7 @@ namespace RdKafka.Internal
 
         internal void Commit()
         {
-            ErrorCode err = rd_kafka_commit(handle, IntPtr.Zero, false);
+            ErrorCode err = LibRdKafka.commit(handle, IntPtr.Zero, false);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to commit offsets");
@@ -439,20 +337,20 @@ namespace RdKafka.Internal
 
         internal void Commit(List<TopicPartitionOffset> offsets)
         {
-            IntPtr list = rd_kafka_topic_partition_list_new((IntPtr) offsets.Count);
+            IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) offsets.Count);
             if (list == IntPtr.Zero)
             {
                 throw new Exception("Failed to create offset commit list");
             }
             foreach (var offset in offsets)
             {
-                IntPtr ptr = rd_kafka_topic_partition_list_add(list, offset.Topic, offset.Partition);
+                IntPtr ptr = LibRdKafka.topic_partition_list_add(list, offset.Topic, offset.Partition);
                 Marshal.WriteInt64(ptr,
                         (int) Marshal.OffsetOf<rd_kafka_topic_partition>("offset"),
                         offset.Offset);
             }
-            ErrorCode err = rd_kafka_commit(handle, list, false);
-            rd_kafka_topic_partition_list_destroy(list);
+            ErrorCode err = LibRdKafka.commit(handle, list, false);
+            LibRdKafka.topic_partition_list_destroy(list);
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to commit offsets");
@@ -461,7 +359,7 @@ namespace RdKafka.Internal
 
         internal string MemberId()
         {
-            IntPtr strPtr = rd_kafka_memberid(handle);
+            IntPtr strPtr = LibRdKafka.memberid(handle);
             if (strPtr == null)
             {
                 return null;
@@ -474,7 +372,7 @@ namespace RdKafka.Internal
 
         internal void SetLogLevel(int level)
         {
-            rd_kafka_set_log_level(handle, level);
+            LibRdKafka.set_log_level(handle, (IntPtr) level);
         }
 
         internal static List<string> GetTopicList(IntPtr listPtr)

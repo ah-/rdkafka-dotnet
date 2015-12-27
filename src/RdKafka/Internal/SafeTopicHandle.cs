@@ -11,24 +11,6 @@ namespace RdKafka.Internal
  
     internal sealed class SafeTopicHandle : SafeHandleZeroIsInvalid
     {
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void rd_kafka_topic_destroy(IntPtr rk);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern /* const char * */ IntPtr rd_kafka_topic_name(IntPtr rkt);
-
-        [DllImport("librdkafka", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr rd_kafka_produce(
-                IntPtr rkt,
-                int partition,
-                IntPtr msgflags,
-                byte[] payload, UIntPtr len,
-                byte[] key, UIntPtr keylen,
-                IntPtr msg_opaque);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern bool rd_kafka_topic_partition_available(IntPtr rkt, int partition);
-
         const int RD_KAFKA_PARTITION_UA = -1;
 
         internal SafeKafkaHandle kafkaHandle;
@@ -37,17 +19,17 @@ namespace RdKafka.Internal
 
         protected override bool ReleaseHandle()
         {
-            rd_kafka_topic_destroy(handle);
+            LibRdKafka.topic_destroy(handle);
             // See SafeKafkaHandle.Topic
             kafkaHandle.DangerousRelease();
             return true;
         }
 
-        internal string GetName() => Marshal.PtrToStringAnsi(rd_kafka_topic_name(handle));
+        internal string GetName() => Marshal.PtrToStringAnsi(LibRdKafka.topic_name(handle));
 
         internal long Produce(byte[] payload, byte[] key, int partition, IntPtr opaque)
         {
-            return (long) rd_kafka_produce(
+            return (long) LibRdKafka.produce(
                     handle,
                     partition,
                     (IntPtr) MsgFlags.MSG_F_COPY,
@@ -58,7 +40,7 @@ namespace RdKafka.Internal
 
         internal bool PartitionAvailable(int partition)
         {
-            return rd_kafka_topic_partition_available(handle, partition);
+            return LibRdKafka.topic_partition_available(handle, partition);
         }
     }
 }

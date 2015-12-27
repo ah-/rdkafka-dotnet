@@ -8,44 +8,13 @@ namespace RdKafka.Internal
 {
     internal sealed class SafeTopicConfigHandle : SafeHandleZeroIsInvalid
     {
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern SafeTopicConfigHandle rd_kafka_topic_conf_new();
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void rd_kafka_topic_conf_destroy(IntPtr conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_topic_conf_t * */ IntPtr rd_kafka_topic_conf_dup(
-                /* const rd_kafka_topic_conf_t * */ IntPtr conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ConfRes rd_kafka_topic_conf_set(
-                IntPtr conf,
-                [MarshalAs(UnmanagedType.LPStr)] string name,
-                [MarshalAs(UnmanagedType.LPStr)] string value,
-                StringBuilder errstr,
-                UIntPtr errstr_size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ConfRes rd_kafka_topic_conf_get(
-                IntPtr conf,
-                [MarshalAs(UnmanagedType.LPStr)] string name,
-                StringBuilder dest, ref UIntPtr dest_size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* const char ** */ IntPtr rd_kafka_topic_conf_dump(
-                IntPtr conf, out UIntPtr cntp);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_topic_conf_dump_free(/* const char ** */ IntPtr arr, UIntPtr cnt);
-
         private SafeTopicConfigHandle()
         {
         }
 
         internal static SafeTopicConfigHandle Create()
         {
-            var ch = rd_kafka_topic_conf_new();
+            var ch = LibRdKafka.topic_conf_new();
             if (ch.IsInvalid)
             {
                 throw new Exception("Failed to create TopicConfig");
@@ -55,20 +24,20 @@ namespace RdKafka.Internal
 
         protected override bool ReleaseHandle()
         {
-            rd_kafka_topic_conf_destroy(handle);
+            LibRdKafka.topic_conf_destroy(handle);
             return true;
         }
 
         internal IntPtr Dup()
         {
-            return rd_kafka_topic_conf_dup(handle);
+            return LibRdKafka.topic_conf_dup(handle);
         }
 
         // TODO: deduplicate, merge with other one
         internal Dictionary<string, string> Dump()
         {
             UIntPtr cntp = (UIntPtr) 0;
-            IntPtr data = rd_kafka_topic_conf_dump(handle, out cntp);
+            IntPtr data = LibRdKafka.topic_conf_dump(handle, out cntp);
 
             if (data == IntPtr.Zero)
             {
@@ -94,7 +63,7 @@ namespace RdKafka.Internal
             }
             finally
             {
-                rd_kafka_topic_conf_dump_free(data, cntp);
+                LibRdKafka.conf_dump_free(data, cntp);
             }
         }
 
@@ -102,7 +71,7 @@ namespace RdKafka.Internal
         {
             // TODO: Constant instead of 512?
             var errorStringBuilder = new StringBuilder(512);
-            ConfRes res = rd_kafka_topic_conf_set(handle, name, value,
+            ConfRes res = LibRdKafka.topic_conf_set(handle, name, value,
                     errorStringBuilder, (UIntPtr) errorStringBuilder.Capacity);
             if (res == ConfRes.Ok)
             {
@@ -127,11 +96,11 @@ namespace RdKafka.Internal
             UIntPtr destSize = (UIntPtr) 0;
             StringBuilder sb = null;
 
-            ConfRes res = rd_kafka_topic_conf_get(handle, name, null, ref destSize);
+            ConfRes res = LibRdKafka.topic_conf_get(handle, name, null, ref destSize);
             if (res == ConfRes.Ok)
             {
                 sb = new StringBuilder((int) destSize);
-                res = rd_kafka_topic_conf_get(handle, name, sb, ref destSize);
+                res = LibRdKafka.topic_conf_get(handle, name, sb, ref destSize);
             }
             if (res != ConfRes.Ok)
             {

@@ -14,43 +14,13 @@ namespace RdKafka.Internal
 
     class SafeConfigHandle : SafeHandleZeroIsInvalid
     {
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern SafeConfigHandle rd_kafka_conf_new();
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_conf_destroy(IntPtr conf);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ConfRes rd_kafka_conf_set(
-                IntPtr conf,
-                [MarshalAs(UnmanagedType.LPStr)] string name,
-                [MarshalAs(UnmanagedType.LPStr)] string value,
-                StringBuilder errstr,
-                UIntPtr errstr_size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern ConfRes rd_kafka_conf_get(
-                IntPtr conf,
-                [MarshalAs(UnmanagedType.LPStr)] string name,
-                StringBuilder dest, ref UIntPtr dest_size);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* const char ** */ IntPtr rd_kafka_conf_dump(
-                IntPtr conf, /* size_t * */ out UIntPtr cntp);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern void rd_kafka_conf_dump_free(/* const char ** */ IntPtr arr, UIntPtr cnt);
-
-        [DllImport("librdkafka", CallingConvention = CallingConvention.Cdecl)]
-        static extern /* rd_kafka_conf_t * */ IntPtr rd_kafka_conf_dup(IntPtr conf);
-
         private SafeConfigHandle()
         {
         }
 
         internal static SafeConfigHandle Create()
         {
-            var ch = rd_kafka_conf_new();
+            var ch = LibRdKafka.conf_new();
             if (ch.IsInvalid)
             {
                 throw new Exception("Failed to create config");
@@ -60,19 +30,19 @@ namespace RdKafka.Internal
 
         protected override bool ReleaseHandle()
         {
-            rd_kafka_conf_destroy(handle);
+            LibRdKafka.conf_destroy(handle);
             return true;
         }
 
         internal IntPtr Dup()
         {
-            return rd_kafka_conf_dup(handle);
+            return LibRdKafka.conf_dup(handle);
         }
 
         internal Dictionary<string, string> Dump()
         {
             UIntPtr cntp = (UIntPtr) 0;
-            IntPtr data = rd_kafka_conf_dump(handle, out cntp);
+            IntPtr data = LibRdKafka.conf_dump(handle, out cntp);
 
             if (data == IntPtr.Zero)
             {
@@ -98,7 +68,7 @@ namespace RdKafka.Internal
             }
             finally
             {
-                rd_kafka_conf_dump_free(data, cntp);
+                LibRdKafka.conf_dump_free(data, cntp);
             }
         }
 
@@ -106,7 +76,7 @@ namespace RdKafka.Internal
         {
             // TODO: Constant instead of 512?
             var errorStringBuilder = new StringBuilder(512);
-            ConfRes res = rd_kafka_conf_set(handle, name, value,
+            ConfRes res = LibRdKafka.conf_set(handle, name, value,
                     errorStringBuilder, (UIntPtr) errorStringBuilder.Capacity);
             if (res == ConfRes.Ok)
             {
@@ -131,11 +101,11 @@ namespace RdKafka.Internal
             UIntPtr destSize = (UIntPtr) 0;
             StringBuilder sb = null;
 
-            ConfRes res = rd_kafka_conf_get(handle, name, null, ref destSize);
+            ConfRes res = LibRdKafka.conf_get(handle, name, null, ref destSize);
             if (res == ConfRes.Ok)
             {
                 sb = new StringBuilder((int) destSize);
-                res = rd_kafka_conf_get(handle, name, sb, ref destSize);
+                res = LibRdKafka.conf_get(handle, name, sb, ref destSize);
             }
             if (res != ConfRes.Ok)
             {

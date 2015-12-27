@@ -27,7 +27,7 @@ namespace RdKafka
                 // The log_cb is called very early during construction, before
                 // SafeKafkaHandle or any of the C# wrappers are ready.
                 // So we can't really pass rk on, just pass the rk name instead.
-                var name = Marshal.PtrToStringAnsi(SafeKafkaHandle.rd_kafka_name(rk));
+                var name = Marshal.PtrToStringAnsi(LibRdKafka.name(rk));
                 logger(name, level, fac, buf);
             };
             LibRdKafka.conf_set_log_cb(config, LogDelegate);
