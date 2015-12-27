@@ -1,7 +1,7 @@
 os: Visual Studio 2015
 
 environment:
-  DNX_BUILD_VERSION: %APPVEYOR_BUILD_NUMBER%
+  DNX_BUILD_VERSION: "{APPVEYOR_BUILD_NUMBER}"
 
 build_script:
   - cmd: dnu restore
