@@ -23,6 +23,7 @@ install:
    - dnvm install -r $RUNTIME 1.0.0-rc1-update1
    - dnvm use -r $RUNTIME 1.0.0-rc1-update1
    - dnu restore
+   - find ./src/RdKafka/runtimes
 
 script:
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
