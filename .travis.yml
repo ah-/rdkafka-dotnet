@@ -3,6 +3,7 @@
 language: csharp
 sudo: required
 dist: trusty
+osx_image: xcode7.2
 
 os:
    - osx
@@ -30,5 +31,4 @@ script:
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
    - dnu build ./src/RdKafka/project.json $FRAMEWORK
    - dnu pack ./src/RdKafka/project.json $FRAMEWORK
-   - dnu restore
    - dnx -p ./test/RdKafka.Tests/ test
