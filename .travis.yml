@@ -25,7 +25,6 @@ install:
    - dnu restore
 
 script:
-   - ./build/copy-runtimes.sh
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
    - dnu build ./src/RdKafka/project.json $FRAMEWORK
    - dnu pack ./src/RdKafka/project.json $FRAMEWORK
