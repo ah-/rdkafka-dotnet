@@ -8,4 +8,4 @@ build_script:
   - cmd: dnx -p ./test/RdKafka.Tests/ test
 
 artifacts:
-  - path: C:/rdkafka-dotnet/src/RdKafka/bin/Release/*.nupkg
+  - path: ./src/RdKafka/bin/release/*.nupkg
