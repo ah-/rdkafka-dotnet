@@ -15,4 +15,4 @@ deploy:
   api_key:
     secure: qbl3uvq1riFSNeRw6/MHnaDbJ0Ft9evEcz3nQp061pKEhXn0ex4eI56dwUOO2fWF
   skip_symbols: true
-  artifact: ./src/RdKafka/bin/release/*.nupkg
+  artifact: /.*\.nupkg/
