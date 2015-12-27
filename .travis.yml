@@ -24,6 +24,7 @@ install:
    - dnvm use -r $RUNTIME 1.0.0-rc1-update1
    - dnu restore
    - find ./src/RdKafka/runtimes
+   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cp src/RdKafka/runtimes/osx.10.9-x64/native/librdkafka.dylib . ; fi
 
 script:
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
