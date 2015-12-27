@@ -15,11 +15,11 @@ namespace RdKafka
             CommitDelegate = CommitCallback;
 
             IntPtr cfgPtr = config.handle.Dup();
-            LibRdKafka.rd_kafka_conf_set_rebalance_cb(cfgPtr, RebalanceDelegate);
-            LibRdKafka.rd_kafka_conf_set_offset_commit_cb(cfgPtr, CommitDelegate);
+            LibRdKafka.conf_set_rebalance_cb(cfgPtr, RebalanceDelegate);
+            LibRdKafka.conf_set_offset_commit_cb(cfgPtr, CommitDelegate);
             if (config.DefaultTopicConfig != null)
             {
-                LibRdKafka.rd_kafka_conf_set_default_topic_conf(cfgPtr,
+                LibRdKafka.conf_set_default_topic_conf(cfgPtr,
                         config.DefaultTopicConfig.handle.Dup());
             }
             Init(RdKafkaType.Consumer, cfgPtr, config.Logger);

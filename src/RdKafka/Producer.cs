@@ -14,7 +14,7 @@ namespace RdKafka
             config = config ?? new Config();
 
             IntPtr cfgPtr = config.handle.Dup();
-            LibRdKafka.rd_kafka_conf_set_dr_msg_cb(cfgPtr, DeliveryReportDelegate);
+            LibRdKafka.conf_set_dr_msg_cb(cfgPtr, DeliveryReportDelegate);
             Init(RdKafkaType.Producer, cfgPtr, config.Logger);
 
             if (brokerList != null)

@@ -30,14 +30,14 @@ namespace RdKafka
                 var name = Marshal.PtrToStringAnsi(SafeKafkaHandle.rd_kafka_name(rk));
                 logger(name, level, fac, buf);
             };
-            LibRdKafka.rd_kafka_conf_set_log_cb(config, LogDelegate);
+            LibRdKafka.conf_set_log_cb(config, LogDelegate);
 
             StatsDelegate = (IntPtr rk, IntPtr json, UIntPtr json_len, IntPtr opaque) =>
             {
                 OnStatistics?.Invoke(this, Marshal.PtrToStringAnsi(json));
                 return 0;
             };
-            LibRdKafka.rd_kafka_conf_set_stats_cb(config, StatsDelegate);
+            LibRdKafka.conf_set_stats_cb(config, StatsDelegate);
 
             handle = SafeKafkaHandle.Create(type, config);
 

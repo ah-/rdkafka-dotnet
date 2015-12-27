@@ -210,7 +210,7 @@ namespace RdKafka.Internal
             if (topicHandle.IsInvalid)
             {
                 DangerousRelease();
-                ErrorCode err = RdKafkaException.rd_kafka_errno2err(
+                ErrorCode err = LibRdKafka.errno2err(
                         (IntPtr) Marshal.GetLastWin32Error());
                 throw RdKafkaException.FromErr(err, "Failed to create topic");
             }
@@ -468,7 +468,7 @@ namespace RdKafka.Internal
             }
 
             string memberId = Marshal.PtrToStringAnsi(strPtr);
-            LibRdKafka.rd_kafka_mem_free(handle, strPtr);
+            LibRdKafka.mem_free(handle, strPtr);
             return memberId;
         }
 

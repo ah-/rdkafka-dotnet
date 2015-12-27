@@ -40,7 +40,7 @@ namespace RdKafka
                     }
                     return config.CustomPartitioner(this, key, partition_cnt);
                 };
-                LibRdKafka.rd_kafka_topic_conf_set_partitioner_cb(configPtr, PartitionerDelegate);
+                LibRdKafka.topic_conf_set_partitioner_cb(configPtr, PartitionerDelegate);
             }
 
             handle = kafkaHandle.Topic(topic, configPtr);
@@ -68,7 +68,7 @@ namespace RdKafka
                     break;
                 }
 
-                ErrorCode err = RdKafkaException.rd_kafka_errno2err(
+                ErrorCode err = LibRdKafka.errno2err(
                         (IntPtr) Marshal.GetLastWin32Error());
                 if (err == ErrorCode._QUEUE_FULL)
                 {
