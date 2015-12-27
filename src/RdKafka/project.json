@@ -1,5 +1,5 @@
 {
-    "version": "0.9.1-beta",
+    "version": "0.9.1-ci-*",
     "description": "C# Apache Kafka client",
     "authors": ["Andreas Heider"],
 
