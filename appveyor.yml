@@ -1,11 +1,13 @@
-version: '{build}'
 os: Visual Studio 2015
-install:
-  - cmd: set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-  - cmd: dnvm install 1.0.0-rc1-update1
+
+environment:
+  - DNX_BUILD_VERSION: %APPVEYOR_BUILD_NUMBER%
 
 build_script:
   - cmd: dnu restore
   - cmd: dnu build ./src/RdKafka/project.json
-  - cmd: dnu pack ./src/RdKafka/project.json
+  - cmd: dnu pack ./src/RdKafka/project.json --configuration release
   - cmd: dnx -p ./test/RdKafka.Tests/ test
+
+artifacts:
+  - path: C:/rdkafka-dotnet/src/RdKafka/bin/Release/*.nupkg
