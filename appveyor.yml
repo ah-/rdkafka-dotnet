@@ -1,9 +1,7 @@
 os: Visual Studio 2015
 
-environment:
-  DNX_BUILD_VERSION: "{APPVEYOR_BUILD_NUMBER}"
-
 build_script:
+  - cmd: set DNX_BUILD_VERSION=%APPVEYOR_BUILD_NUMBER%
   - cmd: dnu restore
   - cmd: dnu build ./src/RdKafka/project.json
   - cmd: dnu pack ./src/RdKafka/project.json --configuration release
