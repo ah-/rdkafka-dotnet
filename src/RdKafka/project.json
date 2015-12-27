@@ -27,6 +27,7 @@
     },
 
     "packInclude": {
+        "build/": "build/**",
         "runtimes/": "runtimes/**"
     },
 

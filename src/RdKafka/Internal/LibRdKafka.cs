@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Text;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace RdKafka.Internal
@@ -12,10 +9,21 @@ namespace RdKafka.Internal
     {
         const long minVersion = 0x00090100;
 
+#if NET451
+        [DllImport("api-ms-win-core-libraryloader-l1-1-0", SetLastError = true)]
+        private static extern IntPtr LoadLibrary(string lpFileName);
+#endif
+
         static LibRdKafka()
         {
-            // TODO: check if win desktop .net, then preload from x86/x64
-            // TODO: check rd_kafka_version first, throw if too low
+#if NET451
+            var is64 = IntPtr.Size == 8;
+            try {
+                LoadLibrary(is64 ? "x64/zlib.dll" : "x86/zlib.dll");
+                LoadLibrary(is64 ? "x64/librdkafka.dll" : "x86/librdkafka.dll");
+            }
+            catch (Exception) { }
+#endif
 
             // Warning: madness below, due to mono needing to load __Internal
             if (PlatformApis.IsDarwinMono)
