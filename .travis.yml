@@ -31,4 +31,5 @@ script:
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
    - dnu build ./src/RdKafka/project.json $FRAMEWORK
    - dnu pack ./src/RdKafka/project.json $FRAMEWORK
+   - otool -L /Users/travis/build/ah-/rdkafka-dotnet/src/RdKafka/runtimes/osx.10.11-x64/native/librdkafka.dylib
    - dnx -p ./test/RdKafka.Tests/ test
