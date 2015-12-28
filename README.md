@@ -12,7 +12,7 @@ Copyright (c) 2015, [Andreas Heider](mailto:andreas@heider.io)
 
 ## Usage
 
-Just reference the [RdKafka nuget package](https://www.nuget.org/packages/RdKafka)
+Just reference the [RdKafka NuGet package](https://www.nuget.org/packages/RdKafka)
 
 ## Examples
 
@@ -24,7 +24,7 @@ using (Topic topic = producer.Topic("testtopic"))
 {
     byte[] data = Encoding.UTF8.GetBytes("Hello RdKafka");
     DeliveryReport deliveryReport = await topic.Produce(data);
-    Console.WriteLine($"Produced to partition: {deliveryReport.Partition}, Offset: {deliveryReport.Offset}");
+    Console.WriteLine($"Produced to Partition: {deliveryReport.Partition}, Offset: {deliveryReport.Offset}");
 }
 
 ```
