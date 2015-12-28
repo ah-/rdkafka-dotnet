@@ -18,7 +18,7 @@ Just reference the [RdKafka nuget package](https://www.nuget.org/packages/RdKafk
 
 ### Producing messages
 
-```
+```cs
 using (Producer producer = new Producer("127.0.0.1:9092"))
 using (Topic topic = producer.Topic("testtopic"))
 {
@@ -31,7 +31,7 @@ using (Topic topic = producer.Topic("testtopic"))
 
 ### Consuming messages
 
-```
+```cs
 var config = new Config() { GroupId = "example-csharp-consumer" };
 using (var consumer = new EventConsumer(config, "127.0.0.1:9092"))
 {
