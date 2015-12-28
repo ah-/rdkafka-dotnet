@@ -12,7 +12,7 @@ Copyright (c) 2015, [Andreas Heider](mailto:andreas@heider.io)
 
 ## Usage
 
-Just reference the [RdKafka nuget package](https://www.nuget.org/packages/RdKafka/0.9.1-ci-50)
+Just reference the [RdKafka nuget package](https://www.nuget.org/packages/RdKafka)
 
 ## Examples
 
