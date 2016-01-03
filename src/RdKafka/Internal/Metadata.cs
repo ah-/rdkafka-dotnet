@@ -39,4 +39,36 @@ namespace RdKafka.Internal
         [MarshalAs(UnmanagedType.LPStr)]
         internal string orig_broker_name;
     };
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct rd_kafka_group_member_info
+    {
+        internal string member_id;
+        internal string client_id;
+        internal string client_host;
+        internal IntPtr member_metadata;
+        internal IntPtr member_metadata_size;
+        internal IntPtr member_assignment;
+        internal IntPtr member_assignment_size;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct rd_kafka_group_info
+    {
+        internal rd_kafka_metadata_broker broker;
+        internal string group;
+        internal ErrorCode err;
+        internal string state;
+        internal string protocol_type;
+        internal string protocol;
+        internal IntPtr members;
+        internal int member_cnt;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct rd_kafka_group_list
+    {
+        internal IntPtr groups;
+        internal int group_cnt;
+    };
 }

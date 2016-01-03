@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Threading;
@@ -114,6 +116,16 @@ namespace RdKafka
                         handle.Poll((IntPtr) 1000);
                     }
                 }, ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        public List<GroupInfo> ListGroups(TimeSpan timeout)
+        {
+            return handle.ListGroups(null, (IntPtr) timeout.TotalMilliseconds);
+        }
+
+        public GroupInfo ListGroup(string group, TimeSpan timeout)
+        {
+            return handle.ListGroups(group, (IntPtr) timeout.TotalMilliseconds).Single();
         }
     }
 }

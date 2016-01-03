@@ -78,6 +78,8 @@ namespace RdKafka.Internal
                 _produce = NativeDarwinMonoMethods.rd_kafka_produce;
                 _metadata = NativeDarwinMonoMethods.rd_kafka_metadata;
                 _metadata_destroy = NativeDarwinMonoMethods.rd_kafka_metadata_destroy;
+                _list_groups = NativeDarwinMonoMethods.rd_kafka_list_groups;
+                _group_list_destroy = NativeDarwinMonoMethods.rd_kafka_group_list_destroy;
                 _brokers_add = NativeDarwinMonoMethods.rd_kafka_brokers_add;
                 _set_log_level = NativeDarwinMonoMethods.rd_kafka_set_log_level;
                 _outq_len = NativeDarwinMonoMethods.rd_kafka_outq_len;
@@ -135,6 +137,8 @@ namespace RdKafka.Internal
                 _produce = NativeMethods.rd_kafka_produce;
                 _metadata = NativeMethods.rd_kafka_metadata;
                 _metadata_destroy = NativeMethods.rd_kafka_metadata_destroy;
+                _list_groups = NativeMethods.rd_kafka_list_groups;
+                _group_list_destroy = NativeMethods.rd_kafka_group_list_destroy;
                 _brokers_add = NativeMethods.rd_kafka_brokers_add;
                 _set_log_level = NativeMethods.rd_kafka_set_log_level;
                 _outq_len = NativeMethods.rd_kafka_outq_len;
@@ -381,6 +385,17 @@ namespace RdKafka.Internal
         internal static void metadata_destroy(IntPtr metadata)
             => _metadata_destroy(metadata);
 
+        private delegate ErrorCode ListGroups(IntPtr rk, string group,
+                out IntPtr grplistp, IntPtr timeout_ms);
+        private static ListGroups _list_groups;
+        internal static ErrorCode list_groups(IntPtr rk, string group,
+                out IntPtr grplistp, IntPtr timeout_ms)
+            => _list_groups(rk, group, out grplistp, timeout_ms);
+
+        private static Action<IntPtr> _group_list_destroy;
+        internal static void group_list_destroy(IntPtr grplist)
+            => _group_list_destroy(grplist);
+
         private static Func<IntPtr, string, IntPtr> _brokers_add;
         internal static IntPtr brokers_add(IntPtr rk, string brokerlist)
             => _brokers_add(rk, brokerlist);
@@ -608,6 +623,15 @@ namespace RdKafka.Internal
                     /* const struct rd_kafka_metadata * */ IntPtr metadata);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_list_groups(
+                    IntPtr rk, string group, out IntPtr grplistp,
+                    IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void rd_kafka_group_list_destroy(
+                    IntPtr grplist);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_brokers_add(IntPtr rk,
                     [MarshalAs(UnmanagedType.LPStr)] string brokerlist);
 
@@ -831,6 +855,15 @@ namespace RdKafka.Internal
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_metadata_destroy(
                     /* const struct rd_kafka_metadata * */ IntPtr metadata);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_list_groups(
+                    IntPtr rk, string group, out IntPtr grplistp,
+                    IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void rd_kafka_group_list_destroy(
+                    IntPtr grplist);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_brokers_add(IntPtr rk,

@@ -8,6 +8,52 @@ namespace Misc
     {
         static string ToString(int[] array) => $"[{string.Join(", ", array)}]";
 
+        static void ListGroups(string brokerList)
+        {
+            using (var producer = new Producer(brokerList))
+            {
+                var groups = producer.ListGroups(TimeSpan.FromSeconds(10));
+                Console.WriteLine($"Consumer Groups:");
+                foreach (var g in groups)
+                {
+                    Console.WriteLine($"  Group: {g.Group} {g.Error} {g.State}");
+                    Console.WriteLine($"  Broker: {g.Broker.BrokerId} {g.Broker.Host}:{g.Broker.Port}");
+                    Console.WriteLine($"  Protocol: {g.ProtocolType} {g.Protocol}");
+                    Console.WriteLine($"  Members:");
+                    foreach (var m in g.Members)
+                    {
+                        Console.WriteLine($"    {m.MemberId} {m.ClientId} {m.ClientHost}");
+                        Console.WriteLine($"    Metadata: {m.MemberMetadata.Length} bytes");
+                        //Console.WriteLine(System.Text.Encoding.UTF8.GetString(m.MemberMetadata));
+                        Console.WriteLine($"    Assignment: {m.MemberAssignment.Length} bytes");
+                        //Console.WriteLine(System.Text.Encoding.UTF8.GetString(m.MemberAssignment));
+                    }
+                }
+            }
+        }
+
+        static void PrintMetadata(string brokerList)
+        {
+            using (var producer = new Producer(brokerList))
+            {
+                var meta = producer.Metadata();
+                Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");
+                meta.Brokers.ForEach(broker =>
+                    Console.WriteLine($"Broker: {broker.BrokerId} {broker.Host}:{broker.Port}"));
+
+                meta.Topics.ForEach(topic =>
+                {
+                    Console.WriteLine($"Topic: {topic.Topic} {topic.Error}");
+                    topic.Partitions.ForEach(partition =>
+                    {
+                        Console.WriteLine($"  Partition: {partition.PartitionId}");
+                        Console.WriteLine($"    Replicas: {ToString(partition.Replicas)}");
+                        Console.WriteLine($"    InSyncReplicas: {ToString(partition.InSyncReplicas)}");
+                    });
+                });
+            }
+        }
+
         public static void Main(string[] args)
         {
             Console.WriteLine($"Hello RdKafka!");
@@ -15,29 +61,17 @@ namespace Misc
             Console.WriteLine($"{Library.VersionString}");
             Console.WriteLine($"{string.Join(", ", Library.DebugContexts)}");
 
-            if (args.Contains("-m") || args.Contains("--metadata"))
+            if (args.Contains("--list-groups"))
             {
-                using (var producer = new Producer(args[0]))
-                {
-                    var meta = producer.Metadata();
-                    Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");
-                    meta.Brokers.ForEach(broker =>
-                        Console.WriteLine($"Broker: {broker.BrokerId} {broker.Host}:{broker.Port}"));
-
-                    meta.Topics.ForEach(topic =>
-                    {
-                        Console.WriteLine($"Topic: {topic.Topic} {topic.Error}");
-                        topic.Partitions.ForEach(partition =>
-                        {
-                            Console.WriteLine($"  Partition: {partition.PartitionId}");
-                            Console.WriteLine($"    Replicas: {ToString(partition.Replicas)}");
-                            Console.WriteLine($"    InSyncReplicas: {ToString(partition.InSyncReplicas)}");
-                        });
-                    });
-                }
+                ListGroups(args[0]);
             }
 
-            if (args.Contains("-d") || args.Contains("--dump-config"))
+            if (args.Contains("--metadata"))
+            {
+                PrintMetadata(args[0]);
+            }
+
+            if (args.Contains("--dump-config"))
             {
                 foreach (var kv in new Config().Dump())
                 {

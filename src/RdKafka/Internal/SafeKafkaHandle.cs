@@ -41,23 +41,25 @@ namespace RdKafka.Internal
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct rd_kafka_topic_partition {
-            internal string topic;
-            internal int partition;
-            internal long offset;
-            /* void * */ IntPtr metadata;
-            UIntPtr metadata_size;
-            /* void * */ IntPtr opaque;
-            ErrorCode err; /* Error code, depending on use. */
-            /* void * */ IntPtr _private; /* INTERNAL USE ONLY,
-                                           * INITIALIZE TO ZERO, DO NOT TOUCH */
+    internal struct rd_kafka_topic_partition
+    {
+        internal string topic;
+        internal int partition;
+        internal long offset;
+        /* void * */ IntPtr metadata;
+        UIntPtr metadata_size;
+        /* void * */ IntPtr opaque;
+        ErrorCode err; /* Error code, depending on use. */
+        /* void * */ IntPtr _private; /* INTERNAL USE ONLY,
+                                       * INITIALIZE TO ZERO, DO NOT TOUCH */
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    struct rd_kafka_topic_partition_list {
-            internal int cnt; /* Current number of elements */
-            internal int size; /* Allocated size */
-            internal /* rd_kafka_topic_partition_t * */ IntPtr elems;
+    struct rd_kafka_topic_partition_list
+    {
+        internal int cnt; /* Current number of elements */
+        internal int size; /* Allocated size */
+        internal /* rd_kafka_topic_partition_t * */ IntPtr elems;
     };
 
     internal sealed class SafeKafkaHandle : SafeHandleZeroIsInvalid
@@ -427,6 +429,65 @@ namespace RdKafka.Internal
                             Offset = ktp.offset
                         })
                 .ToList();
+        }
+
+        static byte[] CopyBytes(IntPtr ptr, IntPtr len)
+        {
+            byte[] data = null;
+            if (ptr != IntPtr.Zero)
+            {
+                data = new byte[(int) len];
+                Marshal.Copy(ptr, data, 0, (int) len);
+            }
+            return data;
+        }
+
+        internal List<GroupInfo> ListGroups(string group, IntPtr timeoutMs)
+        {
+            IntPtr grplistPtr;
+            ErrorCode err = LibRdKafka.list_groups(handle, group, out grplistPtr, timeoutMs);
+            if (err == ErrorCode.NO_ERROR)
+            {
+                var list = Marshal.PtrToStructure<rd_kafka_group_list>(grplistPtr);
+                var groups = Enumerable.Range(0, list.group_cnt)
+                    .Select(i => Marshal.PtrToStructure<rd_kafka_group_info>(
+                        list.groups + i * Marshal.SizeOf<rd_kafka_group_info>()))
+                    .Select(gi => new GroupInfo()
+                            {
+                                Broker = new BrokerMetadata()
+                                {
+                                    BrokerId = gi.broker.id,
+                                    Host = gi.broker.host,
+                                    Port = gi.broker.port
+                                },
+                                Group = gi.group,
+                                Error = gi.err,
+                                State = gi.state,
+                                ProtocolType = gi.protocol_type,
+                                Protocol = gi.protocol,
+                                Members = Enumerable.Range(0, gi.member_cnt)
+                                    .Select(j => Marshal.PtrToStructure<rd_kafka_group_member_info>(
+                                        gi.members + j * Marshal.SizeOf<rd_kafka_group_member_info>()))
+                                    .Select(mi => new GroupMemberInfo()
+                                            {
+                                                MemberId = mi.member_id,
+                                                ClientId = mi.client_id,
+                                                ClientHost = mi.client_host,
+                                                MemberMetadata = CopyBytes(mi.member_metadata,
+                                                        mi.member_metadata_size),
+                                                MemberAssignment = CopyBytes(mi.member_assignment,
+                                                        mi.member_assignment_size)
+                                            })
+                                    .ToList()
+                            })
+                    .ToList();
+                LibRdKafka.group_list_destroy(grplistPtr);
+                return groups;
+            }
+            else
+            {
+                throw RdKafkaException.FromErr(err, "Failed to fetch group list");
+            }
         }
     }
 }
