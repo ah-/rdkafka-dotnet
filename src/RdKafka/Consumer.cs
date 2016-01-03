@@ -126,6 +126,15 @@ namespace RdKafka
             return Task.FromResult(false);
         }
 
+        /// <summary>
+        /// Retrieve committed positions (offsets) for topics+partitions.
+        /// </summary>
+        public Task<List<TopicPartitionOffset>> Position(List<TopicPartition> partitions, TimeSpan timeout)
+        {
+            var result = handle.Position(partitions, (IntPtr) timeout.TotalMilliseconds);
+            return Task.FromResult(result);
+        }
+
         // Rebalance callbacks
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsRevoked;

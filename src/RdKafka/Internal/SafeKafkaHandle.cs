@@ -359,6 +359,27 @@ namespace RdKafka.Internal
             }
         }
 
+        internal List<TopicPartitionOffset> Position(List<TopicPartition> partitions, IntPtr timeout_ms)
+        {
+            IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
+            if (list == IntPtr.Zero)
+            {
+                throw new Exception("Failed to create position list");
+            }
+            foreach (var partition in partitions)
+            {
+                LibRdKafka.topic_partition_list_add(list, partition.Topic, partition.Partition);
+            }
+            ErrorCode err = LibRdKafka.position(handle, list, timeout_ms);
+            var result = GetTopicPartitionOffsetList(list);
+            LibRdKafka.topic_partition_list_destroy(list);
+            if (err != ErrorCode.NO_ERROR)
+            {
+                throw RdKafkaException.FromErr(err, "Failed to fetch position");
+            }
+            return result;
+        }
+
         internal string MemberId()
         {
             IntPtr strPtr = LibRdKafka.memberid(handle);
