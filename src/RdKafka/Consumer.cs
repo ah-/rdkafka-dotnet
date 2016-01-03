@@ -101,35 +101,29 @@ namespace RdKafka
 
         /// <summary>
         /// Commit offsets for the current assignment.
-        ///
-        /// This is the synchronous variant that blocks until offsets 
-        /// are committed or the commit fails.
         /// </summary>
-        public void Commit()
+        public Task Commit()
         {
             handle.Commit();
+            return Task.FromResult(false);
         }
 
         /// <summary>
         /// Commit offset for a single topic+partition based on message.
-        ///
-        /// This is the synchronous variant that blocks until offsets 
-        /// are committed or the commit fails.
         /// </summary>
-        public void Commit(Message message)
+        public Task Commit(Message message)
         {
             Commit(new List<TopicPartitionOffset>() { message.TopicPartitionOffset });
+            return Task.FromResult(false);
         }
 
         /// <summary>
         /// Commit explicit list of offsets.
-        ///
-        /// This is the synchronous variant that blocks until offsets 
-        /// are committed or the commit fails.
         /// </summary>
-        public void Commit(List<TopicPartitionOffset> offsets)
+        public Task Commit(List<TopicPartitionOffset> offsets)
         {
             handle.Commit(offsets);
+            return Task.FromResult(false);
         }
 
         // Rebalance callbacks
