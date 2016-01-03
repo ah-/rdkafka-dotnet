@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using RdKafka;
@@ -7,11 +8,8 @@ namespace AdvancedConsumer
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Run(string brokerList, List<string> topics)
         {
-            string brokerList = args[0];
-            var topics = args.Skip(1).ToList();
-
             bool enableAutoCommit = false;
 
             var config = new Config()
@@ -20,7 +18,7 @@ namespace AdvancedConsumer
                 EnableAutoCommit = enableAutoCommit,
                 StatisticsInterval = TimeSpan.FromSeconds(60)
             };
-     
+
             using (var consumer = new EventConsumer(config, brokerList))
             {
                 consumer.OnMessage += (obj, msg) => {
@@ -30,7 +28,7 @@ namespace AdvancedConsumer
                     if (!enableAutoCommit && msg.Offset % 10 == 0)
                     {
                         Console.WriteLine($"Committing offset");
-                        consumer.Commit(msg);
+                        consumer.Commit(msg).Wait();
                         Console.WriteLine($"Committed offset");
                     }
                 };
@@ -73,6 +71,11 @@ namespace AdvancedConsumer
                 Console.WriteLine($"Started consumer {consumer.MemberId}, press enter to stop consuming");
                 Console.ReadLine();
             }
+        }
+
+        public static void Main(string[] args)
+        {
+            Run(args[0], args.Skip(1).ToList());
         }
     }
 }
