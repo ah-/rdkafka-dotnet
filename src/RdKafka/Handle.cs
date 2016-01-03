@@ -99,10 +99,11 @@ namespace RdKafka
         ///   includeInternal - include internal topics prefixed with __
         ///   timeout      - maximum response time before failing.
         /// </summary>
-        public Metadata Metadata (bool allTopics=true, Topic onlyForTopic=null,
+        public Task<Metadata> Metadata (bool allTopics=true, Topic onlyForTopic=null,
                 bool includeInternal=false, TimeSpan timeout=default(TimeSpan))
         {
-            return handle.Metadata(allTopics, onlyForTopic?.handle, includeInternal, timeout);
+            return Task.FromResult(
+                    handle.Metadata(allTopics, onlyForTopic?.handle, includeInternal, timeout));
         }
 
         public event EventHandler<string> OnStatistics;
@@ -118,14 +119,14 @@ namespace RdKafka
                 }, ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
-        public List<GroupInfo> ListGroups(TimeSpan timeout)
+        public Task<List<GroupInfo>> ListGroups(TimeSpan timeout)
         {
-            return handle.ListGroups(null, (IntPtr) timeout.TotalMilliseconds);
+            return Task.FromResult(handle.ListGroups(null, (IntPtr) timeout.TotalMilliseconds));
         }
 
-        public GroupInfo ListGroup(string group, TimeSpan timeout)
+        public Task<GroupInfo> ListGroup(string group, TimeSpan timeout)
         {
-            return handle.ListGroups(group, (IntPtr) timeout.TotalMilliseconds).Single();
+            return Task.FromResult(handle.ListGroups(group, (IntPtr) timeout.TotalMilliseconds).Single());
         }
     }
 }

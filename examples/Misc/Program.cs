@@ -1,6 +1,7 @@
 using System;
-using RdKafka;
 using System.Linq;
+using System.Threading.Tasks;
+using RdKafka;
 
 namespace Misc
 {
@@ -8,11 +9,11 @@ namespace Misc
     {
         static string ToString(int[] array) => $"[{string.Join(", ", array)}]";
 
-        static void ListGroups(string brokerList)
+        static async Task ListGroups(string brokerList)
         {
             using (var producer = new Producer(brokerList))
             {
-                var groups = producer.ListGroups(TimeSpan.FromSeconds(10));
+                var groups = await producer.ListGroups(TimeSpan.FromSeconds(10));
                 Console.WriteLine($"Consumer Groups:");
                 foreach (var g in groups)
                 {
@@ -32,11 +33,11 @@ namespace Misc
             }
         }
 
-        static void PrintMetadata(string brokerList)
+        static async Task PrintMetadata(string brokerList)
         {
             using (var producer = new Producer(brokerList))
             {
-                var meta = producer.Metadata();
+                var meta = await producer.Metadata();
                 Console.WriteLine($"{meta.OriginatingBrokerId} {meta.OriginatingBrokerName}");
                 meta.Brokers.ForEach(broker =>
                     Console.WriteLine($"Broker: {broker.BrokerId} {broker.Host}:{broker.Port}"));
@@ -63,12 +64,12 @@ namespace Misc
 
             if (args.Contains("--list-groups"))
             {
-                ListGroups(args[0]);
+                ListGroups(args[0]).Wait();
             }
 
             if (args.Contains("--metadata"))
             {
-                PrintMetadata(args[0]);
+                PrintMetadata(args[0]).Wait();
             }
 
             if (args.Contains("--dump-config"))
