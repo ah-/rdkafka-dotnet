@@ -10,7 +10,7 @@ namespace RdKafka.Internal
         const long minVersion = 0x00090100;
 
 #if NET451
-        [DllImport("api-ms-win-core-libraryloader-l1-1-0", SetLastError = true)]
+        [DllImport("kernel32", SetLastError = true)]
         private static extern IntPtr LoadLibrary(string lpFileName);
 #endif
 
