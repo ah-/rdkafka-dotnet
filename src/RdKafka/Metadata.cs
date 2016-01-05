@@ -35,6 +35,12 @@ namespace RdKafka
 
     public struct TopicPartition
     {
+        public TopicPartition(string topic, int partition)
+        {
+            Topic = topic;
+            Partition = partition;
+        }
+
         public string Topic { get; set; }
         public int Partition { get; set; }
 
@@ -43,6 +49,13 @@ namespace RdKafka
 
     public struct TopicPartitionOffset
     {
+        public TopicPartitionOffset(string topic, int partition, long offset)
+        {
+            Topic = topic;
+            Partition = partition;
+            Offset = offset;
+        }
+
         public string Topic { get; set; }
         public int Partition { get; set; }
         public long Offset { get; set; }
