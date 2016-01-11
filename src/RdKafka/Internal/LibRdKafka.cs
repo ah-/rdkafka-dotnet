@@ -212,7 +212,7 @@ namespace RdKafka.Internal
             => _topic_partition_list_add(rktparlist, topic, partition);
 
         private static Func<IntPtr, ErrorCode> _errno2err;
-        internal static ErrorCode errno2err(IntPtr errno) => errno2err(errno);
+        internal static ErrorCode errno2err(IntPtr errno) => _errno2err(errno);
 
         private static Action<IntPtr> _message_destroy;
         internal static void message_destroy(IntPtr rkmessage) => _message_destroy(rkmessage);
