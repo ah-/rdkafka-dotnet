@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using RdKafka.Internal;
 
 namespace RdKafka
 {
@@ -13,6 +10,7 @@ namespace RdKafka
         CancellationTokenSource consumerCts;
 
         public event EventHandler<Message> OnMessage;
+        public event EventHandler<ErrorCode> OnError;
         public event EventHandler<TopicPartitionOffset> OnEndReached;
 
         public EventConsumer(Config config, string brokerList = null)
@@ -45,7 +43,7 @@ namespace RdKafka
                             {
                                 OnMessage?.Invoke(this, mae.Message);
                             }
-                            if (mae.Error == ErrorCode._PARTITION_EOF)
+                            else if (mae.Error == ErrorCode._PARTITION_EOF)
                             {
                                 OnEndReached?.Invoke(this, 
                                         new TopicPartitionOffset()
@@ -54,6 +52,10 @@ namespace RdKafka
                                             Partition = mae.Message.Partition,
                                             Offset = mae.Message.Offset,
                                         });
+                            }
+                            else
+                            {
+                                OnError?.Invoke(this, mae.Error);
                             }
                         }
                     }

@@ -33,6 +33,11 @@ namespace AdvancedConsumer
                     }
                 };
 
+                consumer.OnError += (obj, errorCode) =>
+                {
+                    Console.WriteLine($"Error: {errorCode}");
+                };
+
                 consumer.OnEndReached += (obj, end) => {
                     Console.WriteLine($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
                 };

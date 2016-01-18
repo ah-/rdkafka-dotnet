@@ -253,7 +253,11 @@ namespace RdKafka.Internal
                 key = new byte[(int) msg.key_len];
                 Marshal.Copy(msg.key, key, 0, (int) msg.key_len);
             }
-            string topic = Marshal.PtrToStringAnsi(LibRdKafka.topic_name(msg.rkt));
+            string topic = null;
+            if (msg.rkt != IntPtr.Zero)
+            {
+                topic = Marshal.PtrToStringAnsi(LibRdKafka.topic_name(msg.rkt));
+            }
             LibRdKafka.message_destroy(msgPtr);
 
             var message = new Message()
