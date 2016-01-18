@@ -20,7 +20,7 @@ namespace RdKafka
         /// <summary>
         /// Start automatically consuming message and trigger events.
         ///
-        /// Will invoke OnMessage and OnEndReached events.
+        /// Will invoke OnMessage, OnEndReached and OnError events.
         /// </summary>
         public void Start()
         {
