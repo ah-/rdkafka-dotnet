@@ -19,7 +19,7 @@ namespace RdKafka
 
     public struct MessageAndError
     {
-        internal Message Message;
-        internal ErrorCode Error;
+        public Message Message;
+        public ErrorCode Error;
     }
 }
