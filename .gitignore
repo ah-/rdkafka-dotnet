@@ -11,3 +11,6 @@ todo.txt
 src/RdKafka/runtimes
 Properties
 packages/
+doc/api/
+doc/_site/
+doc/src
