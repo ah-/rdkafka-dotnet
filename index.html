@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>rdkafka-dotnet - C# Apache Kafka client | RdKafka</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="rdkafka-dotnet - C# Apache Kafka client | RdKafka">
+    <meta name="generator" content="docfx 1.4.0.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="rdkafka-dotnet-c-apache-kafka-client">rdkafka-dotnet - C# Apache Kafka client</h1>
+              
+<p><strong>rdkafka-dotnet</strong> is a C# client for <a href="http://kafka.apache.org/">Apache Kafka</a> based on <a href="https://github.com/edenhill/librdkafka">librdkafka</a>.</p>
+<h2 id="api-documentation">Api Documentation</h2>
+<p><a href="api/RdKafka.html">Read the Api Documentation here</a></p>
+<h2 id="usage">Usage</h2>
+<p>Just reference the <a href="https://www.nuget.org/packages/RdKafka">RdKafka NuGet package</a></p>
+<h2 id="examples">Examples</h2>
+<h3 id="producing-messages">Producing messages</h3>
+<pre><code class="lang-cs">using (Producer producer = new Producer(&quot;127.0.0.1:9092&quot;))
+using (Topic topic = producer.Topic(&quot;testtopic&quot;))
+{
+    byte[] data = Encoding.UTF8.GetBytes(&quot;Hello RdKafka&quot;);
+    DeliveryReport deliveryReport = await topic.Produce(data);
+    Console.WriteLine($&quot;Produced to Partition: {deliveryReport.Partition}, Offset: {deliveryReport.Offset}&quot;);
+}
+</code></pre>
+<h3 id="consuming-messages">Consuming messages</h3>
+<pre><code class="lang-cs">var config = new Config() { GroupId = &quot;example-csharp-consumer&quot; };
+using (var consumer = new EventConsumer(config, &quot;127.0.0.1:9092&quot;))
+{
+    consumer.OnMessage += (obj, msg) =&gt;
+    {
+        string text = Encoding.UTF8.GetString(msg.Payload, 0, msg.Payload.Length);
+        Console.WriteLine($&quot;Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {text}&quot;);
+    };
+
+    consumer.Subscribe(new []{&quot;testtopic&quot;});
+    consumer.Start();
+
+    Console.WriteLine(&quot;Started consumer, press enter to stop consuming&quot;);
+    Console.ReadLine();
+}
+</code></pre>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+            <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
