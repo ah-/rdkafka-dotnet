@@ -1,143 +1,142 @@
 namespace RdKafka
 {
+    /// <summary>Internal errors to rdkafka are prefixed with _</summary>
     public enum ErrorCode {
-        /* Internal errors to rdkafka, prefixed with _: */
-        /** Begin internal error codes */
+        /// <summary>Begin internal error codes</summary>
         _BEGIN = -200,
-        /** Received message is incorrect */
+        /// <summary>Received message is incorrect</summary>
         _BAD_MSG = -199,
-        /** Bad/unknown compression */
+        /// <summary>Bad/unknown compression</summary>
         _BAD_COMPRESSION = -198,
-        /** Broker is going away */
+        /// <summary>Broker is going away</summary>
         _DESTROY = -197,
-        /** Generic failure */
+        /// <summary>Generic failure</summary>
         _FAIL = -196,
-        /** Broker transport failure */
+        /// <summary>Broker transport failure</summary>
         _TRANSPORT = -195,
-        /** Critical system resource */
+        /// <summary>Critical system resource</summary>
         _CRIT_SYS_RESOURCE = -194,
-        /** Failed to resolve broker */
+        /// <summary>Failed to resolve broker</summary>
         _RESOLVE = -193,
-        /** Produced message timed out*/
+        /// <summary>Produced message timed out</summary>
         _MSG_TIMED_OUT = -192,
-        /** Reached the end of the topic+partition queue on
-         * the broker. Not really an error. */
+        /// <summary>Reached the end of the topic+partition queue on the broker. Not really an error.</summary>
         _PARTITION_EOF = -191,
-        /** Permanent: Partition does not exist in cluster. */
+        /// <summary>Permanent: Partition does not exist in cluster.</summary>
         _UNKNOWN_PARTITION = -190,
-        /** File or filesystem error */
+        /// <summary>File or filesystem error</summary>
         _FS = -189,
-         /** Permanent: Topic does not exist in cluster. */
+         /// <summary>Permanent: Topic does not exist in cluster.</summary>
         _UNKNOWN_TOPIC = -188,
-        /** All broker connections are down. */
+        /// <summary>All broker connections are down.</summary>
         _ALL_BROKERS_DOWN = -187,
-        /** Invalid argument, or invalid configuration */
+        /// <summary>Invalid argument, or invalid configuration</summary>
         _INVALID_ARG = -186,
-        /** Operation timed out */
+        /// <summary>Operation timed out</summary>
         _TIMED_OUT = -185,
-        /** Queue is full */
+        /// <summary>Queue is full</summary>
         _QUEUE_FULL = -184,
-        /** ISR count < required.acks */
+        /// <summary>ISR count &lt; required.acks</summary>
             _ISR_INSUFF = -183,
-        /** Broker node update */
+        /// <summary>Broker node update</summary>
             _NODE_UPDATE = -182,
-        /** SSL error */
+        /// <summary>SSL error</summary>
         _SSL = -181,
-        /** Waiting for coordinator to become available. */
+        /// <summary>Waiting for coordinator to become available.</summary>
             _WAIT_COORD = -180,
-        /** Unknown client group */
+        /// <summary>Unknown client group</summary>
             _UNKNOWN_GROUP = -179,
-        /** Operation in progress */
+        /// <summary>Operation in progress</summary>
             _IN_PROGRESS = -178,
-         /** Previous operation in progress, wait for it to finish. */
+         /// <summary>Previous operation in progress, wait for it to finish.</summary>
             _PREV_IN_PROGRESS = -177,
-         /** This operation would interfere with an existing subscription */
+         /// <summary>This operation would interfere with an existing subscription</summary>
             _EXISTING_SUBSCRIPTION = -176,
-        /** Assigned partitions (rebalance_cb) */
+        /// <summary>Assigned partitions (rebalance_cb)</summary>
             _ASSIGN_PARTITIONS = -175,
-        /** Revoked partitions (rebalance_cb) */
+        /// <summary>Revoked partitions (rebalance_cb)</summary>
             _REVOKE_PARTITIONS = -174,
-        /** Conflicting use */
+        /// <summary>Conflicting use</summary>
             _CONFLICT = -173,
-        /** Wrong state */
+        /// <summary>Wrong state</summary>
             _STATE = -172,
-        /** Unknown protocol */
+        /// <summary>Unknown protocol</summary>
             _UNKNOWN_PROTOCOL = -171,
-        /** Not implemented */
+        /// <summary>Not implemented</summary>
             _NOT_IMPLEMENTED = -170,
-        /** Authentication failure*/
+        /// <summary>Authentication failure</summary>
         _AUTHENTICATION = -169,
-        /** No stored offset */
+        /// <summary>No stored offset</summary>
         _NO_OFFSET = -168,
-        /** End internal error codes */
+        /// <summary>End internal error codes</summary>
         _END = -100,
 
-        /* Kafka broker errors: */
-        /** Unknown broker error */
+        // Kafka broker errors:
+        /// <summary>Unknown broker error</summary>
         UNKNOWN = -1,
-        /** Success */
+        /// <summary>Success</summary>
         NO_ERROR = 0,
-        /** Offset out of range */
+        /// <summary>Offset out of range</summary>
         OFFSET_OUT_OF_RANGE = 1,
-        /** Invalid message */
+        /// <summary>Invalid message</summary>
         INVALID_MSG = 2,
-        /** Unknown topic or partition */
+        /// <summary>Unknown topic or partition</summary>
         UNKNOWN_TOPIC_OR_PART = 3,
-        /** Invalid message size */
+        /// <summary>Invalid message size</summary>
         INVALID_MSG_SIZE = 4,
-        /** Leader not available */
+        /// <summary>Leader not available</summary>
         LEADER_NOT_AVAILABLE = 5,
-        /** Not leader for partition */
+        /// <summary>Not leader for partition</summary>
         NOT_LEADER_FOR_PARTITION = 6,
-        /** Request timed out */
+        /// <summary>Request timed out</summary>
         REQUEST_TIMED_OUT = 7,
-        /** Broker not available */
+        /// <summary>Broker not available</summary>
         BROKER_NOT_AVAILABLE = 8,
-        /** Replica not available */
+        /// <summary>Replica not available</summary>
         REPLICA_NOT_AVAILABLE = 9,
-        /** Message size too large */
+        /// <summary>Message size too large</summary>
         MSG_SIZE_TOO_LARGE = 10,
-        /** StaleControllerEpochCode */
+        /// <summary>StaleControllerEpochCode</summary>
         STALE_CTRL_EPOCH = 11,
-        /** Offset metadata string too large */
+        /// <summary>Offset metadata string too large</summary>
         OFFSET_METADATA_TOO_LARGE = 12,
-        /** Broker disconnected before response received */
+        /// <summary>Broker disconnected before response received</summary>
         NETWORK_EXCEPTION = 13,
-        /** Group coordinator load in progress */
+        /// <summary>Group coordinator load in progress</summary>
             GROUP_LOAD_IN_PROGRESS = 14,
-         /** Group coordinator not available */
+         /// <summary>Group coordinator not available</summary>
             GROUP_COORDINATOR_NOT_AVAILABLE = 15,
-        /** Not coordinator for group */
+        /// <summary>Not coordinator for group</summary>
             NOT_COORDINATOR_FOR_GROUP = 16,
-        /** Invalid topic */
+        /// <summary>Invalid topic</summary>
             TOPIC_EXCEPTION = 17,
-        /** Message batch larger than configured server segment size */
+        /// <summary>Message batch larger than configured server segment size</summary>
             RECORD_LIST_TOO_LARGE = 18,
-        /** Not enough in-sync replicas */
+        /// <summary>Not enough in-sync replicas</summary>
             NOT_ENOUGH_REPLICAS = 19,
-        /** Message(s) written to insufficient number of in-sync replicas */
+        /// <summary>Message(s) written to insufficient number of in-sync replicas</summary>
             NOT_ENOUGH_REPLICAS_AFTER_APPEND = 20,
-        /** Invalid required acks value */
+        /// <summary>Invalid required acks value</summary>
             INVALID_REQUIRED_ACKS = 21,
-        /** Specified group generation id is not valid */
+        /// <summary>Specified group generation id is not valid</summary>
             ILLEGAL_GENERATION = 22,
-        /** Inconsistent group protocol */
+        /// <summary>Inconsistent group protocol</summary>
             INCONSISTENT_GROUP_PROTOCOL = 23,
-        /** Invalid group.id */
+        /// <summary>Invalid group.id</summary>
         INVALID_GROUP_ID = 24,
-        /** Unknown member */
+        /// <summary>Unknown member</summary>
             UNKNOWN_MEMBER_ID = 25,
-        /** Invalid session timeout */
+        /// <summary>Invalid session timeout</summary>
             INVALID_SESSION_TIMEOUT = 26,
-        /** Group rebalance in progress */
+        /// <summary>Group rebalance in progress</summary>
         REBALANCE_IN_PROGRESS = 27,
-        /** Commit offset data size is not valid */
+        /// <summary>Commit offset data size is not valid</summary>
             INVALID_COMMIT_OFFSET_SIZE = 28,
-        /** Topic authorization failed */
+        /// <summary>Topic authorization failed</summary>
             TOPIC_AUTHORIZATION_FAILED = 29,
-        /** Group authorization failed */
+        /// <summary>Group authorization failed</summary>
         GROUP_AUTHORIZATION_FAILED = 30,
-        /** Cluster authorization failed */
+        /// <summary>Cluster authorization failed</summary>
         CLUSTER_AUTHORIZATION_FAILED = 31
     };
 }
