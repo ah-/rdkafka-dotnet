@@ -3,13 +3,13 @@ rdkafka-dotnet - C# Apache Kafka client
 
 **rdkafka-dotnet** is a C# client for [Apache Kafka](http://kafka.apache.org/) based on [librdkafka](https://github.com/edenhill/librdkafka).
 
-## Api Documentation
-
-[Read the Api Documentation here](api/RdKafka.html)
-
 ## Usage
 
 Just reference the [RdKafka NuGet package](https://www.nuget.org/packages/RdKafka)
+
+## Api Reference
+
+[Read the Api Documentation here](api/RdKafka.html)
 
 ## Examples
 
