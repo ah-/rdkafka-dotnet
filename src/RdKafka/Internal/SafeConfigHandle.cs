@@ -84,7 +84,7 @@ namespace RdKafka.Internal
             }
             else if (res == ConfRes.Invalid)
             {
-                throw new InvalidOperationException(errorStringBuilder.ToString());
+                throw new ArgumentException(errorStringBuilder.ToString());
             }
             else if (res == ConfRes.Unknown)
             {

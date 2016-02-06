@@ -26,7 +26,7 @@ namespace RdKafka.Tests
         public void SettingParameterToInvalidValueThrows()
         {
             var config = new Config();
-            Assert.Throws<InvalidOperationException>(() => config["session.timeout.ms"] = "string");
+            Assert.Throws<ArgumentException>(() => config["session.timeout.ms"] = "string");
         }
 
         [Fact]
