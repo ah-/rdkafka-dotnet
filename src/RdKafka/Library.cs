@@ -6,8 +6,6 @@ namespace RdKafka
 {
     public static class Library
     {
-        public delegate void LogCallback(string handle, int level, string fac, string buf);
-
         /// <summary>
         /// Returns the librdkafka version as integer.
         ///
