@@ -10,8 +10,16 @@
     },
 
     "frameworks" : {
-        "dnxcore50": { },
-        "dnx451": { }
+        "dnx451": { },
+        "dnxcore50": {
+            "dependencies": {
+                "Microsoft.NETCore.Runtime": "1.0.1-beta-*",
+                "System.Console": "4.0.0-beta-*",
+                "System.IO": "4.0.11-beta-*",
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Linq": "4.0.0"
+            }
+        }
     }
 }
 
