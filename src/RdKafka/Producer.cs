@@ -5,6 +5,9 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
+    /// <summary>
+    /// High-level, asynchronous message producer.
+    /// </summary>
     public class Producer : Handle
     {
         public Producer(string brokerList) : this(null, brokerList) {}

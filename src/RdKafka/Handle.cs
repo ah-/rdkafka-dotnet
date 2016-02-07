@@ -9,6 +9,9 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
+    /// <summary>
+    /// Shared base of <see cref="Consumer" /> and <see cref="Producer" />.
+    /// </summary>
     public class Handle : IDisposable
     {
         internal SafeKafkaHandle handle;

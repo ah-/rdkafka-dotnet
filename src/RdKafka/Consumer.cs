@@ -7,6 +7,11 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
+    /// <summary>
+    /// High-level Kafka Consumer, receives messages from a Kafka cluster.
+    ///
+    /// Requires Kafka >= 0.9.0.0.
+    /// </summary>
     public class Consumer : Handle, IDisposable
     {
         public Consumer(Config config, string brokerList = null)
@@ -172,7 +177,7 @@ namespace RdKafka
             }
         }
 
-        public class OffsetCommitArgs
+        public struct OffsetCommitArgs
         {
             public ErrorCode Error { get; set; }
             public IList<TopicPartitionOffset> Offsets { get; set; }

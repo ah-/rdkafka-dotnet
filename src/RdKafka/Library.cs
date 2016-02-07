@@ -4,6 +4,9 @@ using RdKafka.Internal;
 
 namespace RdKafka
 {
+    /// <summary>
+    /// Miscellaneous APIs for the RdKafka library itself.
+    /// </summary>
     public static class Library
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace RdKafka
         ///  - rr = revision
         ///  - xx = pre-release id (0xff is the final release)
         ///
-        /// E.g.: \c 0x000901ff = 0.9.1
+        /// E.g.: 0x000901ff = 0.9.1
         /// </summary>
         public static int Version => (int) LibRdKafka.version();
 
@@ -40,15 +43,16 @@ namespace RdKafka
         /// Wait for all rdkafka objects to be destroyed.
         ///
         /// Returns if all kafka objects are now destroyed,
-        /// or throw TimeoutException if the timeout was reached.
+        /// or throws TimeoutException if the timeout was reached.
         ///
         /// Since RdKafka handle deletion is an async operation the
         /// WaitDestroyed() function can be used for applications where
         /// a clean shutdown is required.
         /// </summary>
-        public static void WaitDestroyed(long timeoutMs)
+        /// <exception cref="System.TimeoutException">Timeout was reached before all objects were destroyed.</exception>
+        public static void WaitDestroyed(TimeSpan timeout)
         {
-            if ((long) LibRdKafka.wait_destroyed((IntPtr) timeoutMs) != 0)
+            if ((long) LibRdKafka.wait_destroyed((IntPtr) timeout.TotalMilliseconds) != 0)
             {
                 throw new TimeoutException();
             }

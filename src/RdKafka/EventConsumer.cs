@@ -4,6 +4,11 @@ using System.Threading.Tasks;
 
 namespace RdKafka
 {
+    /// <summary>
+    /// Kafka Consumer that forwards received messages as events to the application.
+    ///
+    /// Thin abstraction on top of <see cref="Consumer" />.
+    /// </summary>
     public class EventConsumer : Consumer, IDisposable
     {
         Task consumerTask;

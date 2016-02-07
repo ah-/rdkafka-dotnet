@@ -11,6 +11,9 @@ namespace RdKafka
         public long Offset;
     }
 
+    /// <summary>
+    /// Handle to a topic obtained from <see cref="Producer" />.
+    /// </summary>
     public class Topic : IDisposable
     {
         const int RD_KAFKA_PARTITION_UA = -1;
