@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="">
-                <img id="logo" class="svg" src="logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href=""><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -54,10 +51,10 @@
               <h1 id="rdkafka-dotnet-c-apache-kafka-client">rdkafka-dotnet - C# Apache Kafka client</h1>
               
 <p><strong>rdkafka-dotnet</strong> is a C# client for <a href="http://kafka.apache.org/">Apache Kafka</a> based on <a href="https://github.com/edenhill/librdkafka">librdkafka</a>.</p>
-<h2 id="api-documentation">Api Documentation</h2>
-<p><a href="api/RdKafka.html">Read the Api Documentation here</a></p>
 <h2 id="usage">Usage</h2>
 <p>Just reference the <a href="https://www.nuget.org/packages/RdKafka">RdKafka NuGet package</a></p>
+<h2 id="api-reference">Api Reference</h2>
+<p><a href="api/RdKafka.html">Read the Api Documentation here</a></p>
 <h2 id="examples">Examples</h2>
 <h3 id="producing-messages">Producing messages</h3>
 <pre><code class="lang-cs">using (Producer producer = new Producer(&quot;127.0.0.1:9092&quot;))

@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="../">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../"><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -60,7 +57,8 @@
             <article class="content wrap" id="_content">
               
               <h1 id="RdKafka_TopicConfig" data-uid="RdKafka.TopicConfig">Class TopicConfig</h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>Topic-specific configuration.</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
@@ -83,7 +81,10 @@
               </div>
               <h3 id="properties">Properties</h3>
               <h4 id="RdKafka_TopicConfig_CustomPartitioner" data-uid="RdKafka.TopicConfig.CustomPartitioner">CustomPartitioner</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Sets a custom <a class="xref" href="RdKafka.TopicConfig.Partitioner.html#RdKafka_TopicConfig_Partitioner">TopicConfig.Partitioner</a>
+delegate to control assignment of messages to partitions.</p>
+<p>See <a class="xref" href="RdKafka.Topic.html#RdKafka_Topic_Produce_System_Byte___System_Byte___System_Int32_">Produce(Byte[], Byte[], Int32)</a> for details.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -105,7 +106,9 @@
                 </tbody>
               </table>
               <h4 id="RdKafka_TopicConfig_Item_System_String_" data-uid="RdKafka.TopicConfig.Item(System.String)">Item[String]</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Get or set a configuration value directly.</p>
+<p>See <see href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">CONFIGURATION.md</see> for the full list of supported properties.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -124,7 +127,8 @@
                   <tr>
                     <td><span class="xref">System.String</span></td>
                     <td><em>name</em></td>
-                    <td></td>
+                    <td><p>The configuration property name.</p>
+</td>
                   </tr>
                 </tbody>
               </table>
@@ -139,13 +143,36 @@
                 <tbody>
                   <tr>
                     <td><span class="xref">System.String</span></td>
-                    <td></td>
+                    <td><p>The configuration property value.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="exceptions">Exceptions</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.ArgumentException</span></td>
+                    <td><p><em>value</em> is invalid.</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.InvalidOperationException</span></td>
+                    <td><p>Configuration property <em>name</em> does not exist.</p>
+</td>
                   </tr>
                 </tbody>
               </table>
               <h3 id="methods">Methods</h3>
               <h4 id="RdKafka_TopicConfig_Dump" data-uid="RdKafka.TopicConfig.Dump">Dump()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Dump all configuration names and values into a dictionary.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">

@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="../">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../"><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -60,7 +57,8 @@
             <article class="content wrap" id="_content">
               
               <h1 id="RdKafka_ErrorCode" data-uid="RdKafka.ErrorCode">Enum ErrorCode</h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>Internal errors to rdkafka are prefixed with _</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <h6><strong>Namespace</strong>:RdKafka</h6>
               <h6><strong>Assembly</strong>:cs.temp.dll.dll</h6>
@@ -70,469 +68,536 @@
               </div>
               <h3 id="fields">Fields</h3>
               <h4 id="RdKafka_ErrorCode__ALL_BROKERS_DOWN" data-uid="RdKafka.ErrorCode._ALL_BROKERS_DOWN">_ALL_BROKERS_DOWN</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>All broker connections are down.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_ALL_BROKERS_DOWN = -187</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__ASSIGN_PARTITIONS" data-uid="RdKafka.ErrorCode._ASSIGN_PARTITIONS">_ASSIGN_PARTITIONS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Assigned partitions (rebalance_cb)</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_ASSIGN_PARTITIONS = -175</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__AUTHENTICATION" data-uid="RdKafka.ErrorCode._AUTHENTICATION">_AUTHENTICATION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Authentication failure</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_AUTHENTICATION = -169</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__BAD_COMPRESSION" data-uid="RdKafka.ErrorCode._BAD_COMPRESSION">_BAD_COMPRESSION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Bad/unknown compression</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_BAD_COMPRESSION = -198</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__BAD_MSG" data-uid="RdKafka.ErrorCode._BAD_MSG">_BAD_MSG</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Received message is incorrect</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_BAD_MSG = -199</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__BEGIN" data-uid="RdKafka.ErrorCode._BEGIN">_BEGIN</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Begin internal error codes</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_BEGIN = -200</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__CONFLICT" data-uid="RdKafka.ErrorCode._CONFLICT">_CONFLICT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Conflicting use</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_CONFLICT = -173</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__CRIT_SYS_RESOURCE" data-uid="RdKafka.ErrorCode._CRIT_SYS_RESOURCE">_CRIT_SYS_RESOURCE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Critical system resource</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_CRIT_SYS_RESOURCE = -194</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__DESTROY" data-uid="RdKafka.ErrorCode._DESTROY">_DESTROY</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Broker is going away</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_DESTROY = -197</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__END" data-uid="RdKafka.ErrorCode._END">_END</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>End internal error codes</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_END = -100</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__EXISTING_SUBSCRIPTION" data-uid="RdKafka.ErrorCode._EXISTING_SUBSCRIPTION">_EXISTING_SUBSCRIPTION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>This operation would interfere with an existing subscription</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_EXISTING_SUBSCRIPTION = -176</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__FAIL" data-uid="RdKafka.ErrorCode._FAIL">_FAIL</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Generic failure</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_FAIL = -196</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__FS" data-uid="RdKafka.ErrorCode._FS">_FS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>File or filesystem error</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_FS = -189</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__IN_PROGRESS" data-uid="RdKafka.ErrorCode._IN_PROGRESS">_IN_PROGRESS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Operation in progress</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_IN_PROGRESS = -178</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__INVALID_ARG" data-uid="RdKafka.ErrorCode._INVALID_ARG">_INVALID_ARG</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid argument, or invalid configuration</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_INVALID_ARG = -186</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__ISR_INSUFF" data-uid="RdKafka.ErrorCode._ISR_INSUFF">_ISR_INSUFF</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>ISR count &lt; required.acks</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_ISR_INSUFF = -183</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__MSG_TIMED_OUT" data-uid="RdKafka.ErrorCode._MSG_TIMED_OUT">_MSG_TIMED_OUT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Produced message timed out</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_MSG_TIMED_OUT = -192</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__NO_OFFSET" data-uid="RdKafka.ErrorCode._NO_OFFSET">_NO_OFFSET</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>No stored offset</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_NO_OFFSET = -168</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__NODE_UPDATE" data-uid="RdKafka.ErrorCode._NODE_UPDATE">_NODE_UPDATE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Broker node update</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_NODE_UPDATE = -182</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__NOT_IMPLEMENTED" data-uid="RdKafka.ErrorCode._NOT_IMPLEMENTED">_NOT_IMPLEMENTED</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Not implemented</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_NOT_IMPLEMENTED = -170</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__PARTITION_EOF" data-uid="RdKafka.ErrorCode._PARTITION_EOF">_PARTITION_EOF</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Reached the end of the topic+partition queue on the broker. Not really an error.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_PARTITION_EOF = -191</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__PREV_IN_PROGRESS" data-uid="RdKafka.ErrorCode._PREV_IN_PROGRESS">_PREV_IN_PROGRESS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Previous operation in progress, wait for it to finish.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_PREV_IN_PROGRESS = -177</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__QUEUE_FULL" data-uid="RdKafka.ErrorCode._QUEUE_FULL">_QUEUE_FULL</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Queue is full</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_QUEUE_FULL = -184</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__RESOLVE" data-uid="RdKafka.ErrorCode._RESOLVE">_RESOLVE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Failed to resolve broker</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_RESOLVE = -193</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__REVOKE_PARTITIONS" data-uid="RdKafka.ErrorCode._REVOKE_PARTITIONS">_REVOKE_PARTITIONS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Revoked partitions (rebalance_cb)</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_REVOKE_PARTITIONS = -174</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__SSL" data-uid="RdKafka.ErrorCode._SSL">_SSL</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>SSL error</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_SSL = -181</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__STATE" data-uid="RdKafka.ErrorCode._STATE">_STATE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Wrong state</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_STATE = -172</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__TIMED_OUT" data-uid="RdKafka.ErrorCode._TIMED_OUT">_TIMED_OUT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Operation timed out</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_TIMED_OUT = -185</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__TRANSPORT" data-uid="RdKafka.ErrorCode._TRANSPORT">_TRANSPORT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Broker transport failure</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_TRANSPORT = -195</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__UNKNOWN_GROUP" data-uid="RdKafka.ErrorCode._UNKNOWN_GROUP">_UNKNOWN_GROUP</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Unknown client group</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_UNKNOWN_GROUP = -179</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__UNKNOWN_PARTITION" data-uid="RdKafka.ErrorCode._UNKNOWN_PARTITION">_UNKNOWN_PARTITION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Permanent: Partition does not exist in cluster.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_UNKNOWN_PARTITION = -190</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__UNKNOWN_PROTOCOL" data-uid="RdKafka.ErrorCode._UNKNOWN_PROTOCOL">_UNKNOWN_PROTOCOL</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Unknown protocol</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_UNKNOWN_PROTOCOL = -171</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__UNKNOWN_TOPIC" data-uid="RdKafka.ErrorCode._UNKNOWN_TOPIC">_UNKNOWN_TOPIC</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Permanent: Topic does not exist in cluster.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_UNKNOWN_TOPIC = -188</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode__WAIT_COORD" data-uid="RdKafka.ErrorCode._WAIT_COORD">_WAIT_COORD</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Waiting for coordinator to become available.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">_WAIT_COORD = -180</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_BROKER_NOT_AVAILABLE" data-uid="RdKafka.ErrorCode.BROKER_NOT_AVAILABLE">BROKER_NOT_AVAILABLE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Broker not available</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">BROKER_NOT_AVAILABLE = 8</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_CLUSTER_AUTHORIZATION_FAILED" data-uid="RdKafka.ErrorCode.CLUSTER_AUTHORIZATION_FAILED">CLUSTER_AUTHORIZATION_FAILED</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Cluster authorization failed</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">CLUSTER_AUTHORIZATION_FAILED = 31</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_GROUP_AUTHORIZATION_FAILED" data-uid="RdKafka.ErrorCode.GROUP_AUTHORIZATION_FAILED">GROUP_AUTHORIZATION_FAILED</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Group authorization failed</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">GROUP_AUTHORIZATION_FAILED = 30</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_GROUP_COORDINATOR_NOT_AVAILABLE" data-uid="RdKafka.ErrorCode.GROUP_COORDINATOR_NOT_AVAILABLE">GROUP_COORDINATOR_NOT_AVAILABLE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Group coordinator not available</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">GROUP_COORDINATOR_NOT_AVAILABLE = 15</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_GROUP_LOAD_IN_PROGRESS" data-uid="RdKafka.ErrorCode.GROUP_LOAD_IN_PROGRESS">GROUP_LOAD_IN_PROGRESS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Group coordinator load in progress</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">GROUP_LOAD_IN_PROGRESS = 14</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_ILLEGAL_GENERATION" data-uid="RdKafka.ErrorCode.ILLEGAL_GENERATION">ILLEGAL_GENERATION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Specified group generation id is not valid</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">ILLEGAL_GENERATION = 22</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INCONSISTENT_GROUP_PROTOCOL" data-uid="RdKafka.ErrorCode.INCONSISTENT_GROUP_PROTOCOL">INCONSISTENT_GROUP_PROTOCOL</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Inconsistent group protocol</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INCONSISTENT_GROUP_PROTOCOL = 23</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_COMMIT_OFFSET_SIZE" data-uid="RdKafka.ErrorCode.INVALID_COMMIT_OFFSET_SIZE">INVALID_COMMIT_OFFSET_SIZE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Commit offset data size is not valid</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_COMMIT_OFFSET_SIZE = 28</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_GROUP_ID" data-uid="RdKafka.ErrorCode.INVALID_GROUP_ID">INVALID_GROUP_ID</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid group.id</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_GROUP_ID = 24</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_MSG" data-uid="RdKafka.ErrorCode.INVALID_MSG">INVALID_MSG</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid message</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_MSG = 2</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_MSG_SIZE" data-uid="RdKafka.ErrorCode.INVALID_MSG_SIZE">INVALID_MSG_SIZE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid message size</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_MSG_SIZE = 4</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_REQUIRED_ACKS" data-uid="RdKafka.ErrorCode.INVALID_REQUIRED_ACKS">INVALID_REQUIRED_ACKS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid required acks value</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_REQUIRED_ACKS = 21</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_INVALID_SESSION_TIMEOUT" data-uid="RdKafka.ErrorCode.INVALID_SESSION_TIMEOUT">INVALID_SESSION_TIMEOUT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid session timeout</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">INVALID_SESSION_TIMEOUT = 26</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_LEADER_NOT_AVAILABLE" data-uid="RdKafka.ErrorCode.LEADER_NOT_AVAILABLE">LEADER_NOT_AVAILABLE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Leader not available</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">LEADER_NOT_AVAILABLE = 5</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_MSG_SIZE_TOO_LARGE" data-uid="RdKafka.ErrorCode.MSG_SIZE_TOO_LARGE">MSG_SIZE_TOO_LARGE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Message size too large</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">MSG_SIZE_TOO_LARGE = 10</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NETWORK_EXCEPTION" data-uid="RdKafka.ErrorCode.NETWORK_EXCEPTION">NETWORK_EXCEPTION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Broker disconnected before response received</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NETWORK_EXCEPTION = 13</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NO_ERROR" data-uid="RdKafka.ErrorCode.NO_ERROR">NO_ERROR</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Success</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NO_ERROR = 0</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NOT_COORDINATOR_FOR_GROUP" data-uid="RdKafka.ErrorCode.NOT_COORDINATOR_FOR_GROUP">NOT_COORDINATOR_FOR_GROUP</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Not coordinator for group</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NOT_COORDINATOR_FOR_GROUP = 16</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NOT_ENOUGH_REPLICAS" data-uid="RdKafka.ErrorCode.NOT_ENOUGH_REPLICAS">NOT_ENOUGH_REPLICAS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Not enough in-sync replicas</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NOT_ENOUGH_REPLICAS = 19</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NOT_ENOUGH_REPLICAS_AFTER_APPEND" data-uid="RdKafka.ErrorCode.NOT_ENOUGH_REPLICAS_AFTER_APPEND">NOT_ENOUGH_REPLICAS_AFTER_APPEND</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Message(s) written to insufficient number of in-sync replicas</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NOT_ENOUGH_REPLICAS_AFTER_APPEND = 20</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_NOT_LEADER_FOR_PARTITION" data-uid="RdKafka.ErrorCode.NOT_LEADER_FOR_PARTITION">NOT_LEADER_FOR_PARTITION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Not leader for partition</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">NOT_LEADER_FOR_PARTITION = 6</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_OFFSET_METADATA_TOO_LARGE" data-uid="RdKafka.ErrorCode.OFFSET_METADATA_TOO_LARGE">OFFSET_METADATA_TOO_LARGE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Offset metadata string too large</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">OFFSET_METADATA_TOO_LARGE = 12</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_OFFSET_OUT_OF_RANGE" data-uid="RdKafka.ErrorCode.OFFSET_OUT_OF_RANGE">OFFSET_OUT_OF_RANGE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Offset out of range</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">OFFSET_OUT_OF_RANGE = 1</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_REBALANCE_IN_PROGRESS" data-uid="RdKafka.ErrorCode.REBALANCE_IN_PROGRESS">REBALANCE_IN_PROGRESS</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Group rebalance in progress</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">REBALANCE_IN_PROGRESS = 27</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_RECORD_LIST_TOO_LARGE" data-uid="RdKafka.ErrorCode.RECORD_LIST_TOO_LARGE">RECORD_LIST_TOO_LARGE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Message batch larger than configured server segment size</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">RECORD_LIST_TOO_LARGE = 18</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_REPLICA_NOT_AVAILABLE" data-uid="RdKafka.ErrorCode.REPLICA_NOT_AVAILABLE">REPLICA_NOT_AVAILABLE</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Replica not available</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">REPLICA_NOT_AVAILABLE = 9</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_REQUEST_TIMED_OUT" data-uid="RdKafka.ErrorCode.REQUEST_TIMED_OUT">REQUEST_TIMED_OUT</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Request timed out</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">REQUEST_TIMED_OUT = 7</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_STALE_CTRL_EPOCH" data-uid="RdKafka.ErrorCode.STALE_CTRL_EPOCH">STALE_CTRL_EPOCH</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>StaleControllerEpochCode</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">STALE_CTRL_EPOCH = 11</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_TOPIC_AUTHORIZATION_FAILED" data-uid="RdKafka.ErrorCode.TOPIC_AUTHORIZATION_FAILED">TOPIC_AUTHORIZATION_FAILED</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Topic authorization failed</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">TOPIC_AUTHORIZATION_FAILED = 29</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_TOPIC_EXCEPTION" data-uid="RdKafka.ErrorCode.TOPIC_EXCEPTION">TOPIC_EXCEPTION</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Invalid topic</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">TOPIC_EXCEPTION = 17</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_UNKNOWN" data-uid="RdKafka.ErrorCode.UNKNOWN">UNKNOWN</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Unknown broker error</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">UNKNOWN = -1</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_UNKNOWN_MEMBER_ID" data-uid="RdKafka.ErrorCode.UNKNOWN_MEMBER_ID">UNKNOWN_MEMBER_ID</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Unknown member</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">UNKNOWN_MEMBER_ID = 25</code></pre>
               </div>
               <h4 id="RdKafka_ErrorCode_UNKNOWN_TOPIC_OR_PART" data-uid="RdKafka.ErrorCode.UNKNOWN_TOPIC_OR_PART">UNKNOWN_TOPIC_OR_PART</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Unknown topic or partition</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">

@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="../">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../"><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -60,7 +57,9 @@
             <article class="content wrap" id="_content">
               
               <h1 id="RdKafka_Config" data-uid="RdKafka.Config">Class Config</h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>Global configuration that is passed to
+Consumer or Producer constructors.</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
@@ -107,7 +106,8 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                 </tbody>
               </table>
               <h4 id="RdKafka_Config_EnableAutoCommit" data-uid="RdKafka.Config.EnableAutoCommit">EnableAutoCommit</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Automatically and periodically commit offsets in the background.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -129,7 +129,9 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                 </tbody>
               </table>
               <h4 id="RdKafka_Config_GroupId" data-uid="RdKafka.Config.GroupId">GroupId</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Client group id string.</p>
+<p>All clients sharing the same group.id belong to the same group.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -151,7 +153,9 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                 </tbody>
               </table>
               <h4 id="RdKafka_Config_Item_System_String_" data-uid="RdKafka.Config.Item(System.String)">Item[String]</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Get or set a configuration value directly.</p>
+<p>See <see href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md">CONFIGURATION.md</see> for the full list of supported properties.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -170,7 +174,8 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                   <tr>
                     <td><span class="xref">System.String</span></td>
                     <td><em>name</em></td>
-                    <td></td>
+                    <td><p>The configuration property name.</p>
+</td>
                   </tr>
                 </tbody>
               </table>
@@ -185,12 +190,36 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                 <tbody>
                   <tr>
                     <td><span class="xref">System.String</span></td>
-                    <td></td>
+                    <td><p>The configuration property value.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="exceptions">Exceptions</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.ArgumentException</span></td>
+                    <td><p><em>value</em> is invalid.</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.InvalidOperationException</span></td>
+                    <td><p>Configuration property <em>name</em> does not exist.</p>
+</td>
                   </tr>
                 </tbody>
               </table>
               <h4 id="RdKafka_Config_Logger" data-uid="RdKafka.Config.Logger">Logger</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Set custom logger callback.</p>
+<p>By default RdKafka logs using Console.WriteLine.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -212,7 +241,8 @@ subscribed topics (e.g., through pattern-matched topics).</p>
                 </tbody>
               </table>
               <h4 id="RdKafka_Config_StatisticsInterval" data-uid="RdKafka.Config.StatisticsInterval">StatisticsInterval</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Statistics emit interval for <a class="xref" href="RdKafka.Handle.html#RdKafka_Handle_OnStatistics">OnStatistics</a>.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
@@ -235,7 +265,8 @@ subscribed topics (e.g., through pattern-matched topics).</p>
               </table>
               <h3 id="methods">Methods</h3>
               <h4 id="RdKafka_Config_Dump" data-uid="RdKafka.Config.Dump">Dump()</h4>
-              <div class="markdown level1 summary"></div>
+              <div class="markdown level1 summary"><p>Dump all configuration names and values into a dictionary.</p>
+</div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">

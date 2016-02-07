@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="../">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../"><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -66,27 +63,38 @@
               <div class="markdown level0 remarks"></div>
                 <h3 id="classes">Classes</h3>
                   <h4><a class="xref" href="RdKafka.Config.html#RdKafka_Config">Config</a></h4>
-                  <section></section>
+                  <section><p>Global configuration that is passed to
+Consumer or Producer constructors.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.Consumer.html#RdKafka_Consumer">Consumer</a></h4>
-                  <section></section>
-                  <h4><a class="xref" href="RdKafka.Consumer.OffsetCommitArgs.html#RdKafka_Consumer_OffsetCommitArgs">Consumer.OffsetCommitArgs</a></h4>
-                  <section></section>
+                  <section><p>High-level Kafka Consumer, receives messages from a Kafka cluster.</p>
+<p>Requires Kafka &gt;= 0.9.0.0.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.EventConsumer.html#RdKafka_EventConsumer">EventConsumer</a></h4>
-                  <section></section>
+                  <section><p>Kafka Consumer that forwards received messages as events to the application.</p>
+<p>Thin abstraction on top of <a class="xref" href="RdKafka.Consumer.html#RdKafka_Consumer">Consumer</a>.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.Handle.html#RdKafka_Handle">Handle</a></h4>
-                  <section></section>
+                  <section><p>Shared base of <a class="xref" href="RdKafka.Consumer.html#RdKafka_Consumer">Consumer</a> and <a class="xref" href="RdKafka.Producer.html#RdKafka_Producer">Producer</a>.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.Library.html#RdKafka_Library">Library</a></h4>
-                  <section></section>
+                  <section><p>Miscellaneous APIs for the RdKafka library itself.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.Producer.html#RdKafka_Producer">Producer</a></h4>
-                  <section></section>
+                  <section><p>High-level, asynchronous message producer.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.RdKafkaException.html#RdKafka_RdKafkaException">RdKafkaException</a></h4>
                   <section></section>
                   <h4><a class="xref" href="RdKafka.Topic.html#RdKafka_Topic">Topic</a></h4>
-                  <section></section>
+                  <section><p>Handle to a topic obtained from <a class="xref" href="RdKafka.Producer.html#RdKafka_Producer">Producer</a>.</p>
+</section>
                   <h4><a class="xref" href="RdKafka.TopicConfig.html#RdKafka_TopicConfig">TopicConfig</a></h4>
-                  <section></section>
+                  <section><p>Topic-specific configuration.</p>
+</section>
                 <h3 id="structs">Structs</h3>
                   <h4><a class="xref" href="RdKafka.BrokerMetadata.html#RdKafka_BrokerMetadata">BrokerMetadata</a></h4>
+                  <section></section>
+                  <h4><a class="xref" href="RdKafka.Consumer.OffsetCommitArgs.html#RdKafka_Consumer_OffsetCommitArgs">Consumer.OffsetCommitArgs</a></h4>
                   <section></section>
                   <h4><a class="xref" href="RdKafka.DeliveryReport.html#RdKafka_DeliveryReport">DeliveryReport</a></h4>
                   <section></section>
@@ -110,14 +118,23 @@
                   <section></section>
                 <h3 id="enums">Enums</h3>
                   <h4><a class="xref" href="RdKafka.ErrorCode.html#RdKafka_ErrorCode">ErrorCode</a></h4>
-                  <section></section>
+                  <section><p>Internal errors to rdkafka are prefixed with _</p>
+</section>
                 <h3 id="delegates">Delegates</h3>
                   <h4><a class="xref" href="RdKafka.Config.LogCallback.html#RdKafka_Config_LogCallback">Config.LogCallback</a></h4>
                   <section></section>
-                  <h4><a class="xref" href="RdKafka.Library.LogCallback.html#RdKafka_Library_LogCallback">Library.LogCallback</a></h4>
-                  <section></section>
                   <h4><a class="xref" href="RdKafka.TopicConfig.Partitioner.html#RdKafka_TopicConfig_Partitioner">TopicConfig.Partitioner</a></h4>
-                  <section></section>
+                  <section><p>The partitioner may be called in any thread at any time,
+it may be called multiple times for the same message/key.</p>
+<p>Partitioner function constraints:</p>
+<ul>
+<li>MUST NOT call any RdKafka methods except for<a class="xref" href="RdKafka.Topic.html#RdKafka_Topic_PartitionAvailable_System_Int32_">PartitionAvailable(Int32)</a></li>
+<li>MUST NOT block or execute for prolonged periods of time.</li>
+<li>MUST return a value between 0 and partition_cnt-1, or the
+special <span class="xref">RdKafka.Topic.RD_KAFKA_PARTITION_UA</span>
+value if partitioning could not be performed.</li>
+</ul>
+</section>
             </article>
           </div>
           

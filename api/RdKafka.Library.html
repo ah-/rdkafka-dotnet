@@ -20,24 +20,21 @@
   <body data-spy="scroll" data-target="#affix">
     <div id="wrapper">
       <header>
-        
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="../">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-          </div>
-        </nav>
+        <nav class="navbar navbar-inverse">
+             <div class="container">
+               <div class="navbar-header ">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="../"><span class="dotnet">RdKafka .NET</span></a>
+               </div>
+               <div id="navbar" class="collapse navbar-collapse">
+               </div><!--/.nav-collapse -->
+             </div>
+           </nav>
         
         <div class="subnav navbar navbar-default">
           <div class="container" id="breadcrumb">
@@ -60,7 +57,8 @@
             <article class="content wrap" id="_content">
               
               <h1 id="RdKafka_Library" data-uid="RdKafka.Library">Class Library</h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p>Miscellaneous APIs for the RdKafka library itself.</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <div class="inheritance">
                 <h5>Inheritance</h5>
@@ -106,7 +104,7 @@
 <li>rr = revision</li>
 <li>xx = pre-release id (0xff is the final release)</li>
 </ul>
-<p>E.g.: \c 0x000901ff = 0.9.1</p>
+<p>E.g.: 0x000901ff = 0.9.1</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
@@ -176,10 +174,10 @@
                   </tr>
                 </tbody>
               </table>
-              <h4 id="RdKafka_Library_WaitDestroyed_System_Int64_" data-uid="RdKafka.Library.WaitDestroyed(System.Int64)">WaitDestroyed(Int64)</h4>
+              <h4 id="RdKafka_Library_WaitDestroyed_System_TimeSpan_" data-uid="RdKafka.Library.WaitDestroyed(System.TimeSpan)">WaitDestroyed(TimeSpan)</h4>
               <div class="markdown level1 summary"><p>Wait for all rdkafka objects to be destroyed.</p>
 <p>Returns if all kafka objects are now destroyed,
-or throw TimeoutException if the timeout was reached.</p>
+or throws TimeoutException if the timeout was reached.</p>
 <p>Since RdKafka handle deletion is an async operation the
 WaitDestroyed() function can be used for applications where
 a clean shutdown is required.</p>
@@ -187,7 +185,7 @@ a clean shutdown is required.</p>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public static void WaitDestroyed(long timeoutMs)</code></pre>
+                <pre><code class="lang-csharp hljs">public static void WaitDestroyed(TimeSpan timeout)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -200,9 +198,25 @@ a clean shutdown is required.</p>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="xref">System.Int64</span></td>
-                    <td><em>timeoutMs</em></td>
+                    <td><span class="xref">System.TimeSpan</span></td>
+                    <td><em>timeout</em></td>
                     <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="exceptions">Exceptions</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Condition</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.TimeoutException</span></td>
+                    <td><p>Timeout was reached before all objects were destroyed.</p>
+</td>
                   </tr>
                 </tbody>
               </table>
