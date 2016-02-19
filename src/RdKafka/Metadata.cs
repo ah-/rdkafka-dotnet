@@ -63,6 +63,12 @@ namespace RdKafka
         public override string ToString() => Topic + " " + Partition + " " + Offset;
     }
 
+    public struct Offsets
+    {
+        public long Low { get; set; }
+        public long High { get; set; }
+    }
+
     public struct GroupInfo
     {
         public BrokerMetadata Broker { get; set; } /**< Originating broker info */

@@ -66,6 +66,7 @@ namespace RdKafka.Internal
                 _topic_destroy = NativeDarwinMonoMethods.rd_kafka_topic_destroy;
                 _topic_name = NativeDarwinMonoMethods.rd_kafka_topic_name;
                 _poll = NativeDarwinMonoMethods.rd_kafka_poll;
+                _get_offsets = NativeDarwinMonoMethods.rd_kafka_get_offsets;
                 _mem_free = NativeDarwinMonoMethods.rd_kafka_mem_free;
                 _subscribe = NativeDarwinMonoMethods.rd_kafka_subscribe;
                 _unsubscribe = NativeDarwinMonoMethods.rd_kafka_unsubscribe;
@@ -126,6 +127,7 @@ namespace RdKafka.Internal
                 _topic_destroy = NativeMethods.rd_kafka_topic_destroy;
                 _topic_name = NativeMethods.rd_kafka_topic_name;
                 _poll = NativeMethods.rd_kafka_poll;
+                _get_offsets = NativeMethods.rd_kafka_get_offsets;
                 _mem_free = NativeMethods.rd_kafka_mem_free;
                 _subscribe = NativeMethods.rd_kafka_subscribe;
                 _unsubscribe = NativeMethods.rd_kafka_unsubscribe;
@@ -329,6 +331,13 @@ namespace RdKafka.Internal
 
         private static Func<IntPtr, IntPtr, IntPtr> _poll;
         internal static IntPtr poll(IntPtr rk, IntPtr timeout_ms) => _poll(rk, timeout_ms);
+
+        private delegate ErrorCode GetOffsets(IntPtr rk, string topic, int partition,
+                out long low, out long high, IntPtr timeout_ms);
+        private static GetOffsets _get_offsets;
+        internal static ErrorCode get_offsets(IntPtr rk, string topic, int partition,
+                out long low, out long high, IntPtr timeout_ms)
+            => _get_offsets(rk, topic, partition, out low, out high, timeout_ms);
 
         private static Action<IntPtr, IntPtr> _mem_free;
         internal static void mem_free(IntPtr rk, IntPtr ptr)
@@ -574,6 +583,11 @@ namespace RdKafka.Internal
             internal static extern IntPtr rd_kafka_poll(IntPtr rk, IntPtr timeout_ms);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_get_offsets(IntPtr rk,
+                    [MarshalAs(UnmanagedType.LPStr)] string topic,
+                    int partition, out long low, out long high, IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_mem_free(IntPtr rk, IntPtr ptr);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
@@ -810,6 +824,11 @@ namespace RdKafka.Internal
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_poll(IntPtr rk, IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_get_offsets(IntPtr rk,
+                    [MarshalAs(UnmanagedType.LPStr)] string topic,
+                    int partition, out long low, out long high, IntPtr timeout_ms);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_mem_free(IntPtr rk, IntPtr ptr);

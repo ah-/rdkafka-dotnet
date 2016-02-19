@@ -109,6 +109,14 @@ namespace RdKafka
                     handle.Metadata(allTopics, onlyForTopic?.handle, includeInternal, timeout));
         }
 
+        /// <summary>
+        /// Request lowest and highest offsets for a topic partition from broker.
+        /// </summary>
+        public Task<Offsets> GetOffsets(string topic, int partition, TimeSpan timeout=default(TimeSpan))
+        {
+            return Task.FromResult(handle.GetOffsets(topic, partition, timeout));
+        }
+
         public event EventHandler<string> OnStatistics;
 
         Task StartCallbackTask(CancellationToken ct)
