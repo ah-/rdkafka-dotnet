@@ -326,21 +326,28 @@ namespace RdKafka.Internal
 
         internal void Assign(List<TopicPartitionOffset> partitions)
         {
-            IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
-            if (list == IntPtr.Zero)
+            IntPtr list = IntPtr.Zero;
+            if (partitions != null)
             {
-                throw new Exception("Failed to create topic partition list");
-            }
-            foreach (var partition in partitions)
-            {
-                IntPtr ptr = LibRdKafka.topic_partition_list_add(list, partition.Topic, partition.Partition);
-                Marshal.WriteInt64(ptr,
-                        (int) Marshal.OffsetOf<rd_kafka_topic_partition>("offset"),
-                        partition.Offset);
+                list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
+                if (list == IntPtr.Zero)
+                {
+                    throw new Exception("Failed to create topic partition list");
+                }
+                foreach (var partition in partitions)
+                {
+                    IntPtr ptr = LibRdKafka.topic_partition_list_add(list, partition.Topic, partition.Partition);
+                    Marshal.WriteInt64(ptr,
+                            (int) Marshal.OffsetOf<rd_kafka_topic_partition>("offset"),
+                            partition.Offset);
+                }
             }
 
             ErrorCode err = LibRdKafka.assign(handle, list);
-            LibRdKafka.topic_partition_list_destroy(list);
+            if (list != IntPtr.Zero)
+            {
+                LibRdKafka.topic_partition_list_destroy(list);
+            }
             if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to assign partitions");

@@ -85,7 +85,7 @@ namespace RdKafka
         /// </summary>
         public void Unassign()
         {
-            handle.Assign(new List<TopicPartitionOffset>());
+            handle.Assign(null);
         }
 
         /// <summary>
