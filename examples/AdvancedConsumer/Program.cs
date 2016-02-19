@@ -54,7 +54,7 @@ namespace AdvancedConsumer
                 }
 
                 consumer.OnPartitionsAssigned += (obj, partitions) => {
-                    Console.WriteLine($"Assigned partitions: [{string.Join(", ", partitions)}]");
+                    Console.WriteLine($"Assigned partitions: [{string.Join(", ", partitions)}], member id: {consumer.MemberId}");
                     consumer.Assign(partitions);
                 };
 
@@ -73,7 +73,7 @@ namespace AdvancedConsumer
                 Console.WriteLine($"Assigned to: [{string.Join(", ", consumer.Assignment)}]");
                 Console.WriteLine($"Subscribed to: [{string.Join(", ", consumer.Subscription)}]");
 
-                Console.WriteLine($"Started consumer {consumer.MemberId}, press enter to stop consuming");
+                Console.WriteLine($"Started consumer, press enter to stop consuming");
                 Console.ReadLine();
             }
         }
