@@ -71,8 +71,7 @@ namespace RdKafka
                     break;
                 }
 
-                ErrorCode err = LibRdKafka.errno2err(
-                        (IntPtr) Marshal.GetLastWin32Error());
+                ErrorCode err = LibRdKafka.last_error();
                 if (err == ErrorCode._QUEUE_FULL)
                 {
                     // Wait and retry

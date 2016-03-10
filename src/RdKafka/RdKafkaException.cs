@@ -17,11 +17,6 @@ namespace RdKafka
             return Marshal.PtrToStringAnsi(LibRdKafka.err2str(errorCode));
         }
 
-        internal static RdKafkaException FromErrNo(IntPtr errno, string message)
-        {
-            return FromErr(LibRdKafka.errno2err(errno), message);
-        }
-
         internal static RdKafkaException FromErr(ErrorCode err, string message)
         {
             var errorMessage = $"Error {err} - {ErrorToString(err)}";

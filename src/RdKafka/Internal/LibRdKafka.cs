@@ -32,7 +32,7 @@ namespace RdKafka.Internal
                 _version_str = NativeDarwinMonoMethods.rd_kafka_version_str;
                 _get_debug_contexts = NativeDarwinMonoMethods.rd_kafka_get_debug_contexts;
                 _err2str = NativeDarwinMonoMethods.rd_kafka_err2str;
-                _errno2err = NativeDarwinMonoMethods.rd_kafka_errno2err;
+                _last_error = NativeDarwinMonoMethods.rd_kafka_last_error;
                 _topic_partition_list_new = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_new;
                 _topic_partition_list_destroy = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_destroy;
                 _topic_partition_list_add = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_add;
@@ -93,7 +93,7 @@ namespace RdKafka.Internal
                 _version_str = NativeMethods.rd_kafka_version_str;
                 _get_debug_contexts = NativeMethods.rd_kafka_get_debug_contexts;
                 _err2str = NativeMethods.rd_kafka_err2str;
-                _errno2err = NativeMethods.rd_kafka_errno2err;
+                _last_error = NativeMethods.rd_kafka_last_error;
                 _topic_partition_list_new = NativeMethods.rd_kafka_topic_partition_list_new;
                 _topic_partition_list_destroy = NativeMethods.rd_kafka_topic_partition_list_destroy;
                 _topic_partition_list_add = NativeMethods.rd_kafka_topic_partition_list_add;
@@ -213,8 +213,8 @@ namespace RdKafka.Internal
                 string topic, int partition)
             => _topic_partition_list_add(rktparlist, topic, partition);
 
-        private static Func<IntPtr, ErrorCode> _errno2err;
-        internal static ErrorCode errno2err(IntPtr errno) => _errno2err(errno);
+        private static Func<ErrorCode> _last_error;
+        internal static ErrorCode last_error() => _last_error();
 
         private static Action<IntPtr> _message_destroy;
         internal static void message_destroy(IntPtr rkmessage) => _message_destroy(rkmessage);
@@ -443,7 +443,7 @@ namespace RdKafka.Internal
             internal static extern IntPtr rd_kafka_err2str(ErrorCode err);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_errno2err(IntPtr errno);
+            internal static extern ErrorCode rd_kafka_last_error();
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern /* rd_kafka_topic_partition_list_t * */ IntPtr
@@ -626,7 +626,7 @@ namespace RdKafka.Internal
             internal static extern ErrorCode rd_kafka_position(
                     IntPtr rk, IntPtr partitions, IntPtr timeout_ms);
 
-            [DllImport(DllName, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_produce(
                     IntPtr rkt,
                     int partition,
@@ -686,7 +686,7 @@ namespace RdKafka.Internal
             internal static extern IntPtr rd_kafka_err2str(ErrorCode err);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_errno2err(IntPtr errno);
+            internal static extern ErrorCode rd_kafka_last_error();
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern /* rd_kafka_topic_partition_list_t * */ IntPtr
@@ -869,7 +869,7 @@ namespace RdKafka.Internal
             internal static extern ErrorCode rd_kafka_position(
                     IntPtr rk, IntPtr partitions, IntPtr timeout_ms);
 
-            [DllImport(DllName, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_produce(
                     IntPtr rkt,
                     int partition,

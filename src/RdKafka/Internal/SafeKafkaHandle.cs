@@ -110,9 +110,7 @@ namespace RdKafka.Internal
             if (topicHandle.IsInvalid)
             {
                 DangerousRelease();
-                ErrorCode err = LibRdKafka.errno2err(
-                        (IntPtr) Marshal.GetLastWin32Error());
-                throw RdKafkaException.FromErr(err, "Failed to create topic");
+                throw RdKafkaException.FromErr(LibRdKafka.last_error(), "Failed to create topic");
             }
             topicHandle.kafkaHandle = this;
             return topicHandle;
