@@ -60,3 +60,8 @@ See `examples/`
 ## Supported Platforms and .NET Releases
 
 Requires .NET 4.5 or later. Tested with .NET Core on Linux, OS X and Windows, and classic .NET 4.5 on Windows.
+
+## FAQ
+### The type initializer for 'RdKafka.Internal.LibRdKafka' threw an exception.
+RdKafka depends on OpenSSL, try installing it from here: https://slproweb.com/products/Win32OpenSSL.html
+It will be bundled properly once I figure out a good way to do so, pull requests welcome.
