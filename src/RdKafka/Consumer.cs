@@ -132,12 +132,24 @@ namespace RdKafka
         }
 
         /// <summary>
-        /// Retrieve committed positions (offsets) for topics+partitions.
+        /// Retrieve committed offsets for topics+partitions.
         /// </summary>
-        public Task<List<TopicPartitionOffset>> Position(List<TopicPartition> partitions, TimeSpan timeout)
+        public Task<List<TopicPartitionOffset>> Committed(List<TopicPartition> partitions, TimeSpan timeout)
         {
-            var result = handle.Position(partitions, (IntPtr) timeout.TotalMilliseconds);
+            var result = handle.Committed(partitions, (IntPtr) timeout.TotalMilliseconds);
             return Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Retrieve current positions (offsets) for topics+partitions.
+        ///
+        /// The offset field of each requested partition will be set to the offset
+        /// of the last consumed message + 1, or RD_KAFKA_OFFSET_INVALID in case there was
+        /// no previous message.
+        /// </summary>
+        public List<TopicPartitionOffset> Position(List<TopicPartition> partitions)
+        {
+            return handle.Position(partitions);
         }
 
         // Rebalance callbacks

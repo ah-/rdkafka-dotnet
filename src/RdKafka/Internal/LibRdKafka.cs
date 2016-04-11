@@ -76,6 +76,7 @@ namespace RdKafka.Internal
                 _assign = NativeDarwinMonoMethods.rd_kafka_assign;
                 _assignment = NativeDarwinMonoMethods.rd_kafka_assignment;
                 _commit = NativeDarwinMonoMethods.rd_kafka_commit;
+                _committed = NativeDarwinMonoMethods.rd_kafka_committed;
                 _position = NativeDarwinMonoMethods.rd_kafka_position;
                 _produce = NativeDarwinMonoMethods.rd_kafka_produce;
                 _metadata = NativeDarwinMonoMethods.rd_kafka_metadata;
@@ -137,6 +138,7 @@ namespace RdKafka.Internal
                 _assign = NativeMethods.rd_kafka_assign;
                 _assignment = NativeMethods.rd_kafka_assignment;
                 _commit = NativeMethods.rd_kafka_commit;
+                _committed = NativeMethods.rd_kafka_committed;
                 _position = NativeMethods.rd_kafka_position;
                 _produce = NativeMethods.rd_kafka_produce;
                 _metadata = NativeMethods.rd_kafka_metadata;
@@ -374,9 +376,13 @@ namespace RdKafka.Internal
         internal static ErrorCode commit(IntPtr rk, IntPtr offsets, bool async)
             => _commit(rk, offsets, async);
 
-        private static Func<IntPtr, IntPtr, IntPtr, ErrorCode> _position;
-        internal static ErrorCode position(IntPtr rk, IntPtr partitions, IntPtr timeout_ms)
-            => _position(rk, partitions, timeout_ms);
+        private static Func<IntPtr, IntPtr, IntPtr, ErrorCode> _committed;
+        internal static ErrorCode committed(IntPtr rk, IntPtr partitions, IntPtr timeout_ms)
+            => _committed(rk, partitions, timeout_ms);
+
+        private static Func<IntPtr, IntPtr, ErrorCode> _position;
+        internal static ErrorCode position(IntPtr rk, IntPtr partitions)
+            => _position(rk, partitions);
 
         private static Func<IntPtr, int, IntPtr, byte[], UIntPtr, byte[], UIntPtr,
                 IntPtr, IntPtr> _produce;
@@ -623,8 +629,12 @@ namespace RdKafka.Internal
                     bool async);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_position(
+            internal static extern ErrorCode rd_kafka_committed(
                     IntPtr rk, IntPtr partitions, IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_position(
+                    IntPtr rk, IntPtr partitions);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_produce(
@@ -866,8 +876,12 @@ namespace RdKafka.Internal
                     bool async);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_position(
+            internal static extern ErrorCode rd_kafka_committed(
                     IntPtr rk, IntPtr partitions, IntPtr timeout_ms);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern ErrorCode rd_kafka_position(
+                    IntPtr rk, IntPtr partitions);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_produce(
