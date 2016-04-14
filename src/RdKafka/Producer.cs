@@ -48,6 +48,7 @@ namespace RdKafka
                     RdKafkaException.FromErr(
                         rkmessage.err,
                         Marshal.PtrToStringAnsi(rkmessage.payload)));
+                return;
             }
 
             deliveryCompletionSource.SetResult(new DeliveryReport() {
