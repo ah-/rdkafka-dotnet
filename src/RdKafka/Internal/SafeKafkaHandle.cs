@@ -201,16 +201,16 @@ namespace RdKafka.Internal
             }
         }
 
-        internal Offsets GetOffsets(string topic, int partition, TimeSpan timeout)
+        internal Offsets QueryWatermarkOffsets(string topic, int partition, TimeSpan timeout)
         {
             long low;
             long high;
 
-            ErrorCode err = LibRdKafka.get_offsets(handle, topic, partition, out low, out high,
+            ErrorCode err = LibRdKafka.query_watermark_offsets(handle, topic, partition, out low, out high,
                     timeout == default(TimeSpan) ?  new IntPtr(-1) : (IntPtr) timeout.TotalMilliseconds);
             if (err != ErrorCode.NO_ERROR)
             {
-                throw RdKafkaException.FromErr(err, "Failed to query offsets");
+                throw RdKafkaException.FromErr(err, "Failed to query watermark offsets");
             }
 
             return new Offsets { Low = low, High = high };
