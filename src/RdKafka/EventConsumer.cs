@@ -15,7 +15,7 @@ namespace RdKafka
         CancellationTokenSource consumerCts;
 
         public event EventHandler<Message> OnMessage;
-        public event EventHandler<ErrorCode> OnError;
+        public event EventHandler<ErrorCode> OnConsumerError;
         public event EventHandler<TopicPartitionOffset> OnEndReached;
 
         public EventConsumer(Config config, string brokerList = null)
@@ -25,7 +25,7 @@ namespace RdKafka
         /// <summary>
         /// Start automatically consuming message and trigger events.
         ///
-        /// Will invoke OnMessage, OnEndReached and OnError events.
+        /// Will invoke OnMessage, OnEndReached and OnConsumerError events.
         /// </summary>
         public void Start()
         {
@@ -60,7 +60,7 @@ namespace RdKafka
                             }
                             else
                             {
-                                OnError?.Invoke(this, mae.Error);
+                                OnConsumerError?.Invoke(this, mae.Error);
                             }
                         }
                     }

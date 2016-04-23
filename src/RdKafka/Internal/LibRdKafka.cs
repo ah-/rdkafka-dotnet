@@ -43,6 +43,7 @@ namespace RdKafka.Internal
                 _conf_set = NativeDarwinMonoMethods.rd_kafka_conf_set;
                 _conf_set_dr_msg_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_dr_msg_cb;
                 _conf_set_rebalance_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_rebalance_cb;
+                _conf_set_error_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_error_cb;
                 _conf_set_offset_commit_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_offset_commit_cb;
                 _conf_set_log_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_log_cb;
                 _conf_set_stats_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_stats_cb;
@@ -105,6 +106,7 @@ namespace RdKafka.Internal
                 _conf_set = NativeMethods.rd_kafka_conf_set;
                 _conf_set_dr_msg_cb = NativeMethods.rd_kafka_conf_set_dr_msg_cb;
                 _conf_set_rebalance_cb = NativeMethods.rd_kafka_conf_set_rebalance_cb;
+                _conf_set_error_cb = NativeMethods.rd_kafka_conf_set_error_cb;
                 _conf_set_offset_commit_cb = NativeMethods.rd_kafka_conf_set_offset_commit_cb;
                 _conf_set_log_cb = NativeMethods.rd_kafka_conf_set_log_cb;
                 _conf_set_stats_cb = NativeMethods.rd_kafka_conf_set_stats_cb;
@@ -167,6 +169,10 @@ namespace RdKafka.Internal
                 ErrorCode err,
                 /* rd_kafka_topic_partition_list_t * */ IntPtr offsets,
                 IntPtr opaque);
+
+        [UnmanagedFunctionPointer(callingConvention: CallingConvention.Cdecl)]
+        internal delegate void ErrorCallback(IntPtr rk,
+                ErrorCode err, string reason, IntPtr opaque);
 
         [UnmanagedFunctionPointer(callingConvention: CallingConvention.Cdecl)]
         internal delegate void RebalanceCallback(IntPtr rk,
@@ -246,6 +252,10 @@ namespace RdKafka.Internal
         private static Action<IntPtr, CommitCallback> _conf_set_offset_commit_cb;
         internal static void conf_set_offset_commit_cb(IntPtr conf, CommitCallback commit_cb)
             => _conf_set_offset_commit_cb(conf, commit_cb);
+
+        private static Action<IntPtr, ErrorCallback> _conf_set_error_cb;
+        internal static void conf_set_error_cb(IntPtr conf, ErrorCallback error_cb)
+            => _conf_set_error_cb(conf, error_cb);
 
         private static Action<IntPtr, LogCallback> _conf_set_log_cb;
         internal static void conf_set_log_cb(IntPtr conf, LogCallback log_cb)
@@ -500,6 +510,10 @@ namespace RdKafka.Internal
                     IntPtr conf, CommitCallback commit_cb);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void rd_kafka_conf_set_error_cb(
+                    IntPtr conf, ErrorCallback error_cb);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_conf_set_log_cb(IntPtr conf, LogCallback log_cb);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
@@ -745,6 +759,10 @@ namespace RdKafka.Internal
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_conf_set_offset_commit_cb(
                     IntPtr conf, CommitCallback commit_cb);
+
+            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void rd_kafka_conf_set_error_cb(
+                    IntPtr conf, ErrorCallback error_cb);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void rd_kafka_conf_set_log_cb(IntPtr conf, LogCallback log_cb);

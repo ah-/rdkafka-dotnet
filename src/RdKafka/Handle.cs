@@ -15,18 +15,31 @@ namespace RdKafka
     public class Handle : IDisposable
     {
         internal SafeKafkaHandle handle;
+        LibRdKafka.ErrorCallback ErrorDelegate;
         LibRdKafka.LogCallback LogDelegate;
         LibRdKafka.StatsCallback StatsDelegate;
         Task callbackTask;
         CancellationTokenSource callbackCts;
 
+
         internal void Init(RdKafkaType type, IntPtr config, Config.LogCallback logger)
         {
+            ErrorDelegate = (IntPtr rk, ErrorCode err, string reason, IntPtr opaque) =>
+            {
+                OnError?.Invoke(this, new ErrorArgs()
+                    {
+                        ErrorCode = err,
+                        Reason = reason
+                    });
+            };
+            LibRdKafka.conf_set_error_cb(config, ErrorDelegate);
+
             logger = logger ?? ((string handle, int level, string fac, string buf) =>
             {
                 var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 Console.WriteLine($"{level}|{now}|{handle}|{fac}| {buf}");
             });
+
             LogDelegate = (IntPtr rk, int level, string fac, string buf) =>
             {
                 // The log_cb is called very early during construction, before
@@ -116,6 +129,17 @@ namespace RdKafka
         {
             return Task.FromResult(handle.QueryWatermarkOffsets(topic, partition, timeout));
         }
+
+        public struct ErrorArgs
+        {
+            public ErrorCode ErrorCode { get; set; }
+            public string Reason { get; set; }
+        }
+
+        /// <summary>
+        /// Fires on critical errors, e.g. connection failures or all brokers being down.
+        /// </summary>
+        public event EventHandler<ErrorArgs> OnError;
 
         public event EventHandler<string> OnStatistics;
 

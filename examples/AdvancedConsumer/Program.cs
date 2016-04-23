@@ -33,13 +33,17 @@ namespace AdvancedConsumer
                     }
                 };
 
-                consumer.OnError += (obj, errorCode) =>
+                consumer.OnConsumerError += (obj, errorCode) =>
                 {
-                    Console.WriteLine($"Error: {errorCode}");
+                    Console.WriteLine($"Consumer Error: {errorCode}");
                 };
 
                 consumer.OnEndReached += (obj, end) => {
                     Console.WriteLine($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
+                };
+
+                consumer.OnError += (obj, error) => {
+                    Console.WriteLine($"Error: {error.ErrorCode} {error.Reason}");
                 };
 
                 if (enableAutoCommit)

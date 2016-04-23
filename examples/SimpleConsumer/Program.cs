@@ -22,7 +22,7 @@ namespace SimpleProducer
                     Console.WriteLine($"Topic: {msg.Topic} Partition: {msg.Partition} Offset: {msg.Offset} {text}");
                 };
 
-                consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset("foo", 0, 5)});
+                consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(topics.First(), 0, 5)});
                 consumer.Start();
 
                 Console.WriteLine("Started consumer, press enter to stop consuming");
