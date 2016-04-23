@@ -53,9 +53,11 @@ using (var consumer = new EventConsumer(config, "127.0.0.1:9092"))
 
 See `examples/`
 
-## API Documentation
+## Documentation
 
 [Read the API Documentation here](https://ah-.github.io/rdkafka-dotnet/api/RdKafka.html)
+
+[Read the FAQ for answers to common questions](https://github.com/ah-/rdkafka-dotnet/wiki/Faq)
 
 ## Supported Platforms and .NET Releases
 
