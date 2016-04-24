@@ -1,6 +1,8 @@
 rdkafka-dotnet - C# Apache Kafka client
 =======================================
 
+[![Join the chat at https://gitter.im/ah-/rdkafka-dotnet](https://badges.gitter.im/ah-/rdkafka-dotnet.svg)](https://gitter.im/ah-/rdkafka-dotnet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Travis Build Status](https://travis-ci.org/ah-/rdkafka-dotnet.svg?branch=master)](https://travis-ci.org/ah-/rdkafka-dotnet)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/ah-/rdkafka-dotnet?branch=master&svg=true)](https://ci.appveyor.com/project/ah-/rdkafka-dotnet)
 
