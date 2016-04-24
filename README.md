@@ -3,7 +3,6 @@ rdkafka-dotnet - C# Apache Kafka client
 
 [![Travis Build Status](https://travis-ci.org/ah-/rdkafka-dotnet.svg?branch=master)](https://travis-ci.org/ah-/rdkafka-dotnet)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/ah-/rdkafka-dotnet?branch=master&svg=true)](https://ci.appveyor.com/project/ah-/rdkafka-dotnet)
-
 [![Gitter chat](https://badges.gitter.im/edenhill/librdkafka.png)](https://gitter.im/edenhill/librdkafka)
 
 Copyright (c) 2015-2016, [Andreas Heider](mailto:andreas@heider.io)
