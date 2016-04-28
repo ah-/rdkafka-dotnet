@@ -9,7 +9,6 @@ os:
    - linux
 
 env:
-   - RUNTIME=mono
    - RUNTIME=coreclr
 
 # TODO on linux: install http://docs.confluent.io/2.0.0/installation.html#installation-apt
