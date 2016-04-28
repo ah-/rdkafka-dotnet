@@ -47,7 +47,7 @@ namespace RdKafka
                 deliveryCompletionSource.SetException(
                     RdKafkaException.FromErr(
                         rkmessage.err,
-                        Marshal.PtrToStringAnsi(rkmessage.payload)));
+                        "Failed to produce message"));
                 return;
             }
 
