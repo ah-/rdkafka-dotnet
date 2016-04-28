@@ -20,11 +20,11 @@ install:
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
    - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
    - dnvm upgrade
-   - dnvm install -r $RUNTIME 1.0.0-rc1-update1
-   - dnvm use -r $RUNTIME 1.0.0-rc1-update1
+   - dnvm install -r $RUNTIME 1.0.0-rc1-update2
+   - dnvm use -r $RUNTIME 1.0.0-rc1-update2
    - dnu restore
    - find ./src/RdKafka/runtimes
-   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cp src/RdKafka/runtimes/osx.10.9-x64/native/librdkafka.dylib . ; fi
+   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cp src/RdKafka/runtimes/osx/native/librdkafka.dylib . ; fi
 
 script:
    - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
