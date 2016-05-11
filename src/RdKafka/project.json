@@ -5,15 +5,15 @@
 
     "dependencies": {
         "RdKafka.Internal.librdkafka-Linux": {
-            "version": "0.9.1-ci-32",
+            "version": "0.9.1-ci-44",
             "type": "build"
         },
         "RdKafka.Internal.librdkafka-Darwin": {
-            "version": "0.9.1-ci-32",
+            "version": "0.9.1-ci-44",
             "type": "build"
         },
         "RdKafka.Internal.librdkafka-Windows": {
-            "version": "0.9.1-ci-32",
+            "version": "0.9.1-ci-44",
             "type": "build"
         }
     },
