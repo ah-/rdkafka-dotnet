@@ -12,10 +12,7 @@ namespace RdKafka
             ErrorCode = errorCode;
         }
 
-        internal static string ErrorToString(ErrorCode errorCode)
-        {
-            return Marshal.PtrToStringAnsi(LibRdKafka.err2str(errorCode));
-        }
+        internal static string ErrorToString(ErrorCode errorCode) => Marshal.PtrToStringAnsi(LibRdKafka.err2str(errorCode));
 
         internal static RdKafkaException FromErr(ErrorCode err, string message)
         {

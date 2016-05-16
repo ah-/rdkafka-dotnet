@@ -26,10 +26,7 @@ namespace RdKafka
             }
         }
 
-        public Topic Topic(string topic, TopicConfig config = null)
-        {
-            return new Topic(handle, this, topic, config);
-        }
+        public Topic Topic(string topic, TopicConfig config = null) => new Topic(handle, this, topic, config);
 
         // Explicitly keep reference to delegate so it stays alive
         static LibRdKafka.DeliveryReportCallback DeliveryReportDelegate = DeliveryReportCallback;
