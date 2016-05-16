@@ -9,7 +9,7 @@ os:
 
 install:
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'; fi
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo sh -c sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo sh -c 'sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893'; fi
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install dotnet-dev-1.0.0-preview1-002702; fi
    - dotnet restore
