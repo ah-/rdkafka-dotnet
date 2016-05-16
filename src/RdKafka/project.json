@@ -1,44 +1,24 @@
 {
     "version": "0.9.1-ci-*",
-    "description": "C# Apache Kafka client",
-    "authors": ["Andreas Heider"],
+
+    "packOptions": {
+        "description": "C# Apache Kafka client",
+        "authors": ["Andreas Heider"],
+        "tags": ["kafka", "rdkafka"]
+    },
 
     "dependencies": {
-        "RdKafka.Internal.librdkafka-Linux": {
-            "version": "0.9.1-ci-44",
-            "type": "build"
-        },
-        "RdKafka.Internal.librdkafka-Darwin": {
-            "version": "0.9.1-ci-44",
-            "type": "build"
-        },
-        "RdKafka.Internal.librdkafka-Windows": {
-            "version": "0.9.1-ci-44",
-            "type": "build"
-        }
+        "RdKafka.Internal.librdkafka": "0.9.1-ci-16"
     },
 
     "frameworks": {
         "net451": { },
-        "dotnet5.4": {
+        "netstandard1.3": {
             "dependencies": {
-                "System.Console": "4.0.0-*",
-                "System.Linq": "4.0.0-*",
-                "System.Runtime": "4.0.21-*",
-                "System.Runtime.InteropServices": "4.0.21-*"
+                "System.Console": "4.0.0-rc2-24027",
+                "System.Linq": "4.1.0-rc2-24027",
+                "System.Runtime.InteropServices": "4.1.0-rc2-24027"
             }
         }
-    },
-
-    "packInclude": {
-        "build/": "build/**",
-        "runtimes/": "runtimes/**"
-    },
-
-    "scripts": {
-        "postrestore": [
-            "dnu restore ../../tools/Copy.Librdkafka",
-            "dnx -p ../../tools/Copy.Librdkafka run"
-        ]
     }
 }

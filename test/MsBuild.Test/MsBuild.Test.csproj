@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="RdKafka, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\RdKafka.0.9.1-ci-61\lib\net451\RdKafka.dll</HintPath>
+      <HintPath>..\..\packages\RdKafka.0.9.1-ci-99\lib\net451\RdKafka.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -88,12 +88,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\RdKafka.0.9.1-ci-61\build\RdKafka.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\RdKafka.0.9.1-ci-61\build\RdKafka.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

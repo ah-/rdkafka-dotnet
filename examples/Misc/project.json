@@ -2,25 +2,23 @@
     "version": "0.9.1-*",
     "authors": ["Andreas Heider"],
 
-    "compilationOptons": {
+    "buildOptions": {
         "emitEntryPoint": true
     },
 
-    "commands": {
-        "Misc": "Misc"
-    },
-
     "dependencies": {
-        "RdKafka": "0.9.1-*"
+        "RdKafka": {
+            "target": "project"
+        }
     },
 
     "frameworks": {
-        "dnx451": { },
-        "dnxcore50": {
+        "netcoreapp1.0": {
             "dependencies": {
-                "Microsoft.NETCore.Runtime": "1.0.1-*",
-                "System.Console": "4.0.0-*",
-                "System.Linq": "4.0.0"
+                "Microsoft.NETCore.App": {
+                    "type": "platform",
+                    "version": "1.0.0-rc2-3002702"
+                }
             }
         }
     }

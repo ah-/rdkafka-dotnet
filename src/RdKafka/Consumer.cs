@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using RdKafka.Internal;
 
 namespace RdKafka
@@ -99,10 +97,7 @@ namespace RdKafka
         /// - error event (ErrorCode is != NO_ERROR)
         /// - timeout due to no message or event within timeout (null)
         /// </summary>
-        public MessageAndError? Consume(TimeSpan timeout)
-        {
-            return handle.ConsumerPoll((IntPtr) timeout.TotalMilliseconds);
-        }
+        public MessageAndError? Consume(TimeSpan timeout) => handle.ConsumerPoll((IntPtr)timeout.TotalMilliseconds);
 
         /// <summary>
         /// Commit offsets for the current assignment.
@@ -147,10 +142,7 @@ namespace RdKafka
         /// of the last consumed message + 1, or RD_KAFKA_OFFSET_INVALID in case there was
         /// no previous message.
         /// </summary>
-        public List<TopicPartitionOffset> Position(List<TopicPartition> partitions)
-        {
-            return handle.Position(partitions);
-        }
+        public List<TopicPartitionOffset> Position(List<TopicPartition> partitions) => handle.Position(partitions);
 
         // Rebalance callbacks
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
