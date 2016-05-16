@@ -11,8 +11,6 @@ os:
 env:
    - RUNTIME=coreclr
 
-# TODO on linux: install http://docs.confluent.io/2.0.0/installation.html#installation-apt
-
 install:
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git clone https://github.com/edenhill/librdkafka; fi
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd librdkafka && ./configure && make && sudo make install && popd; fi
