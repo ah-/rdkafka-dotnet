@@ -9,22 +9,16 @@ os:
    - linux
 
 env:
-   - RUNTIME=coreclr
+    - PATH
 
 install:
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git clone https://github.com/edenhill/librdkafka; fi
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd librdkafka && ./configure && make && sudo make install && popd; fi
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
-   - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-   - dnvm upgrade
-   - dnvm install -r $RUNTIME 1.0.0-rc1-update2
-   - dnvm use -r $RUNTIME 1.0.0-rc1-update2
-   - dnu restore
-   - find ./src/RdKafka/runtimes
-   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cp src/RdKafka/runtimes/osx/native/librdkafka.dylib . ; fi
+   - wget https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.sh
+   - sudo bash dotnet-install.sh --version 1.0.0-preview1-002702
+   - export PATH=$HOME/.dotnet:$PATH
+   - dotnet restore
 
 script:
-   - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
-   - dnu build ./src/RdKafka/project.json $FRAMEWORK
-   - dnu pack ./src/RdKafka/project.json $FRAMEWORK
-   - dnx -p ./test/RdKafka.Tests/ test
+   - dotnet build ./src/RdKafka/project.json
+   - dotnet pack ./src/RdKafka/project.json
+   - dotnet test ./test/RdKafka.Tests/
