@@ -15,7 +15,7 @@ install:
    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
    - wget https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.sh
    - sudo bash dotnet-install.sh --version 1.0.0-preview1-002702
-   - export PATH=/usr/local/share/dotnet:$PATH
+   - export PATH=$HOME/.dotnet:$PATH
    - dotnet restore
 
 script:
