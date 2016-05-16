@@ -34,11 +34,14 @@ namespace RdKafka
             };
             LibRdKafka.conf_set_error_cb(config, ErrorDelegate);
 
-            logger = logger ?? ((string handle, int level, string fac, string buf) =>
+            if (logger == null)
             {
-                var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
-                Console.WriteLine($"{level}|{now}|{handle}|{fac}| {buf}");
-            });
+                logger = ((string handle, int level, string fac, string buf) =>
+                {
+                    var now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    Console.WriteLine($"{level}|{now}|{handle}|{fac}| {buf}");
+                });
+            }
 
             LogDelegate = (IntPtr rk, int level, string fac, string buf) =>
             {
