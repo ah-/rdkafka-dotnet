@@ -13,8 +13,8 @@ environment:
 build_script:
   - appveyor-retry dotnet restore -v Minimal
   - dotnet build **/project.json -c %CONFIGURATION%
-  - dotnet pack **/project.json -c %CONFIGURATION%
-  - dotnet test ./test/RdKafka.Tests
+  - dotnet pack src/RdKafka/project.json -c %CONFIGURATION%
+  - dotnet test test/RdKafka.Tests
 
 artifacts:
   - path: ./src/RdKafka/bin/Release/*.nupkg
