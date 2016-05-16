@@ -5,26 +5,16 @@ sudo: required
 dist: trusty
 
 os:
-   - osx
    - linux
 
-env:
-   - RUNTIME=coreclr
-
 install:
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then git clone https://github.com/edenhill/librdkafka; fi
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pushd librdkafka && ./configure && make && sudo make install && popd; fi
-   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libunwind8; fi
-   - curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-   - dnvm upgrade
-   - dnvm install -r $RUNTIME 1.0.0-rc1-update2
-   - dnvm use -r $RUNTIME 1.0.0-rc1-update2
-   - dnu restore
-   - find ./src/RdKafka/runtimes
-   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then cp src/RdKafka/runtimes/osx/native/librdkafka.dylib . ; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo sh -c sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
+   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install dotnet-dev-1.0.0-preview1-002702; fi
+   - dotnet restore
 
 script:
-   - if [ "$RUNTIME" == "coreclr" ]; then export FRAMEWORK="--framework dotnet5.4"; fi
-   - dnu build ./src/RdKafka/project.json $FRAMEWORK
-   - dnu pack ./src/RdKafka/project.json $FRAMEWORK
-   - dnx -p ./test/RdKafka.Tests/ test
+   - dotnet build ./src/RdKafka/project.json
+   - dotnet pack ./src/RdKafka/project.json
+   - dotnet test ./test/RdKafka.Tests/
