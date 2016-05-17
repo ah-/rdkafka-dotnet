@@ -82,7 +82,7 @@ namespace Benchmark
             Console.WriteLine($"Sent {numMessages * numThreads} messages in {stopwatch.Elapsed}");
             Console.WriteLine($"{numMessages * numThreads / stopwatch.Elapsed.TotalSeconds:F0} messages/second");
 
-            stopwatch.Start();
+            stopwatch.Restart();
             long n = Consume(brokerList, topic).Result;
             stopwatch.Stop();
 
