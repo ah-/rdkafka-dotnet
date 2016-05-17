@@ -216,6 +216,20 @@ namespace RdKafka.Internal
             return new Offsets { Low = low, High = high };
         }
 
+        internal Offsets GetWatermarkOffsets(string topic, int partition)
+        {
+            long low;
+            long high;
+
+            ErrorCode err = LibRdKafka.get_watermark_offsets(handle, topic, partition, out low, out high);
+            if (err != ErrorCode.NO_ERROR)
+            {
+                throw RdKafkaException.FromErr(err, "Failed to get watermark offsets");
+            }
+
+            return new Offsets { Low = low, High = high };
+        }
+
         // Consumer API
         internal void Subscribe(IList<string> topics)
         {

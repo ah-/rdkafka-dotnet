@@ -125,8 +125,8 @@ namespace RdKafka
         /// <summary>
         /// Request lowest and highest offsets for a topic partition from broker.
         /// </summary>
-        public Task<Offsets> QueryWatermarkOffsets(string topic, int partition, TimeSpan timeout=default(TimeSpan))
-            => Task.FromResult(handle.QueryWatermarkOffsets(topic, partition, timeout));
+        public Task<Offsets> QueryWatermarkOffsets(TopicPartition topicPartition, TimeSpan timeout=default(TimeSpan))
+            => Task.FromResult(handle.QueryWatermarkOffsets(topicPartition.Topic, topicPartition.Partition, timeout));
 
         public struct ErrorArgs
         {

@@ -144,6 +144,18 @@ namespace RdKafka
         /// </summary>
         public List<TopicPartitionOffset> Position(List<TopicPartition> partitions) => handle.Position(partitions);
 
+        /// <summary>
+        /// Get last known low (oldest/beginning) and high (newest/end) offsets for partition.
+        ///
+        /// The low offset is updated periodically (if statistics.interval.ms is set)
+        /// while the high offset is updated on each fetched message set from the broker.
+        ///
+        /// If there is no cached offset (either low or high, or both) then
+        /// RD_KAFKA_OFFSET_INVALID will be returned for the respective offset.
+        /// </summary>
+        public Offsets GetWatermarkOffsets(TopicPartition topicPartition)
+            => handle.GetWatermarkOffsets(topicPartition.Topic, topicPartition.Partition);
+
         // Rebalance callbacks
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsAssigned;
         public event EventHandler<List<TopicPartitionOffset>> OnPartitionsRevoked;
