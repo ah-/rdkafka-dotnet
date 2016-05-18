@@ -113,7 +113,11 @@ namespace RdKafka
         /// </summary>
         public Task Commit(Message message)
         {
-            Commit(new List<TopicPartitionOffset>() { message.TopicPartitionOffset });
+            var tpo = message.TopicPartitionOffset;
+            Commit(new List<TopicPartitionOffset>()
+                   {
+                       new TopicPartitionOffset(tpo.Topic, tpo.Partition, tpo.Offset + 1)
+                   });
             return Task.FromResult(false);
         }
 
