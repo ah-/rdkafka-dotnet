@@ -7,7 +7,7 @@ namespace RdKafka.Internal
 {
     internal static class LibRdKafka
     {
-        const long minVersion = 0x00090100;
+        const long minVersion = 0x000901ff;
 
 #if NET451
         [DllImport("kernel32", SetLastError = true)]
