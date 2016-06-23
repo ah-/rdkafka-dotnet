@@ -2,6 +2,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
+#if NET451
+using System.Reflection;
+#endif
 
 namespace RdKafka.Internal
 {
@@ -19,8 +22,11 @@ namespace RdKafka.Internal
 #if NET451
             var is64 = IntPtr.Size == 8;
             try {
-                LoadLibrary(is64 ? "x64/zlib.dll" : "x86/zlib.dll");
-                LoadLibrary(is64 ? "x64/librdkafka.dll" : "x86/librdkafka.dll");
+                var baseUri = new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase);
+                var baseDirectory = Path.GetDirectoryName(baseUri.LocalPath);
+
+                LoadLibrary(Path.Combine(baseDirectory, is64 ? "x64/zlib.dll" : "x86/zlib.dll"));
+                LoadLibrary(Path.Combine(baseDirectory, is64 ? "x64/librdkafka.dll" : "x86/librdkafka.dll"));
             }
             catch (Exception) { }
 #endif
