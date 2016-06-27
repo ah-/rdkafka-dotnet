@@ -8,7 +8,7 @@
     },
 
     "dependencies": {
-        "RdKafka.Internal.librdkafka": "0.9.1-ci-18"
+        "RdKafka.Internal.librdkafka": "0.9.1"
     },
 
     "frameworks": {
