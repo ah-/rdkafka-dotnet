@@ -14,7 +14,7 @@ build_script:
   - appveyor-retry dotnet restore -v Minimal
   - dotnet build **/project.json -c %CONFIGURATION%
   - cmd: IF "%APPVEYOR_REPO_TAG%" == "True" (dotnet pack src/RdKafka/project.json -c %CONFIGURATION%)
-  - cmd: IF "%APPVEYOR_REPO_TAG%" != "True" (dotnet pack src/RdKafka/project.json -c %CONFIGURATION% --version-suffix ci-%APPVEYOR_BUILD_NUMBER%)
+  - cmd: IF NOT "%APPVEYOR_REPO_TAG%" == "True" (dotnet pack src/RdKafka/project.json -c %CONFIGURATION% --version-suffix ci-%APPVEYOR_BUILD_NUMBER%)
   - dotnet test test/RdKafka.Tests
 
 test: off
