@@ -31,135 +31,67 @@ namespace RdKafka.Internal
             catch (Exception) { }
 #endif
 
-            // Warning: madness below, due to mono needing to load __Internal
-            if (PlatformApis.IsDarwinMono)
-            {
-                _version = NativeDarwinMonoMethods.rd_kafka_version;
-                _version_str = NativeDarwinMonoMethods.rd_kafka_version_str;
-                _get_debug_contexts = NativeDarwinMonoMethods.rd_kafka_get_debug_contexts;
-                _err2str = NativeDarwinMonoMethods.rd_kafka_err2str;
-                _last_error = NativeDarwinMonoMethods.rd_kafka_last_error;
-                _topic_partition_list_new = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_new;
-                _topic_partition_list_destroy = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_destroy;
-                _topic_partition_list_add = NativeDarwinMonoMethods.rd_kafka_topic_partition_list_add;
-                _message_destroy = NativeDarwinMonoMethods.rd_kafka_message_destroy;
-                _conf_new = NativeDarwinMonoMethods.rd_kafka_conf_new;
-                _conf_destroy = NativeDarwinMonoMethods.rd_kafka_conf_destroy;
-                _conf_dup = NativeDarwinMonoMethods.rd_kafka_conf_dup;
-                _conf_set = NativeDarwinMonoMethods.rd_kafka_conf_set;
-                _conf_set_dr_msg_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_dr_msg_cb;
-                _conf_set_rebalance_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_rebalance_cb;
-                _conf_set_error_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_error_cb;
-                _conf_set_offset_commit_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_offset_commit_cb;
-                _conf_set_log_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_log_cb;
-                _conf_set_stats_cb = NativeDarwinMonoMethods.rd_kafka_conf_set_stats_cb;
-                _conf_set_default_topic_conf = NativeDarwinMonoMethods.rd_kafka_conf_set_default_topic_conf;
-                _conf_get = NativeDarwinMonoMethods.rd_kafka_conf_get;
-                _topic_conf_get = NativeDarwinMonoMethods.rd_kafka_topic_conf_get;
-                _conf_dump = NativeDarwinMonoMethods.rd_kafka_conf_dump;
-                _topic_conf_dump = NativeDarwinMonoMethods.rd_kafka_topic_conf_dump;
-                _conf_dump_free = NativeDarwinMonoMethods.rd_kafka_conf_dump_free;
-                _topic_conf_new = NativeDarwinMonoMethods.rd_kafka_topic_conf_new;
-                _topic_conf_dup = NativeDarwinMonoMethods.rd_kafka_topic_conf_dup;
-                _topic_conf_destroy = NativeDarwinMonoMethods.rd_kafka_topic_conf_destroy;
-                _topic_conf_set = NativeDarwinMonoMethods.rd_kafka_topic_conf_set;
-                _topic_conf_set_partitioner_cb = NativeDarwinMonoMethods.rd_kafka_topic_conf_set_partitioner_cb;
-                _topic_partition_available = NativeDarwinMonoMethods.rd_kafka_topic_partition_available;
-                _new = NativeDarwinMonoMethods.rd_kafka_new;
-                _destroy = NativeDarwinMonoMethods.rd_kafka_destroy;
-                _name = NativeDarwinMonoMethods.rd_kafka_name;
-                _memberid = NativeDarwinMonoMethods.rd_kafka_memberid;
-                _topic_new = NativeDarwinMonoMethods.rd_kafka_topic_new;
-                _topic_destroy = NativeDarwinMonoMethods.rd_kafka_topic_destroy;
-                _topic_name = NativeDarwinMonoMethods.rd_kafka_topic_name;
-                _poll = NativeDarwinMonoMethods.rd_kafka_poll;
-                _query_watermark_offsets = NativeDarwinMonoMethods.rd_kafka_query_watermark_offsets;
-                _get_watermark_offsets = NativeDarwinMonoMethods.rd_kafka_get_watermark_offsets;
-                _mem_free = NativeDarwinMonoMethods.rd_kafka_mem_free;
-                _subscribe = NativeDarwinMonoMethods.rd_kafka_subscribe;
-                _unsubscribe = NativeDarwinMonoMethods.rd_kafka_unsubscribe;
-                _subscription = NativeDarwinMonoMethods.rd_kafka_subscription;
-                _consumer_poll = NativeDarwinMonoMethods.rd_kafka_consumer_poll;
-                _consumer_close = NativeDarwinMonoMethods.rd_kafka_consumer_close;
-                _assign = NativeDarwinMonoMethods.rd_kafka_assign;
-                _assignment = NativeDarwinMonoMethods.rd_kafka_assignment;
-                _commit = NativeDarwinMonoMethods.rd_kafka_commit;
-                _committed = NativeDarwinMonoMethods.rd_kafka_committed;
-                _position = NativeDarwinMonoMethods.rd_kafka_position;
-                _produce = NativeDarwinMonoMethods.rd_kafka_produce;
-                _metadata = NativeDarwinMonoMethods.rd_kafka_metadata;
-                _metadata_destroy = NativeDarwinMonoMethods.rd_kafka_metadata_destroy;
-                _list_groups = NativeDarwinMonoMethods.rd_kafka_list_groups;
-                _group_list_destroy = NativeDarwinMonoMethods.rd_kafka_group_list_destroy;
-                _brokers_add = NativeDarwinMonoMethods.rd_kafka_brokers_add;
-                _set_log_level = NativeDarwinMonoMethods.rd_kafka_set_log_level;
-                _outq_len = NativeDarwinMonoMethods.rd_kafka_outq_len;
-                _wait_destroyed = NativeDarwinMonoMethods.rd_kafka_wait_destroyed;
-            }
-            else
-            {
-                _version = NativeMethods.rd_kafka_version;
-                _version_str = NativeMethods.rd_kafka_version_str;
-                _get_debug_contexts = NativeMethods.rd_kafka_get_debug_contexts;
-                _err2str = NativeMethods.rd_kafka_err2str;
-                _last_error = NativeMethods.rd_kafka_last_error;
-                _topic_partition_list_new = NativeMethods.rd_kafka_topic_partition_list_new;
-                _topic_partition_list_destroy = NativeMethods.rd_kafka_topic_partition_list_destroy;
-                _topic_partition_list_add = NativeMethods.rd_kafka_topic_partition_list_add;
-                _message_destroy = NativeMethods.rd_kafka_message_destroy;
-                _conf_new = NativeMethods.rd_kafka_conf_new;
-                _conf_destroy = NativeMethods.rd_kafka_conf_destroy;
-                _conf_dup = NativeMethods.rd_kafka_conf_dup;
-                _conf_set = NativeMethods.rd_kafka_conf_set;
-                _conf_set_dr_msg_cb = NativeMethods.rd_kafka_conf_set_dr_msg_cb;
-                _conf_set_rebalance_cb = NativeMethods.rd_kafka_conf_set_rebalance_cb;
-                _conf_set_error_cb = NativeMethods.rd_kafka_conf_set_error_cb;
-                _conf_set_offset_commit_cb = NativeMethods.rd_kafka_conf_set_offset_commit_cb;
-                _conf_set_log_cb = NativeMethods.rd_kafka_conf_set_log_cb;
-                _conf_set_stats_cb = NativeMethods.rd_kafka_conf_set_stats_cb;
-                _conf_set_default_topic_conf = NativeMethods.rd_kafka_conf_set_default_topic_conf;
-                _conf_get = NativeMethods.rd_kafka_conf_get;
-                _topic_conf_get = NativeMethods.rd_kafka_topic_conf_get;
-                _conf_dump = NativeMethods.rd_kafka_conf_dump;
-                _topic_conf_dump = NativeMethods.rd_kafka_topic_conf_dump;
-                _conf_dump_free = NativeMethods.rd_kafka_conf_dump_free;
-                _topic_conf_new = NativeMethods.rd_kafka_topic_conf_new;
-                _topic_conf_dup = NativeMethods.rd_kafka_topic_conf_dup;
-                _topic_conf_destroy = NativeMethods.rd_kafka_topic_conf_destroy;
-                _topic_conf_set = NativeMethods.rd_kafka_topic_conf_set;
-                _topic_conf_set_partitioner_cb = NativeMethods.rd_kafka_topic_conf_set_partitioner_cb;
-                _topic_partition_available = NativeMethods.rd_kafka_topic_partition_available;
-                _new = NativeMethods.rd_kafka_new;
-                _destroy = NativeMethods.rd_kafka_destroy;
-                _name = NativeMethods.rd_kafka_name;
-                _memberid = NativeMethods.rd_kafka_memberid;
-                _topic_new = NativeMethods.rd_kafka_topic_new;
-                _topic_destroy = NativeMethods.rd_kafka_topic_destroy;
-                _topic_name = NativeMethods.rd_kafka_topic_name;
-                _poll = NativeMethods.rd_kafka_poll;
-                _query_watermark_offsets = NativeMethods.rd_kafka_query_watermark_offsets;
-                _get_watermark_offsets = NativeMethods.rd_kafka_get_watermark_offsets;
-                _mem_free = NativeMethods.rd_kafka_mem_free;
-                _subscribe = NativeMethods.rd_kafka_subscribe;
-                _unsubscribe = NativeMethods.rd_kafka_unsubscribe;
-                _subscription = NativeMethods.rd_kafka_subscription;
-                _consumer_poll = NativeMethods.rd_kafka_consumer_poll;
-                _consumer_close = NativeMethods.rd_kafka_consumer_close;
-                _assign = NativeMethods.rd_kafka_assign;
-                _assignment = NativeMethods.rd_kafka_assignment;
-                _commit = NativeMethods.rd_kafka_commit;
-                _committed = NativeMethods.rd_kafka_committed;
-                _position = NativeMethods.rd_kafka_position;
-                _produce = NativeMethods.rd_kafka_produce;
-                _metadata = NativeMethods.rd_kafka_metadata;
-                _metadata_destroy = NativeMethods.rd_kafka_metadata_destroy;
-                _list_groups = NativeMethods.rd_kafka_list_groups;
-                _group_list_destroy = NativeMethods.rd_kafka_group_list_destroy;
-                _brokers_add = NativeMethods.rd_kafka_brokers_add;
-                _set_log_level = NativeMethods.rd_kafka_set_log_level;
-                _outq_len = NativeMethods.rd_kafka_outq_len;
-                _wait_destroyed = NativeMethods.rd_kafka_wait_destroyed;
-            }
+            _version = NativeMethods.rd_kafka_version;
+            _version_str = NativeMethods.rd_kafka_version_str;
+            _get_debug_contexts = NativeMethods.rd_kafka_get_debug_contexts;
+            _err2str = NativeMethods.rd_kafka_err2str;
+            _last_error = NativeMethods.rd_kafka_last_error;
+            _topic_partition_list_new = NativeMethods.rd_kafka_topic_partition_list_new;
+            _topic_partition_list_destroy = NativeMethods.rd_kafka_topic_partition_list_destroy;
+            _topic_partition_list_add = NativeMethods.rd_kafka_topic_partition_list_add;
+            _message_destroy = NativeMethods.rd_kafka_message_destroy;
+            _conf_new = NativeMethods.rd_kafka_conf_new;
+            _conf_destroy = NativeMethods.rd_kafka_conf_destroy;
+            _conf_dup = NativeMethods.rd_kafka_conf_dup;
+            _conf_set = NativeMethods.rd_kafka_conf_set;
+            _conf_set_dr_msg_cb = NativeMethods.rd_kafka_conf_set_dr_msg_cb;
+            _conf_set_rebalance_cb = NativeMethods.rd_kafka_conf_set_rebalance_cb;
+            _conf_set_error_cb = NativeMethods.rd_kafka_conf_set_error_cb;
+            _conf_set_offset_commit_cb = NativeMethods.rd_kafka_conf_set_offset_commit_cb;
+            _conf_set_log_cb = NativeMethods.rd_kafka_conf_set_log_cb;
+            _conf_set_stats_cb = NativeMethods.rd_kafka_conf_set_stats_cb;
+            _conf_set_default_topic_conf = NativeMethods.rd_kafka_conf_set_default_topic_conf;
+            _conf_get = NativeMethods.rd_kafka_conf_get;
+            _topic_conf_get = NativeMethods.rd_kafka_topic_conf_get;
+            _conf_dump = NativeMethods.rd_kafka_conf_dump;
+            _topic_conf_dump = NativeMethods.rd_kafka_topic_conf_dump;
+            _conf_dump_free = NativeMethods.rd_kafka_conf_dump_free;
+            _topic_conf_new = NativeMethods.rd_kafka_topic_conf_new;
+            _topic_conf_dup = NativeMethods.rd_kafka_topic_conf_dup;
+            _topic_conf_destroy = NativeMethods.rd_kafka_topic_conf_destroy;
+            _topic_conf_set = NativeMethods.rd_kafka_topic_conf_set;
+            _topic_conf_set_partitioner_cb = NativeMethods.rd_kafka_topic_conf_set_partitioner_cb;
+            _topic_partition_available = NativeMethods.rd_kafka_topic_partition_available;
+            _new = NativeMethods.rd_kafka_new;
+            _destroy = NativeMethods.rd_kafka_destroy;
+            _name = NativeMethods.rd_kafka_name;
+            _memberid = NativeMethods.rd_kafka_memberid;
+            _topic_new = NativeMethods.rd_kafka_topic_new;
+            _topic_destroy = NativeMethods.rd_kafka_topic_destroy;
+            _topic_name = NativeMethods.rd_kafka_topic_name;
+            _poll = NativeMethods.rd_kafka_poll;
+            _query_watermark_offsets = NativeMethods.rd_kafka_query_watermark_offsets;
+            _get_watermark_offsets = NativeMethods.rd_kafka_get_watermark_offsets;
+            _mem_free = NativeMethods.rd_kafka_mem_free;
+            _subscribe = NativeMethods.rd_kafka_subscribe;
+            _unsubscribe = NativeMethods.rd_kafka_unsubscribe;
+            _subscription = NativeMethods.rd_kafka_subscription;
+            _consumer_poll = NativeMethods.rd_kafka_consumer_poll;
+            _consumer_close = NativeMethods.rd_kafka_consumer_close;
+            _assign = NativeMethods.rd_kafka_assign;
+            _assignment = NativeMethods.rd_kafka_assignment;
+            _commit = NativeMethods.rd_kafka_commit;
+            _committed = NativeMethods.rd_kafka_committed;
+            _position = NativeMethods.rd_kafka_position;
+            _produce = NativeMethods.rd_kafka_produce;
+            _metadata = NativeMethods.rd_kafka_metadata;
+            _metadata_destroy = NativeMethods.rd_kafka_metadata_destroy;
+            _list_groups = NativeMethods.rd_kafka_list_groups;
+            _group_list_destroy = NativeMethods.rd_kafka_group_list_destroy;
+            _brokers_add = NativeMethods.rd_kafka_brokers_add;
+            _set_log_level = NativeMethods.rd_kafka_set_log_level;
+            _outq_len = NativeMethods.rd_kafka_outq_len;
+            _wait_destroyed = NativeMethods.rd_kafka_wait_destroyed;
 
             if ((long) version() < minVersion) {
                 throw new FileLoadException($"Invalid librdkafka version {(long)version():x}, expected at least {minVersion:x}");
@@ -709,262 +641,6 @@ namespace RdKafka.Internal
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_outq_len(IntPtr rk);
             
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_wait_destroyed(IntPtr timeout_ms);
-        }
-
-        private class NativeDarwinMonoMethods
-        {
-            private const string DllName = "__Internal";
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_version();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_version_str();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_get_debug_contexts();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_err2str(ErrorCode err);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_last_error();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* rd_kafka_topic_partition_list_t * */ IntPtr
-            rd_kafka_topic_partition_list_new(IntPtr size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_topic_partition_list_destroy(
-                    /* rd_kafka_topic_partition_list_t * */ IntPtr rkparlist);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* rd_kafka_topic_partition_t * */ IntPtr
-            rd_kafka_topic_partition_list_add(
-                    /* rd_kafka_topic_partition_list_t * */ IntPtr rktparlist,
-                    string topic, int partition);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_message_destroy(
-                    /* rd_kafka_message_t * */ IntPtr rkmessage);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern SafeConfigHandle rd_kafka_conf_new();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_destroy(IntPtr conf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_conf_dup(IntPtr conf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ConfRes rd_kafka_conf_set(
-                    IntPtr conf,
-                    [MarshalAs(UnmanagedType.LPStr)] string name,
-                    [MarshalAs(UnmanagedType.LPStr)] string value,
-                    StringBuilder errstr,
-                    UIntPtr errstr_size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_dr_msg_cb(
-                    IntPtr conf,
-                    DeliveryReportCallback dr_msg_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_rebalance_cb(
-                    IntPtr conf, RebalanceCallback rebalance_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_offset_commit_cb(
-                    IntPtr conf, CommitCallback commit_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_error_cb(
-                    IntPtr conf, ErrorCallback error_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_log_cb(IntPtr conf, LogCallback log_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_stats_cb(IntPtr conf, StatsCallback stats_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_set_default_topic_conf(
-                    IntPtr conf, IntPtr tconf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ConfRes rd_kafka_conf_get(
-                    IntPtr conf,
-                    [MarshalAs(UnmanagedType.LPStr)] string name,
-                    StringBuilder dest, ref UIntPtr dest_size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ConfRes rd_kafka_topic_conf_get(
-                    IntPtr conf,
-                    [MarshalAs(UnmanagedType.LPStr)] string name,
-                    StringBuilder dest, ref UIntPtr dest_size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* const char ** */ IntPtr rd_kafka_conf_dump(
-                    IntPtr conf, /* size_t * */ out UIntPtr cntp);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* const char ** */ IntPtr rd_kafka_topic_conf_dump(
-                    IntPtr conf, out UIntPtr cntp);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_conf_dump_free(/* const char ** */ IntPtr arr, UIntPtr cnt);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern SafeTopicConfigHandle rd_kafka_topic_conf_new();
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* rd_kafka_topic_conf_t * */ IntPtr rd_kafka_topic_conf_dup(
-                    /* const rd_kafka_topic_conf_t * */ IntPtr conf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_topic_conf_destroy(IntPtr conf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ConfRes rd_kafka_topic_conf_set(
-                    IntPtr conf,
-                    [MarshalAs(UnmanagedType.LPStr)] string name,
-                    [MarshalAs(UnmanagedType.LPStr)] string value,
-                    StringBuilder errstr,
-                    UIntPtr errstr_size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_topic_conf_set_partitioner_cb(
-                    IntPtr topic_conf, PartitionerCallback partitioner_cb);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern bool rd_kafka_topic_partition_available(
-                    IntPtr rkt, int partition);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern SafeKafkaHandle rd_kafka_new(
-                    RdKafkaType type, IntPtr conf,
-                    StringBuilder errstr,
-                    UIntPtr errstr_size);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_destroy(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* const char * */ IntPtr rd_kafka_name(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* char * */ IntPtr rd_kafka_memberid(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern SafeTopicHandle rd_kafka_topic_new(
-                    IntPtr rk,
-                    [MarshalAs(UnmanagedType.LPStr)] string topic,
-                    /* rd_kafka_topic_conf_t * */ IntPtr conf);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_topic_destroy(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* const char * */ IntPtr rd_kafka_topic_name(IntPtr rkt);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_poll(IntPtr rk, IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_query_watermark_offsets(IntPtr rk,
-                    [MarshalAs(UnmanagedType.LPStr)] string topic,
-                    int partition, out long low, out long high, IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_get_watermark_offsets(IntPtr rk,
-                    [MarshalAs(UnmanagedType.LPStr)] string topic,
-                    int partition, out long low, out long high);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_mem_free(IntPtr rk, IntPtr ptr);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_subscribe(IntPtr rk,
-                    /* const rd_kafka_topic_partition_list_t * */ IntPtr topics);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_unsubscribe(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_subscription(IntPtr rk,
-                    /* rd_kafka_topic_partition_list_t ** */ out IntPtr topics);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern /* rd_kafka_message_t * */ IntPtr rd_kafka_consumer_poll(
-                    IntPtr rk, IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_consumer_close(IntPtr rk);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_assign(IntPtr rk,
-                    /* const rd_kafka_topic_partition_list_t * */ IntPtr partitions);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_assignment(IntPtr rk,
-                    /* rd_kafka_topic_partition_list_t ** */ out IntPtr topics);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_commit(
-                    IntPtr rk,
-                    /* const rd_kafka_topic_partition_list_t * */ IntPtr offsets,
-                    bool async);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_committed(
-                    IntPtr rk, IntPtr partitions, IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_position(
-                    IntPtr rk, IntPtr partitions);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_produce(
-                    IntPtr rkt,
-                    int partition,
-                    IntPtr msgflags,
-                    byte[] payload, UIntPtr len,
-                    byte[] key, UIntPtr keylen,
-                    IntPtr msg_opaque);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_metadata(
-                IntPtr rk, bool all_topics,
-                /* rd_kafka_topic_t * */ IntPtr only_rkt,
-                /* const struct rd_kafka_metadata ** */ out IntPtr metadatap,
-                IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_metadata_destroy(
-                    /* const struct rd_kafka_metadata * */ IntPtr metadata);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern ErrorCode rd_kafka_list_groups(
-                    IntPtr rk, string group, out IntPtr grplistp,
-                    IntPtr timeout_ms);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_group_list_destroy(
-                    IntPtr grplist);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_brokers_add(IntPtr rk,
-                    [MarshalAs(UnmanagedType.LPStr)] string brokerlist);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void rd_kafka_set_log_level(IntPtr rk, IntPtr level);
-
-            [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern IntPtr rd_kafka_outq_len(IntPtr rk);
-
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr rd_kafka_wait_destroyed(IntPtr timeout_ms);
         }

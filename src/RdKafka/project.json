@@ -1,5 +1,5 @@
 {
-    "version": "0.9.1-ci-*",
+    "version": "0.9.2-*",
 
     "packOptions": {
         "description": "C# Apache Kafka client",
@@ -8,16 +8,16 @@
     },
 
     "dependencies": {
-        "RdKafka.Internal.librdkafka": "0.9.1-ci-18"
+        "RdKafka.Internal.librdkafka": "0.9.1"
     },
 
     "frameworks": {
         "net451": { },
         "netstandard1.3": {
             "dependencies": {
-                "System.Console": "4.0.0-rc2-24027",
-                "System.Linq": "4.1.0-rc2-24027",
-                "System.Runtime.InteropServices": "4.1.0-rc2-24027"
+                "System.Console": "4.0.0",
+                "System.Linq": "4.1.0",
+                "System.Runtime.InteropServices": "4.1.0"
             }
         }
     }
