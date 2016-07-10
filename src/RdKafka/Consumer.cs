@@ -10,7 +10,7 @@ namespace RdKafka
     ///
     /// Requires Kafka >= 0.9.0.0.
     /// </summary>
-    public class Consumer : Handle, IDisposable
+    public class Consumer : Handle
     {
         public Consumer(Config config, string brokerList = null)
         {
@@ -218,10 +218,14 @@ namespace RdKafka
                     });
         }
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            handle.ConsumerClose();
-            base.Dispose();
+            if (disposing)
+            {
+                handle.ConsumerClose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }
