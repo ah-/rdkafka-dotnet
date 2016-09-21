@@ -60,11 +60,14 @@ namespace RdKafka
         {
             // Passes the TaskCompletionSource to the delivery report callback
             // via the msg_opaque pointer
+            // try only 3 times
+            int maxTryTime = 3;
             var deliveryCompletionSource = new TaskCompletionSource<DeliveryReport>();
             var gch = GCHandle.Alloc(deliveryCompletionSource);
 
-            while (true)
+            while (maxTryTime > 0)
             {
+                maxTryTime --;
                 if (handle.Produce(payload, key, partition, GCHandle.ToIntPtr(gch)) == 0)
                 {
                     // Successfully enqueued produce request
