@@ -231,7 +231,7 @@ namespace RdKafka.Internal
         }
 
         // Consumer API
-        internal void Subscribe(IList<string> topics)
+        internal void Subscribe(ICollection<string> topics)
         {
             IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) topics.Count);
             if (list == IntPtr.Zero)
@@ -336,7 +336,7 @@ namespace RdKafka.Internal
             return GetTopicList(listPtr);
         }
 
-        internal void Assign(List<TopicPartitionOffset> partitions)
+        internal void Assign(ICollection<TopicPartitionOffset> partitions)
         {
             IntPtr list = IntPtr.Zero;
             if (partitions != null)
@@ -375,7 +375,7 @@ namespace RdKafka.Internal
             }
         }
 
-        internal void Commit(List<TopicPartitionOffset> offsets)
+        internal void Commit(ICollection<TopicPartitionOffset> offsets)
         {
             IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) offsets.Count);
             if (list == IntPtr.Zero)
@@ -397,7 +397,7 @@ namespace RdKafka.Internal
             }
         }
 
-        internal List<TopicPartitionOffset> Committed(List<TopicPartition> partitions, IntPtr timeout_ms)
+        internal List<TopicPartitionOffset> Committed(ICollection<TopicPartition> partitions, IntPtr timeout_ms)
         {
             IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
             if (list == IntPtr.Zero)
@@ -418,7 +418,7 @@ namespace RdKafka.Internal
             return result;
         }
 
-        internal List<TopicPartitionOffset> Position(List<TopicPartition> partitions)
+        internal List<TopicPartitionOffset> Position(ICollection<TopicPartition> partitions)
         {
             IntPtr list = LibRdKafka.topic_partition_list_new((IntPtr) partitions.Count);
             if (list == IntPtr.Zero)
