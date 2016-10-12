@@ -54,7 +54,7 @@ namespace RdKafka
         /// partition.assignment.strategy to assign the subscription sets's
         /// topics's partitions to the consumers, depending on their subscription.
         /// </summary>
-        public void Subscribe(List<string> topics)
+        public void Subscribe(ICollection<string> topics)
         {
             handle.Subscribe(topics);
         }
@@ -73,7 +73,7 @@ namespace RdKafka
         /// The assignment set is the set of partitions actually being consumed
         /// by the KafkaConsumer.
         /// </summary>
-        public void Assign(List<TopicPartitionOffset> partitions)
+        public void Assign(ICollection<TopicPartitionOffset> partitions)
         {
             handle.Assign(partitions);
         }
@@ -124,7 +124,7 @@ namespace RdKafka
         /// <summary>
         /// Commit explicit list of offsets.
         /// </summary>
-        public Task Commit(List<TopicPartitionOffset> offsets)
+        public Task Commit(ICollection<TopicPartitionOffset> offsets)
         {
             handle.Commit(offsets);
             return Task.FromResult(false);
@@ -133,7 +133,7 @@ namespace RdKafka
         /// <summary>
         /// Retrieve committed offsets for topics+partitions.
         /// </summary>
-        public Task<List<TopicPartitionOffset>> Committed(List<TopicPartition> partitions, TimeSpan timeout)
+        public Task<List<TopicPartitionOffset>> Committed(ICollection<TopicPartition> partitions, TimeSpan timeout)
         {
             var result = handle.Committed(partitions, (IntPtr) timeout.TotalMilliseconds);
             return Task.FromResult(result);
@@ -146,7 +146,7 @@ namespace RdKafka
         /// of the last consumed message + 1, or RD_KAFKA_OFFSET_INVALID in case there was
         /// no previous message.
         /// </summary>
-        public List<TopicPartitionOffset> Position(List<TopicPartition> partitions) => handle.Position(partitions);
+        public List<TopicPartitionOffset> Position(ICollection<TopicPartition> partitions) => handle.Position(partitions);
 
         /// <summary>
         /// Get last known low (oldest/beginning) and high (newest/end) offsets for partition.
