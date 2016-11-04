@@ -27,15 +27,15 @@ namespace RdKafka.Internal
 
         internal string GetName() => Marshal.PtrToStringAnsi(LibRdKafka.topic_name(handle));
 
-        internal long Produce(byte[] payload, byte[] key, int partition, IntPtr opaque)
+        internal long Produce(byte[] payload, int payloadCount, byte[] key, int keyCount, int partition, IntPtr opaque)
             => (long) LibRdKafka.produce(
                     handle,
                     partition,
                     (IntPtr) MsgFlags.MSG_F_COPY,
-                    payload, (UIntPtr) (payload?.Length ?? 0),
-                    key, (UIntPtr) (key?.Length ?? 0),
+                    payload, (UIntPtr) payloadCount,
+                    key, (UIntPtr) keyCount,
                     opaque);
-
+        
         internal bool PartitionAvailable(int partition) => LibRdKafka.topic_partition_available(handle, partition);
     }
 }
