@@ -65,7 +65,7 @@ namespace RdKafka
             // Passes the TaskCompletionSource to the delivery report callback
             // via the msg_opaque pointer
             var deliveryCompletionSource = new TaskDeliveryHandler();
-            Produce(payload, key, partition, deliveryCompletionSource);
+            Produce(payload, deliveryCompletionSource, key, partition);
             return deliveryCompletionSource.Task;
         }
 
@@ -81,12 +81,30 @@ namespace RdKafka
         /// Use this overload for high-performance use cases as it does not use TPL and reduces the number of allocations.</remarks>
         public void Produce(byte[] payload, IDeliveryHandler deliveryHandler, byte[] key = null, Int32 partition = RD_KAFKA_PARTITION_UA)
         {
-            if(deliveryHandler==null)
+            var payloadSegment = payload == null ? (ArraySegment<byte>?) null : new ArraySegment<byte>(payload);
+            var keySegment = key == null ? (ArraySegment<byte>?)null : new ArraySegment<byte>(key);
+            Produce(payloadSegment, deliveryHandler, keySegment, partition);
+        }
+
+        /// <summary>
+        /// Produces a keyed message to a partition of the current Topic and notifies the caller of progress via a callback interface.
+        /// </summary>
+        /// <param name="payload">Payload to send to Kafka. Can be null.</param>
+        /// <param name="deliveryHandler">IDeliveryHandler implementation used to notify the caller when the given produce request completes or an error occurs.</param>
+        /// <param name="key">(Optional) The key associated with <paramref name="payload"/> (or null if no key is specified).</param>
+        /// <param name="partition">(Optional) The topic partition to which <paramref name="payload"/> will be sent (or -1 if no partition is specified).</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="deliveryHandler"/> is null.</exception>
+        /// <remarks>Methods of <paramref name="deliveryHandler"/> will be executed in an RdKafka-internal thread and will block other operations - consider this when implementing IDeliveryHandler.
+        /// Use this overload for high-performance use cases as it does not use TPL and reduces the number of allocations.</remarks>
+        public void Produce(ArraySegment<byte>? payload, IDeliveryHandler deliveryHandler, ArraySegment<byte>? key = null, Int32 partition = RD_KAFKA_PARTITION_UA)
+        {
+            if (deliveryHandler == null)
                 throw new ArgumentNullException(nameof(deliveryHandler));
             Produce(payload, key, partition, deliveryHandler);
         }
 
-        private void Produce(byte[] payload, byte[] key, Int32 partition, object deliveryHandler)
+
+        private void Produce(ArraySegment<byte>? payload, ArraySegment<byte>? key, Int32 partition, object deliveryHandler)
         {
             var gch = GCHandle.Alloc(deliveryHandler);
             var ptr = GCHandle.ToIntPtr(gch);

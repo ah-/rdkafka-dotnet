@@ -341,14 +341,14 @@ namespace RdKafka.Internal
         internal static ErrorCode position(IntPtr rk, IntPtr partitions)
             => _position(rk, partitions);
 
-        private static Func<IntPtr, int, IntPtr, byte[], UIntPtr, byte[], UIntPtr,
+        private static Func<IntPtr, int, IntPtr, IntPtr, UIntPtr, IntPtr, UIntPtr,
                 IntPtr, IntPtr> _produce;
         internal static IntPtr produce(
                 IntPtr rkt,
                 int partition,
                 IntPtr msgflags,
-                byte[] payload, UIntPtr len,
-                byte[] key, UIntPtr keylen,
+                IntPtr payload, UIntPtr len,
+                IntPtr key, UIntPtr keylen,
                 IntPtr msg_opaque)
             => _produce(rkt, partition, msgflags, payload, len, key, keylen, msg_opaque);
 
@@ -607,8 +607,8 @@ namespace RdKafka.Internal
                     IntPtr rkt,
                     int partition,
                     IntPtr msgflags,
-                    byte[] payload, UIntPtr len,
-                    byte[] key, UIntPtr keylen,
+                    IntPtr payload, UIntPtr len,
+                    IntPtr key, UIntPtr keylen,
                     IntPtr msg_opaque);
 
             [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
