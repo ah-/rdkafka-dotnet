@@ -6,7 +6,8 @@ namespace RdKafka.Internal
     enum MsgFlags
     {
         MSG_F_FREE = 1,
-        MSG_F_COPY = 2
+        MSG_F_COPY = 2,
+        MSG_F_BLOCK = 4
     }
  
     internal sealed class SafeTopicHandle : SafeHandleZeroIsInvalid
@@ -27,11 +28,11 @@ namespace RdKafka.Internal
 
         internal string GetName() => Marshal.PtrToStringAnsi(LibRdKafka.topic_name(handle));
 
-        internal long Produce(byte[] payload, int payloadCount, byte[] key, int keyCount, int partition, IntPtr opaque)
+        internal long Produce(byte[] payload, int payloadCount, byte[] key, int keyCount, int partition, IntPtr opaque, bool blockIfQueueFull)
             => (long) LibRdKafka.produce(
                     handle,
                     partition,
-                    (IntPtr) MsgFlags.MSG_F_COPY,
+                    (IntPtr) (MsgFlags.MSG_F_COPY | (blockIfQueueFull ? MsgFlags.MSG_F_BLOCK : 0)),
                     payload, (UIntPtr) payloadCount,
                     key, (UIntPtr) keyCount,
                     opaque);
