@@ -11,8 +11,22 @@ namespace Benchmark
 {
     public class Program
     {
+        public class DeliveryHandler : IDeliveryHandler
+        {
+            public void SetException(Exception exception)
+            {
+                throw exception;
+            }
+
+            public void SetResult(DeliveryReport deliveryReport)
+            {
+            }
+        }
+
         public static void Produce(string broker, string topicName, long numMessages)
         {
+            var deliveryHandler = new DeliveryHandler();
+
             using (var producer = new Producer(broker))
             using (Topic topic = producer.Topic(topicName))
             {
@@ -20,15 +34,13 @@ namespace Benchmark
                 for (int i = 0; i < numMessages; i++)
                 {
                     byte[] data = Encoding.UTF8.GetBytes(i.ToString());
-                    topic.Produce(data);
-                    // TODO; add continuation, count success/failures
+                    topic.Produce(data, deliveryHandler);
                 }
 
                 Console.WriteLine("Shutting down");
             }
         }
 
-        // WIP, not producing useful numbers yet. Assumes one partition.
         public static async Task<long> Consume(string broker, string topic)
         {
             long n = 0;
@@ -70,17 +82,15 @@ namespace Benchmark
             string brokerList = args[0];
             string topic = args[1];
 
-            long numMessages = 1000000;
-            int numThreads = 1;
-
+            long numMessages = 10000000;
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
             Produce(brokerList, topic, numMessages);
             stopwatch.Stop();
 
-            Console.WriteLine($"Sent {numMessages * numThreads} messages in {stopwatch.Elapsed}");
-            Console.WriteLine($"{numMessages * numThreads / stopwatch.Elapsed.TotalSeconds:F0} messages/second");
+            Console.WriteLine($"Sent {numMessages} messages in {stopwatch.Elapsed}");
+            Console.WriteLine($"{numMessages / stopwatch.Elapsed.TotalSeconds:F0} messages/second");
 
             stopwatch.Restart();
             long n = Consume(brokerList, topic).Result;
