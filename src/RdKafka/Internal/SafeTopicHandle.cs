@@ -41,14 +41,14 @@ namespace RdKafka.Internal
             if (payload.HasValue)
             {
                 gchPayload = GCHandle.Alloc(payload.Value.Array, GCHandleType.Pinned);
-                pPayload = GCHandle.ToIntPtr(gchPayload) + payload.Value.Offset;
+                pPayload = Marshal.UnsafeAddrOfPinnedArrayElement(payload.Value.Array, payload.Value.Offset);
                 payloadCount = payload.Value.Count;
             }
 
             if (key.HasValue)
             {
                 gchKey = GCHandle.Alloc(key.Value.Array, GCHandleType.Pinned);
-                pKey = GCHandle.ToIntPtr(gchKey) + key.Value.Offset;
+                pKey = Marshal.UnsafeAddrOfPinnedArrayElement(key.Value.Array, key.Value.Offset);
                 keyCount = key.Value.Count;
             }
             
