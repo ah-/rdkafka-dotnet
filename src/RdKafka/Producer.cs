@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using RdKafka.Internal;
+using System.Collections.Concurrent;
 
 namespace RdKafka
 {
@@ -9,6 +10,9 @@ namespace RdKafka
     /// </summary>
     public class Producer : Handle
     {
+        BlockingCollection<LibRdKafka.PartitionerCallback> topicPartitioners 
+            = new BlockingCollection<LibRdKafka.PartitionerCallback>();
+
         public Producer(string brokerList) : this(null, brokerList) {}
 
         public Producer(Config config, string brokerList = null)
@@ -25,7 +29,26 @@ namespace RdKafka
             }
         }
 
-        public Topic Topic(string topic, TopicConfig config = null) => new Topic(handle, this, topic, config);
+        public Topic Topic(string topic, TopicConfig config = null)
+        {
+            LibRdKafka.PartitionerCallback partitionerDelegate;
+            var kafkaTopic = new Topic(handle, this, topic, config, out partitionerDelegate);
+            if (config.CustomPartitioner != null)
+            {
+                // kafkaTopic may be GC before partitionerDelegate is called on all produced mesages
+                // so we need to keep a reference on it.
+                // We can't mak it static in Topic as the partitioner will be different for each topic
+                // we could make it in a static collection in Topic, but we can clear it when producer is closed,
+                // (as it wait for all message to be produced)
+                // so putting it in an instance collection allow to free it eventually
+
+                // it's not very effective for people creating a lot of topic
+                // we should find a way to clear the list 
+                // when there is no more messages in queue related to the topic
+                topicPartitioners.Add(partitionerDelegate);
+            }
+            return kafkaTopic;
+        }
 
         // Explicitly keep reference to delegate so it stays alive
         private static readonly LibRdKafka.DeliveryReportCallback DeliveryReportDelegate = DeliveryReportCallback;
