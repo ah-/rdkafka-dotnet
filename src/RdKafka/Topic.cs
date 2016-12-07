@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using RdKafka.Internal;
+using System.Collections.Concurrent;
 
 namespace RdKafka
 {
@@ -24,10 +25,14 @@ namespace RdKafka
 
         internal readonly SafeTopicHandle handle;
         readonly Producer producer;
-        readonly LibRdKafka.PartitionerCallback PartitionerDelegate;
 
-        internal Topic(SafeKafkaHandle kafkaHandle, Producer producer, string topic, TopicConfig config)
+
+        internal Topic(SafeKafkaHandle kafkaHandle, Producer producer, string topic, TopicConfig config,
+            out LibRdKafka.PartitionerCallback partitionerDelegate)
         {
+            // PartitionerDelegate is an out parameter as its reference must be kept outside of Topic
+            // it may be called after topic is GC, and it may be different for different topics
+            // so we can't simply make it static here
             this.producer = producer;
 
             config = config ?? new TopicConfig();
@@ -36,7 +41,7 @@ namespace RdKafka
 
             if (config.CustomPartitioner != null)
             {
-                PartitionerDelegate = (IntPtr rkt, IntPtr keydata, UIntPtr keylen, int partition_cnt,
+                partitionerDelegate = (IntPtr rkt, IntPtr keydata, UIntPtr keylen, int partition_cnt,
                         IntPtr rkt_opaque, IntPtr msg_opaque) =>
                 {
                     byte[] key = null;
@@ -47,7 +52,11 @@ namespace RdKafka
                     }
                     return config.CustomPartitioner(this, key, partition_cnt);
                 };
-                LibRdKafka.topic_conf_set_partitioner_cb(configPtr, PartitionerDelegate);
+                LibRdKafka.topic_conf_set_partitioner_cb(configPtr, partitionerDelegate);
+            }
+            else
+            {
+                partitionerDelegate = null;
             }
 
             handle = kafkaHandle.Topic(topic, configPtr);
