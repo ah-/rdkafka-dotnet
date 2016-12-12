@@ -33,7 +33,7 @@ namespace RdKafka
         {
             LibRdKafka.PartitionerCallback partitionerDelegate;
             var kafkaTopic = new Topic(handle, this, topic, config, out partitionerDelegate);
-            if (config.CustomPartitioner != null)
+            if (config?.CustomPartitioner != null)
             {
                 // kafkaTopic may be GC before partitionerDelegate is called on all produced mesages
                 // so we need to keep a reference on it.
