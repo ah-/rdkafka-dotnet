@@ -36,13 +36,13 @@ namespace RdKafka
             if (config?.CustomPartitioner != null)
             {
                 // kafkaTopic may be GC before partitionerDelegate is called on all produced mesages
-                // so we need to keep a reference on it.
-                // We can't mak it static in Topic as the partitioner will be different for each topic
+                // so we need to keep a reference to it.
+                // We can't make it static in Topic as the partitioner will be different for each topic
                 // we could make it in a static collection in Topic, but we can clear it when producer is closed,
                 // (as it wait for all message to be produced)
-                // so putting it in an instance collection allow to free it eventually
+                // so putting it in an instance collection allows us to free it eventually
 
-                // it's not very effective for people creating a lot of topic
+                // it's not very effective for people creating a lot of topics
                 // we should find a way to clear the list 
                 // when there is no more messages in queue related to the topic
                 topicPartitioners.Add(partitionerDelegate);
