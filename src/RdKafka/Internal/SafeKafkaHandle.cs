@@ -369,7 +369,7 @@ namespace RdKafka.Internal
         internal void Commit()
         {
             ErrorCode err = LibRdKafka.commit(handle, IntPtr.Zero, false);
-            if (err != ErrorCode.NO_ERROR && err != ErrorCode._NO_OFFSET)
+            if (err != ErrorCode.NO_ERROR)
             {
                 throw RdKafkaException.FromErr(err, "Failed to commit offsets");
             }
