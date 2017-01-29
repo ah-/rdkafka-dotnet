@@ -101,6 +101,8 @@ namespace RdKafka
 
         /// <summary>
         /// Commit offsets for the current assignment.
+        /// If no partitions had valid offsets to commit this will throw
+        /// RdKafkaException with ErrorCode _NO_OFFSET which is not to be considered an error
         /// </summary>
         public Task Commit()
         {
