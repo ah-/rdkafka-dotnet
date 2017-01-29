@@ -1,3 +1,12 @@
+# This project has moved to https://github.com/confluentinc/confluent-kafka-dotnet and is now being maintained by Confluent
+
+Please update to [Confluent.Kafka](https://www.nuget.org/packages/Confluent.Kafka/).
+
+
+
+
+
+
 rdkafka-dotnet - C# Apache Kafka client
 =======================================
 
